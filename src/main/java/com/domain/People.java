@@ -1,5 +1,8 @@
 package com.domain;
 
+/**
+ *  测试用，项目无关
+ */
 public class People {
     public String name;
     public int age;
