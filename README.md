@@ -10,7 +10,7 @@
 
 ## 框架   
 #### 前端   
-* Vue.js + iView  
-* 可能用到的： jQuery
+* Vue.js   
+* bootstrap
 #### 后端
 * Spring 、SpringMVC 、 Mybatis 
