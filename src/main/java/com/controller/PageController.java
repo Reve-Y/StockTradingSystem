@@ -13,4 +13,9 @@ public class PageController {
         return new ModelAndView("register");
     }
 
+    // 跳转到首页home
+    @RequestMapping("home")
+    public ModelAndView toHomePage(){
+        return new ModelAndView("home");
+    }
 }

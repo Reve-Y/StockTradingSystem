@@ -8,6 +8,7 @@
 * 手机号 telephone  varchar(11)           主键  非空
 * 密码 password varchar(20)                     非空
 * 用户昵称 nickname varchar(40)  
+* 邮箱  email  varchar(20)                唯一
 * 性别 sex number(1)                      
 * 年龄 age number(3)                      
 
@@ -18,7 +19,7 @@
 
 #### 3. SecuritiesAccount 证券账户信息表    
 * 证券账户号码：     securities_account_id      varchar(20)  主键  非空 
-* 开户日期：         open_date                  number(8)    
+* 开户日期：         open_date                  varchar(8)    
 * 开户证券公司       securities_company_name    varchar(30) 
 * 资金账户id        account_id                  number(8)
 

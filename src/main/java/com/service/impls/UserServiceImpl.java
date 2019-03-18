@@ -1,7 +1,7 @@
-package com.service.interfaces;
+package com.service.impls;
 
 import com.dao.UserDao;
-import com.service.impls.UserService;
+import com.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
