@@ -11,6 +11,7 @@
 ## 框架   
 #### 前端   
 * Vue.js   
-* jQuery  bootstrap
+* jquery  bootstrap
+
 #### 后端
 * Spring 、SpringMVC 、 Mybatis 
