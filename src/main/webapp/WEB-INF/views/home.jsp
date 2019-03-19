@@ -5,21 +5,21 @@
   Time: 14:21
   To change this template use File | Settings | File Templates.
 --%>
-<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html" charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../../css/highcharts/gui.css">
+    <link rel="stylesheet" type="text/css" href="../../css/highcharts/popup.css">
     <link rel="stylesheet" href="../../css/bootstrap.css">
-    <script src="../../js/jquery-3.3.1.js"></script>
-    <script src="../../js/bootstrap.js"></script>
     <script src="../../js/vue.js"></script>
     <script src="../../js/vue-resource.js"></script>
     <script src="../../js/axios.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../css/highcharts/gui.css">
-    <link rel="stylesheet" type="text/css" href="../../css/highcharts/popup.css">
+    <script src="../../js/jquery-3.3.1.js"></script>
+    <script src="../../js/bootstrap.js"></script>
     <script src="../../js/highcharts/highstock.js"></script>
     <script src="../../js/highcharts/indicators-all.js"></script>
     <script src="../../js/highcharts/drag-panes.js"></script>
@@ -42,16 +42,21 @@
 </head>
 <body>
     <%@include file="navbar.jsp"%>
-    <div id="stock">
-        <div id="stockinfo" class="chart"></div>
-    </div>
+
+    <div id="stockinfo" class="chart">加载中</div>
+    <div id="stock"></div>
     <script>
-        var stockdata ;
+        var ohlc = []
+        var volume = []
         Highcharts.setOptions({
             lang: {
-                rangeSelectorZoom: 'HS'
+                rangeSelectorZoom: ' '
+            },
+            credits:{
+                enabled: false // 禁用版权信息
             }
         });
+        var chart = null
         var app = new Vue({
             el:"#stock",
             created : function () {
@@ -67,13 +72,12 @@
                             datalen:'1023',
                         }
                     }).then(function (resp) {
-                        console.log(resp.data);
-                        stockdata = resp.data;
-
+                        console.log(resp.data)
+                        var stockdata =eval('('+resp.data+')')
+                        console.log(stockdata.length)
+                        console.log(stockdata)
                         // split the data set into ohlc and volume
-                        var ohlc = [],
-                            volume = [],
-                            i = 0;
+                        var i = 0
                         for (i; i < stockdata.length; i += 1) {
                             ohlc.push([
                                 (new Date(stockdata[i].day)).getTime(),
@@ -87,7 +91,7 @@
                                 parseInt(stockdata[i].volume)
                             ]);
                         }
-                        Highcharts.stockChart('stockinfo', {
+                        chart = Highcharts.stockChart('stockinfo', {
                             yAxis: [{
                                 labels: {
                                     align: 'left'
@@ -105,37 +109,11 @@
                                 offset: 0
                             }],
                             tooltip: {
-                                shape: 'square',
-                                headerShape: 'callout',
-                                borderWidth: 0,
-                                shadow: false,
-                                positioner: function (width, height, point) {
-                                    var chart = this.chart,
-                                        position;
-                                    if (point.isHeader) {
-                                        position = {
-                                            x: Math.max(
-                                                // Left side limit
-                                                chart.plotLeft,
-                                                Math.min(
-                                                    point.plotX + chart.plotLeft - width / 2,
-                                                    // Right side limit
-                                                    chart.chartWidth - width - chart.marginRight
-                                                )
-                                            ),
-                                            y: point.plotY
-                                        };
-                                    } else {
-                                        position = {
-                                            x: point.series.chart.plotLeft,
-                                            y: point.series.yAxis.top - chart.plotTop
-                                        };
-                                    }
-                                    return position;
-                                }
+                                split: false,
+                                shared: true,
                             },
                             series: [{
-                                type: 'ohlc',
+                                type: 'candlestick',
                                 id: 'HS-ohlc',
                                 name: '恒生电子',
                                 data: ohlc
@@ -146,20 +124,7 @@
                                 data: volume,
                                 yAxis: 1
                             }],
-                            responsive: {
-                                rules: [{
-                                    condition: {
-                                        maxWidth: 800
-                                    },
-                                    chartOptions: {
-                                        rangeSelector: {
-                                            inputEnabled: false
-                                        }
-                                    }
-                                }]
-                            }
                         });
-
                     }).catch(function (err) {
                         console.log(err)
                     })

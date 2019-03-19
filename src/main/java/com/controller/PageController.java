@@ -18,4 +18,10 @@ public class PageController {
     public ModelAndView toHomePage(){
         return new ModelAndView("home");
     }
+
+    // 跳转到登录页
+    @RequestMapping("login")
+    public ModelAndView toLoginPage(){
+        return new ModelAndView("login");
+    }
 }

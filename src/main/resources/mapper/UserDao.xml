@@ -3,9 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.dao.UserDao">
     <select id="queryTest" resultType="com.domain.People">
         SELECT * from people
     </select>
+    <insert id="addUser" parameterType="com.domain.User">
+        INSERT into tuser
+          values(ai.nextval,#{telephone},#{password},#{nickname},#{email},#{sex},#{age})
+    </insert>
 </mapper>

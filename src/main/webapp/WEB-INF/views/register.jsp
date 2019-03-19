@@ -28,7 +28,7 @@
 <%@include file="navbar.jsp" %>
 <div class="d1"  style="margin-left:523px">
     <h2>注册：</h2><br>
-    <form action="/doregist" method="GET" id="form1" @submit="checkForm" >
+    <form action="/doregist" method="post" id="form1" @submit="checkForm" >
         <div class="form-group form-inputsize" :class="[telflag ? 'has-success' : 'has-error']" >
             <label class="control-label" for="telephone">手机号</label>
             <input type="text" class="form-control" id="telephone" v-model="telephone"
@@ -57,7 +57,7 @@
         <div class="form-group has-success" >
             <label class="control-label" >性别:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <label class="radio-inline">
-                <input type="radio" name="sex" checked="checked" id="inlineRadio1" value="1"> 男
+                <input type="radio" name="sex" checked id="inlineRadio1" value="1"> 男
             </label>
             <label class="radio-inline">
                 <input type="radio" name="sex" id="inlineRadio2" value="2"> 女
@@ -65,7 +65,7 @@
         </div>
         <div class="form-group form-inputsize" :class="[ageflag ? 'has-success' : 'has-error']">
             <label class="control-label" for="age">年龄</label>
-            <input type="text" class="form-control" id="age" v-model="age" >
+            <input type="text" class="form-control" id="age" v-model="age" name="age">
         </div>
         <button type="submit" class="btn btn-lg " :class="[btnflag ? 'btn-success':'btn-danger']">确认注册</button>
     </form>

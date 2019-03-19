@@ -3,43 +3,43 @@
     注册(User) --> 开立证券账户(SecuritiesAccount)--> 开立资金账户(CapitalAccount) --> 委托
 
 
-#### 1. USER 用户基本信息表    
-* 用户user_id varchar(20)                 主键 非空 自增 
-* 手机号 telephone  varchar(11)           主键  非空
+#### 1. tUSER 用户基本信息表    
+* 用户user_id number(10)                 主键 非空  自增
+* 手机号 telephone  varchar(11)           唯一
 * 密码 password varchar(20)                     非空
 * 用户昵称 nickname varchar(40)  
-* 邮箱  email  varchar(20)                唯一
+* 邮箱  email  varchar(30)                
 * 性别 sex number(1)                      
 * 年龄 age number(3)                      
 
-#### 2. UserAccount 用户-证券账户对应表   
+#### 2. tUserAccount 用户-证券账户对应表   
 * 用户id           user_id                varchar(20)   主键
 * 证券公司id      securities_company_id    number(2)       
 * 证券账户号码     securities_account_id    varchar(20)    
 
-#### 3. SecuritiesAccount 证券账户信息表    
+#### 3. tSecuritiesAccount 证券账户信息表    
 * 证券账户号码：     securities_account_id      varchar(20)  主键  非空 
 * 开户日期：         open_date                  varchar(8)    
 * 开户证券公司       securities_company_name    varchar(30) 
 * 资金账户id        account_id                  number(8)
 
-#### 4. CapitalAccount 资金账户表
+#### 4. tCapitalAccount 资金账户表
 * 资金账户序号       account_id             number(8) 主键 
 * 开户行            bank_name              varchar(30) 
 * 银行卡号           bank_card_number       varchar(20) 
 * 账户余额          account_balance         number(10)  
 
-#### 5. SecurityCompany  券商对照表   
+#### 5. tSecurityCompany  券商对照表   
 * 证券公司id       securities_company_id          number(2)
 * 证券公司名称     securities_company_name        varchar(30)
 
-#### 6. StockHolderInfo  某一证券账户持仓信息表
+#### 6. tStockHolderInfo  某一证券账户持仓信息表
 * 证券账户号码：     securities_account_id      varchar(20)  主键  非空 
 * 证券id：          stock_code                 number(6)
 * 证券名称          stock_name                  varchar(40)
 * 持有数量          hold_amount                 number(12)
 
-#### 7. StockInfo 证券信息表
+#### 7. tStockInfo 证券信息表
 * 证券代码：     stock_code                  number(6)
 * 证券名称       stock_name                  varchar(40)
 * 所属交易市场   market_name                  varchar(30)
