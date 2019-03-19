@@ -1,13 +1,12 @@
 package com.dao;
 
-import com.domain.People;
 import com.domain.User;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserDao {
 
-    public List<People> queryTest() ;
-
     public int addUser(User user);
+
+    public User login(@Param("telephone")String telephone,@Param("password")String password);
+
 }

@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 注册，完成后跳转到首页
+     * 注册，完成后默认直接登录，并跳转到首页
      */
     @RequestMapping("doregist")
     public ModelAndView doregist(HttpServletRequest request){
@@ -41,8 +41,31 @@ public class UserController {
         }
     }
 
+    /**
+     * 检查登录信息
+     */
     @RequestMapping("dologin")
     public ModelAndView dologin(HttpServletRequest request){
-        return null;
+        String telephone = request.getParameter("telephone");
+        String password = request.getParameter("password");
+        log.info("获取到请求登录信息： 手机号为："+telephone+" ; 密码为："+password);
+        User user = userService.login(telephone,password);
+        if(user == null || (user.getUser_id() == 0)){
+            log.info("用户:"+user.getTelephone()+" 登陆成功");
+            request.getSession().setAttribute("user",user);
+            return new ModelAndView("home");
+        }else{
+            log.info("登录失败，跳转到登录页面");
+            return new ModelAndView("login");
+        }
+    }
+
+    /**
+     *  注销： 销毁session
+     */
+    @RequestMapping("invalidate")
+    public ModelAndView logoff(HttpServletRequest request){
+        request.getSession().invalidate();
+        return new ModelAndView("home");
     }
 }

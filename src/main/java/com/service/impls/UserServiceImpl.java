@@ -26,4 +26,10 @@ public class UserServiceImpl implements UserService{
         return flag;
     }
 
+    @Override
+    public User login(String telephone, String password) {
+        log.info("开始验证登录信息");
+        return userDao.login(telephone,password);
+    }
+
 }

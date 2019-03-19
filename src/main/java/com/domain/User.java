@@ -8,7 +8,7 @@ import java.util.Objects;
  */
 public class User {
 
-    private String user_id ;
+    private int user_id ;
     private String telephone ;
     private String password ;
     private String nickname ;
@@ -16,11 +16,11 @@ public class User {
     private int sex ;    //  1:男  2:女
     private int age ;
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 

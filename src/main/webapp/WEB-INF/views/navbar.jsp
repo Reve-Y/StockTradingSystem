@@ -43,6 +43,7 @@
                                 <li class="active"><a href="#">${user.telephone} <span class="sr-only">(current)</span></a></li>
                             </c:otherwise>
                         </c:choose>
+                        <li><a href="/invalidate">注销</a></li>
                     </ul>
                 </c:otherwise>
             </c:choose>
