@@ -6,9 +6,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <script src="js/jquery-3.3.1.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <script src="assets/js/core/jquery-3.3.1.js"></script>
+    <script src="assets/js/core/bootstrap.js"></script>
     <script src="js/vue.js"></script>
     <script src="js/vue-resource.js"></script>
     <title>首页</title>
@@ -17,7 +17,7 @@
     <%--<%@include file="WEB-INF/views/navbar.jsp" %>--%>
     <div id="app">
         <button type="button" class="btn btn-lg btn-primary" @click="register">注册页面</button><br><br>
-        <a class="btn btn-primary btn-lg" href="/home" role="button">首页</a><br><br>
+        <a class="btn btn-primary btn-lg" href="/start" role="button">首页</a><br><br>
         <a class="btn btn-primary btn-lg" href="/login" role="button">登录页</a>
     </div>
     <script type="text/javascript">

@@ -35,9 +35,9 @@ public class UserController {
         int flag = userService.addUser(user);
         if(flag == 1){
             request.getSession().setAttribute("user",user);
-            return new ModelAndView("home");
+            return new ModelAndView("stockinfo");
         }else{
-            return new ModelAndView("errorPage");
+            return new ModelAndView("404");
         }
     }
 
@@ -51,12 +51,12 @@ public class UserController {
         log.info("获取到请求登录信息： 手机号为："+telephone+" ; 密码为："+password);
         User user = userService.login(telephone,password);
         if(user == null || (user.getUser_id() == 0)){
-            log.info("用户:"+user.getTelephone()+" 登陆成功");
-            request.getSession().setAttribute("user",user);
-            return new ModelAndView("home");
-        }else{
             log.info("登录失败，跳转到登录页面");
             return new ModelAndView("login");
+        }else{
+            log.info("用户:"+user.getTelephone()+" 登陆成功");
+            request.getSession().setAttribute("user",user);
+            return new ModelAndView("stockinfo");
         }
     }
 
@@ -66,6 +66,7 @@ public class UserController {
     @RequestMapping("invalidate")
     public ModelAndView logoff(HttpServletRequest request){
         request.getSession().invalidate();
-        return new ModelAndView("home");
+        log.info("用户已注销...");
+        return new ModelAndView("stockinfo");
     }
 }

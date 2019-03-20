@@ -13,15 +13,27 @@ public class PageController {
         return new ModelAndView("register");
     }
 
-    // 跳转到首页home
-    @RequestMapping("home")
+    // 跳转到股票信息页面
+    @RequestMapping("stockinfo")
     public ModelAndView toHomePage(){
-        return new ModelAndView("home");
+        return new ModelAndView("stockinfo");
     }
 
     // 跳转到登录页
     @RequestMapping("login")
     public ModelAndView toLoginPage(){
         return new ModelAndView("login");
+    }
+
+    // 帮助页面
+    @RequestMapping("help")
+    public ModelAndView toHelpPage() {
+        return new ModelAndView("help");
+    }
+
+    // 跳转到首页
+    @RequestMapping("start")
+    public ModelAndView getStart(){
+        return new ModelAndView("start");
     }
 }

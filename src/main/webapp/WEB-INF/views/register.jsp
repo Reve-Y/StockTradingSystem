@@ -12,11 +12,11 @@
     <meta http-equiv="content-type" content="text/html" charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../css/bootstrap.css">
-    <script src="../../js/jquery-3.3.1.js"></script>
-    <script src="../../js/bootstrap.js"></script>
-    <script src="../../js/vue.js"></script>
-    <script src="../../js/vue-resource.js"></script>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
+    <script src="../../assets/js/core/jquery-3.3.1.js"></script>
+    <script src="../../assets/js/core/bootstrap.js"></script>
+    <script src="../../assets/js/core/vue.js"></script>
+    <script src="../../assets/js/core/vue-resource.js"></script>
     <style type="text/css">
         .form-inputsize {
             width: 320px;
@@ -117,6 +117,6 @@
         }
     })
 </script>
-<%@include file="footer.jsp" %>
+<%--<%@include file="footer.jsp" %>--%>
 </body>
 </html>
