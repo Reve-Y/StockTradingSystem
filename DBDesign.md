@@ -10,36 +10,31 @@
 * 用户昵称 nickname varchar(40)  
 * 邮箱  email  varchar(30)                
 * 性别 sex number(1)                      
-* 年龄 age number(3)                      
+* 年龄 age number(3)    
+* 证券账户号码     securities_account_id    varchar(20)
+* 用户权限  role  number(1)                 1 代表管理员  2 代表普通用户                  
 
-#### 2. tUserAccount 用户-证券账户对应表   
-* 用户id           user_id                varchar(20)   主键
-* 证券公司id      securities_company_id    number(2)       
-* 证券账户号码     securities_account_id    varchar(20)    
-
-#### 3. tSecuritiesAccount 证券账户信息表    
+#### 2. tSecuritiesAccount 证券账户信息表    
 * 证券账户号码：     securities_account_id      varchar(20)  主键  非空 
 * 开户日期：         open_date                  varchar(8)    
 * 开户证券公司       securities_company_name    varchar(30) 
 * 资金账户id        account_id                  number(8)
 
-#### 4. tCapitalAccount 资金账户表
+#### 3. tCapitalAccount 资金账户表
 * 资金账户序号       account_id             number(8) 主键 
 * 开户行            bank_name              varchar(30) 
 * 银行卡号           bank_card_number       varchar(20) 
-* 账户余额          account_balance         number(10)  
+* 冻结金额          frozen_balance          number(10) 
+* 账户余额          account_balance         number(10)
+* 可用余额          enable_balance          number(10)  
 
-#### 5. tSecurityCompany  券商对照表   
-* 证券公司id       securities_company_id          number(2)
-* 证券公司名称     securities_company_name        varchar(30)
-
-#### 6. tStockHolderInfo  某一证券账户持仓信息表
+#### 4. tStockHolderInfo  某一证券账户持仓信息表
 * 证券账户号码：     securities_account_id      varchar(20)  主键  非空 
 * 证券id：          stock_code                 number(6)
 * 证券名称          stock_name                  varchar(40)
 * 持有数量          hold_amount                 number(12)
 
-#### 7. tStockInfo 证券信息表
+#### 5. tStockInfo 证券信息表
 * 证券代码：     stock_code                  number(6)
 * 证券名称       stock_name                  varchar(40)
 * 所属交易市场   market_name                  varchar(30)
