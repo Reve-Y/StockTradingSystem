@@ -11,7 +11,7 @@
     <title>出错了</title>
 </head>
 <body>
-<%@include file="navbar.jsp"%>
+
 <h2>Sorry , Something Wrong had happened! </h2>
 </body>
 </html>

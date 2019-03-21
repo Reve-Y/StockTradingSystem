@@ -36,4 +36,10 @@ public class PageController {
     public ModelAndView getStart(){
         return new ModelAndView("start");
     }
+
+    // 关于我们
+    @RequestMapping("about")
+    public ModelAndView toAboutUs(){
+        return new ModelAndView("about");
+    }
 }

@@ -1,22 +1,19 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Reve
-  Date: 2019-03-14
-  Time: 13:31
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="mastfoot" style="align:center">
-    <div class="inner">
-        <STRONG>Copyright © 2019 Kangge.</STRONG>
-    </div>
-</div>
 <style type="text/css">
-    /*.mastfoot {*/
-        /*color: #999; !* IE8 proofing *!*/
-        /*color: rgba(255,255,255,.5);*/
-    /*}*/
-    /*.inner {*/
-        /*padding: 30px;*/
-    /*}*/
+    .text-muted{color:#6c757d!important}
+    .text-center{text-align:center!important}
+    .small {
+        font-size: 80%;
+        font-weight: 400;
+    }
+    .footer {
+         position: absolute; /*相对于父元素contanier定位*/
+         width: 100%;
+         bottom: 0;/*始终距离它的父元素的底部为0px.则是处于父元素的最底*/
+     }
 </style>
+<!-- Footer -->
+<footer class="bg-light py-5 footer">
+    <div class="container">
+        <div class="small text-center text-muted"><strong>Copyright &copy; 2019 - Kang & XY</strong></div>
+    </div>
+</footer>

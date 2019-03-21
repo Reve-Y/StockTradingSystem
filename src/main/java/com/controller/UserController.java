@@ -67,6 +67,6 @@ public class UserController {
     public ModelAndView logoff(HttpServletRequest request){
         request.getSession().invalidate();
         log.info("用户已注销...");
-        return new ModelAndView("stockinfo");
+        return new ModelAndView("login");
     }
 }

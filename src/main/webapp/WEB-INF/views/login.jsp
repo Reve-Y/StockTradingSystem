@@ -19,7 +19,7 @@
     <link href="../../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../../assets/demo/demo.css" rel="stylesheet" />
-    <script src="../../js/common.js" type="text/javascript"></script>
+    <%--<script src="../../js/common.js" type="text/javascript"></script>--%>
 </head>
 
 <body class="login-page sidebar-collapse">
@@ -29,7 +29,7 @@
 
         <div class="navbar-translate">
             <a class="navbar-brand" href="#" rel="tooltip" title="" data-placement="bottom" target="_blank">
-                Now Ui Kit
+                Stock Trade System
             </a>
             <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-bar top-bar"></span>
@@ -40,7 +40,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="../../assets/img/loginpage/blurred-image-1.jpg">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/stockinfo">Back to Home</a>
+                    <a class="nav-link" href="/start">Back to Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/registerPage">Want Regist?</a>
@@ -120,6 +120,14 @@
 
 </div>
 
+<script src="../../assets/js/core/vue.js"></script>
+<script src="../../assets/js/core/jquery.min.js"></script>
+<script src="../../assets/js/core/popper.min.js"></script>
+<script src="../../assets/js/core/bootstrap.min.js"></script>
+<script src="../../assets/js/plugins/bootstrap-switch.js"></script>
+<script src="../../assets/js/plugins/nouislider.min.js"></script>
+<script src="../../assets/js/plugins/bootstrap-datepicker.js"></script>
+<script src="../../assets/js/now-ui-kit.js?v=1.2.0"></script>
 
 <script type="text/javascript">
     var app = new Vue({

@@ -41,7 +41,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto my-2 my-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="# ">About</a>
+                    <a class="nav-link js-scroll-trigger" href="/about">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="# ">Services</a>
@@ -67,7 +67,7 @@
             </div>
             <div class="col-lg-8 align-self-baseline">
                 <p class="text-white-75 font-weight-light mb-5">You'll be more experienced if you simulate stocks before you actually trade them! Just go and trying it</p>
-                <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Get Started</a>
+                <a class="btn btn-primary btn-xl js-scroll-trigger" href="/login">Get Started</a>
             </div>
         </div>
     </div>
@@ -100,7 +100,7 @@
 <!-- Footer -->
 <footer class="bg-light py-5">
     <div class="container">
-        <div class="small text-center text-muted">Copyright &copy; 2019 - Start Bootstrap</div>
+        <div class="small text-center text-muted"><strong>Copyright &copy; 2019 - Kang & XY</strong></div>
     </div>
 </footer>
 

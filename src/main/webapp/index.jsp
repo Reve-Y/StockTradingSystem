@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="assets/css/bootstrap.css">
     <script src="assets/js/core/jquery-3.3.1.js"></script>
     <script src="assets/js/core/bootstrap.js"></script>
-    <script src="js/vue.js"></script>
-    <script src="js/vue-resource.js"></script>
+    <script src="assets/js/core/vue.js"></script>
+    <script src="assets/js/core/vue-resource.js"></script>
     <title>首页</title>
 </head>
 <body>
-    <%--<%@include file="WEB-INF/views/navbar.jsp" %>--%>
+
     <div id="app">
         <button type="button" class="btn btn-lg btn-primary" @click="register">注册页面</button><br><br>
         <a class="btn btn-primary btn-lg" href="/start" role="button">首页</a><br><br>
