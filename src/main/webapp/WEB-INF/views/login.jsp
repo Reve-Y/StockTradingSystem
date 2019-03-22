@@ -12,13 +12,13 @@
     </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
-    <link href="../../assets/css/google-font-family.css" rel="stylesheet" />
+    <link href="../../assets/css/google-font-family.css" rel="stylesheet">
     <link href="../../assets/css/font-awesome.css" rel="stylesheet">
     <!-- CSS Files -->
     <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="../../assets/demo/demo.css" rel="stylesheet" />
+    <link href="../../assets/css/login/demo.css" rel="stylesheet" />
     <%--<script src="../../js/common.js" type="text/javascript"></script>--%>
 </head>
 
@@ -45,24 +45,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/registerPage">Want Regist?</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                        <p class="d-lg-none d-xl-none">Twitter</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
-                        <i class="fab fa-facebook-square"></i>
-                        <p class="d-lg-none d-xl-none">Facebook</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                        <p class="d-lg-none d-xl-none">Instagram</p>
-                    </a>
-                </li>
+
             </ul>
         </div>
     </div>

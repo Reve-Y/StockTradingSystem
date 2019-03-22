@@ -19,6 +19,7 @@
         <button type="button" class="btn btn-lg btn-primary" @click="register">注册页面</button><br><br>
         <a class="btn btn-primary btn-lg" href="/start" role="button">首页</a><br><br>
         <a class="btn btn-primary btn-lg" href="/login" role="button">登录页</a>
+        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/admin" role="button">管理页</a>
     </div>
     <script type="text/javascript">
         var app = new Vue({

@@ -44,7 +44,7 @@
                     <a class="nav-link js-scroll-trigger" href="/about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="# ">Services</a>
+                    <a class="nav-link js-scroll-trigger" href="/admin">Services</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="/help">Help</a>

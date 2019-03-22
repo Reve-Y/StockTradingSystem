@@ -35,7 +35,7 @@ public class UserController {
         int flag = userService.addUser(user);
         if(flag == 1){
             request.getSession().setAttribute("user",user);
-            return new ModelAndView("stockinfo");
+            return new ModelAndView("admin/index");
         }else{
             return new ModelAndView("404");
         }
@@ -56,7 +56,7 @@ public class UserController {
         }else{
             log.info("用户:"+user.getTelephone()+" 登陆成功");
             request.getSession().setAttribute("user",user);
-            return new ModelAndView("stockinfo");
+            return new ModelAndView("admin/index");
         }
     }
 
