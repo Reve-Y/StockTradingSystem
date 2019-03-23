@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Reve
-  Date: 2019-03-14
-  Time: 13:35
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <nav class="navbar navbar-default navbar-static-top">
@@ -17,19 +10,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/stockinfo">StockTradingSystem</a>
+            <a class="navbar-brand" href="/start">StockTradingSystem</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/stockinfo">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="/start">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/help">Help</a></li>
+                <li><a href="/admin">Services</a></li>
             </ul>
             <c:choose>
                 <c:when test="${empty user}">
                     <ul class=" nav navbar-nav navbar-right">
                         <li><a href="/registerPage">注册</a></li>
-                        <li class="active"><a href="/login">登录<span class="sr-only">(current)</span></a></li>
+                        <li><a href="/login">登录<span class="sr-only">(current)</span></a></li>
                     </ul>
                 </c:when>
                 <c:otherwise>

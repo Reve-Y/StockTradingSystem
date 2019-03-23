@@ -6,7 +6,7 @@
 <mapper namespace="com.dao.UserDao">
     <insert id="addUser" parameterType="com.domain.User">
         INSERT into tuser
-          values(ai.nextval,#{telephone},#{password},#{nickname},#{email},#{sex},#{age})
+          values(ai.nextval,#{telephone},#{password},#{nickname},#{email},#{sex},#{age},NULL,2)
     </insert>
 
     <select id="login" resultType="com.domain.User">

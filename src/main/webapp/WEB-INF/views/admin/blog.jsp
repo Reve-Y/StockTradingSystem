@@ -141,23 +141,51 @@
                     <a class="dropdown-item notification__all text-center" href="#"> View all Notifications </a>
                   </div>
                 </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="/userProfile" role="button" aria-haspopup="true" aria-expanded="false">
-                    <!-- <img class="user-avatar rounded-circle mr-2" src="images/avatars/0.jpg" alt="User Avatar"> -->
-                    <span class="d-none d-md-inline-block">Sierra Brooks</span>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-small">
-                    <a class="dropdown-item" href="/userProfile">
-                      <i class="material-icons">&#xE7FD;</i> Profile</a>
-                    <a class="dropdown-item" href="/blog">
-                      <i class="material-icons">vertical_split</i> Blog Posts</a>
-                    <a class="dropdown-item" href="/newPost">
-                      <i class="material-icons">note_add</i> Add New Post</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-danger" href="/invalidate">
-                      <i class="material-icons text-danger">&#xE879;</i> Logout </a>
-                  </div>
-                </li>
+                <c:choose>
+                  <c:when test="${empty user}">
+                    <li class="nav-item border-right dropdown notifications">
+                      <a class="nav-link nav-link-icon text-center" href="/login" role="button">
+                        <div class="nav-link-icon__wrapper">
+                          <span class="d-none d-md-inline-block">Login</span>
+                        </div>
+                      </a>
+                    </li>
+                    <li class="nav-item border-right dropdown notifications">
+                      <a class="nav-link nav-link-icon text-center" href="/registerPage" role="button">
+                        <div class="nav-link-icon__wrapper">
+                          <span class="d-none d-md-inline-block">Register</span>
+                        </div>
+                      </a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="/userProfile" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img class="user-avatar rounded-circle mr-2" src="../../../assets/img/admin/usericon.JPG" alt="Am I Beautiful?">
+                        <c:choose>
+                          <c:when test="${user.nickname != ''}">
+                            <span class="d-none d-md-inline-block">hi,&nbsp;<strong>${user.nickname}</strong></span>
+                          </c:when>
+                          <c:otherwise>
+                            <span class="d-none d-md-inline-block">hi,&nbsp;<strong>${user.telephone}</strong></span>
+                          </c:otherwise>
+                        </c:choose>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-small">
+                        <a class="dropdown-item" href="/userProfile">
+                          <i class="material-icons">&#xE7FD;</i> Profile</a>
+                        <a class="dropdown-item" href="/blog">
+                          <i class="material-icons">vertical_split</i> Blog Posts</a>
+                        <a class="dropdown-item" href="/newPost">
+                          <i class="material-icons">note_add</i> Add New Post</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger" href="/invalidate">
+                          <i class="material-icons text-danger">&#xE879;</i> Logout </a>
+                      </div>
+                    </li>
+                  </c:otherwise>
+                </c:choose>
+
               </ul>
               <nav class="nav">
                 <a href="#" class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left" data-toggle="collapse" data-target=".header-navbar" aria-expanded="false" aria-controls="header-navbar">

@@ -15,6 +15,24 @@ public class User {
     private String email ;
     private int sex ;    //  1:男  2:女
     private int age ;
+    private String securities_account_id ; // 证券账户号码
+    private int role ;          // 角色：操作权限
+
+    public String getSecurities_account_id() {
+        return securities_account_id;
+    }
+
+    public void setSecurities_account_id(String securities_account_id) {
+        this.securities_account_id = securities_account_id;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
 
     public int getUser_id() {
         return user_id;
@@ -77,31 +95,36 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return sex == user.sex &&
+        return user_id == user.user_id &&
+                sex == user.sex &&
                 age == user.age &&
-                Objects.equals(user_id, user.user_id) &&
+                role == user.role &&
                 Objects.equals(telephone, user.telephone) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(nickname, user.nickname) &&
-                Objects.equals(email, user.email);
+                Objects.equals(email, user.email) &&
+                Objects.equals(securities_account_id, user.securities_account_id);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(user_id, telephone, password, nickname, email, sex, age);
+        return Objects.hash(user_id, telephone, password, nickname, email, sex, age, securities_account_id, role);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "user_id='" + user_id + '\'' +
+                "user_id=" + user_id +
                 ", telephone='" + telephone + '\'' +
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 ", sex=" + sex +
                 ", age=" + age +
+                ", securities_account_id='" + securities_account_id + '\'' +
+                ", role=" + role +
                 '}';
     }
+
 }

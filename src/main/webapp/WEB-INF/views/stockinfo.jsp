@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="../../assets/css/highcharts/gui.css">
     <link rel="stylesheet" type="text/css" href="../../assets/css/highcharts/popup.css">
-    <link rel="stylesheet" href="../../assets/css/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap3.min.css">
     <script src="../../assets/js/core/vue.js"></script>
     <script src="../../assets/js/core/vue-resource.js"></script>
     <script src="../../assets/js/core/axios.js"></script>

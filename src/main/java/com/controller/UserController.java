@@ -44,6 +44,7 @@ public class UserController {
     /**
      * 检查登录信息
      */
+//    @SuppressWarnings("all")
     @RequestMapping("dologin")
     public ModelAndView dologin(HttpServletRequest request){
         String telephone = request.getParameter("telephone");
@@ -53,10 +54,14 @@ public class UserController {
         if(user == null || (user.getUser_id() == 0)){
             log.info("登录失败，跳转到登录页面");
             return new ModelAndView("login");
-        }else{
-            log.info("用户:"+user.getTelephone()+" 登陆成功");
+        }else if(user.getRole() == 2){
+            log.info("普通用户:"+user.getTelephone()+" 登陆成功");
             request.getSession().setAttribute("user",user);
             return new ModelAndView("admin/index");
+        }else{
+            log.info("管理员："+user.getTelephone()+"登录成功");
+            request.getSession().setAttribute("user",user);
+            return new ModelAndView("admin/superadmin");
         }
     }
 

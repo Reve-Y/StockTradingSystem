@@ -17,7 +17,7 @@
     <!-- CSS Files -->
     <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
-    <!-- CSS Just for demo purpose, don't include it in your project -->
+
     <link href="../../assets/css/login/demo.css" rel="stylesheet" />
     <%--<script src="../../js/common.js" type="text/javascript"></script>--%>
 </head>
@@ -52,7 +52,7 @@
 </nav>
 <!-- End Navbar -->
 <div class="page-header clear-filter" filter-color="orange">
-    <div class="page-header-image" style="background-image:url(../../assets/img/loginpage/login.jpg)"></div>
+    <div class="page-header-image" style="background-image:url(../../assets/img/loginpage/bg11.jpg)"></div>
     <div class="content">
         <div class="container">
             <div class="col-md-4 ml-auto mr-auto">
