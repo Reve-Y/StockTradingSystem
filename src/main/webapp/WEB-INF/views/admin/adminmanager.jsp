@@ -225,7 +225,7 @@
             <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/superadmin">Home</a>
+                        <a class="nav-link" href="/start">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>

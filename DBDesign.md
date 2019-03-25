@@ -11,11 +11,11 @@
 * 邮箱  email  varchar(30)                
 * 性别 sex number(1)                      
 * 年龄 age number(3)    
-* 证券账户号码     securities_account_id    varchar(20)
+* 证券账户号码     securities_account_id    varchar(12)
 * 用户权限  role  number(1)                 1 代表管理员  2 代表普通用户                  
 
 #### 2. tSecuritiesAccount 证券账户信息表    
-* 证券账户号码：     securities_account_id      varchar(20)  主键  非空 
+* 证券账户号码：     securities_account_id      varchar(12)  主键  非空 
 * 开户日期：         open_date                  varchar(8)    
 * 开户证券公司       securities_company_name    varchar(30) 
 * 资金账户id        account_id                  number(8)
@@ -24,15 +24,16 @@
 * 资金账户序号       account_id             number(8) 主键 
 * 开户行            bank_name              varchar(30) 
 * 银行卡号           bank_card_number       varchar(20) 
-* 冻结金额          frozen_balance          number(10) 
-* 账户余额          account_balance         number(10)
-* 可用余额          enable_balance          number(10)  
+* 冻结金额          frozen_balance          number(16,4) 
+* 账户余额          account_balance         number(16,4)
+* 可用余额          enable_balance          number(16,4)  
 
-#### 4. tStockHolderInfo  某一证券账户持仓信息表   
-* 证券账户号码：     securities_account_id      varchar(20)  主键  非空 
-* 证券id：          stock_code                 number(6)
+#### 4. tHoldings  某一证券账户持仓信息表   
+* 证券账户号码：     securities_account_id      varchar(12)  主键  非空 
+* 证券id：          stock_code                 number(8)
 * 证券名称          stock_name                  varchar(40)
 * 持有数量          hold_amount                 number(12)
+* 买入时价格        buy_price                   number(16,8)
 
 #### 5. tStockInfo 证券信息表   
 * 证券代码：     stock_code                  number(6)
@@ -72,10 +73,10 @@
 * 成交量         deal_amount                    number(16)
 
 #### 6. tInstruction 委托指令表   
-* 指令序号    instruction_no               number(10)      primary key 
-* 日期        date                         varchar(20)
-* 证券账户号码 securities_account_id        varchar(20)   
-* 证券代码    stock_code                    number(6)       
+* 指令序号    instruction_no               varchar(10)      primary key 
+* 日期        entrust_date                 varchar(20)
+* 证券账户号码 securities_account_id        varchar(12)   
+* 证券代码    stock_code                    number(8)       
 * 委托方向    entrust_direction             number(1)       1.买入    2.卖出
-* 委托数量    entrust_amount                number(8)       
+* 交易数量    entrust_amount                number(8)       
 * 委托价格    entrust_price                 number(16,8)    
