@@ -83,9 +83,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/errors">
-                  <i class="material-icons">error</i>
-                  <span>Errors</span>
+                <a class="nav-link" href="/createAccount">
+                  <i class="material-icons">edit</i>
+                  <span>Create Account</span>
                 </a>
               </li>
             </ul>

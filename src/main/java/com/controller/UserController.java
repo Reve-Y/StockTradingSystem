@@ -18,7 +18,7 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 注册，完成后默认直接登录，并跳转到首页
+     * 注册，完成后默认直接登录，并跳转到后台管理页面
      */
     @RequestMapping("doregist")
     public ModelAndView doregist(HttpServletRequest request){
@@ -26,11 +26,6 @@ public class UserController {
         User user = new User();
         user.setTelephone(request.getParameter("telephone"));
         user.setPassword(request.getParameter("password"));
-        user.setEmail(request.getParameter("email"));
-        user.setNickname(request.getParameter("nickname"));
-        String age = request.getParameter("age");
-        user.setAge((age=="") ? 0 : Integer.parseInt(age));
-        user.setSex(Integer.parseInt(request.getParameter("sex")));
         log.info("获取完成. 请求注册的user信息为："+user.toString());
         int flag = userService.addUser(user);
         if(flag == 1){
@@ -74,4 +69,14 @@ public class UserController {
         log.info("用户已注销...");
         return new ModelAndView("login");
     }
+
+    /**
+     *  更新用户信息
+     */
+    @RequestMapping("updateUserInfo")
+    public ModelAndView updateUserInfo(HttpServletRequest request){
+        // code here
+        return new ModelAndView("admin/index");
+    }
+
 }

@@ -127,4 +127,10 @@ public class User {
                 '}';
     }
 
+    public User() {
+        this.nickname = "";
+        this.email = "";
+        this.sex = 0;
+        this.age = 18;
+    }
 }

@@ -7,8 +7,10 @@ public class CapitalAccount {
 
     private int account_id ;          //  资金账号号码
     private String bank_name;         //  存管银行
-    private String bank_card_number;  //  银行卡号
-    private long account_balance;     //  余额
+    private String bank_card_number ;  //  银行卡号
+    private float account_balance ;     //  账户余额
+    private float frozen_balance ;    //  冻结金额
+    private float enable_balance ;    //  可用余额
 
     public int getAccount_id() {
         return account_id;
@@ -34,12 +36,28 @@ public class CapitalAccount {
         this.bank_card_number = bank_card_number;
     }
 
-    public long getAccount_balance() {
+    public float getAccount_balance() {
         return account_balance;
     }
 
-    public void setAccount_balance(long account_balance) {
+    public void setAccount_balance(float account_balance) {
         this.account_balance = account_balance;
+    }
+
+    public float getFrozen_balance() {
+        return frozen_balance;
+    }
+
+    public void setFrozen_balance(float frozen_balance) {
+        this.frozen_balance = frozen_balance;
+    }
+
+    public float getEnable_balance() {
+        return enable_balance;
+    }
+
+    public void setEnable_balance(float enable_balance) {
+        this.enable_balance = enable_balance;
     }
 
     @Override
@@ -49,6 +67,8 @@ public class CapitalAccount {
                 ", bank_name='" + bank_name + '\'' +
                 ", bank_card_number='" + bank_card_number + '\'' +
                 ", account_balance=" + account_balance +
+                ", frozen_balance=" + frozen_balance +
+                ", enable_balance=" + enable_balance +
                 '}';
     }
 }

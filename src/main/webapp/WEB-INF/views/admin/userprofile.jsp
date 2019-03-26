@@ -82,9 +82,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/errors">
-                  <i class="material-icons">error</i>
-                  <span>Errors</span>
+                <a class="nav-link" href="/createAccount">
+                  <i class="material-icons">edit</i>
+                  <span>Create Account</span>
                 </a>
               </li>
             </ul>
@@ -193,12 +193,7 @@
             </nav>
           </div>
           <!-- / .main-navbar -->
-          <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-            <i class="fa fa-check mx-2"></i>
-            <strong>Success!</strong> Your profile has been updated! </div>
+
           <div class="main-content-container container-fluid px-4">
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
@@ -215,8 +210,8 @@
                   <div class="card-header border-bottom text-center">
                     <div class="mb-3 mx-auto">
                       <div class="rounded-circle"  alt="User Avatar" width="110"></div> </div>
-                    <h4 class="mb-0">Sierra Brooks</h4>
-                    <span class="text-muted d-block mb-2">Project Manager</span>
+                    <h4 class="mb-0">${user.telephone}</h4>
+                    <span class="text-muted d-block mb-2">${user.nickname}</span>
                     <button type="button" class="mb-2 btn btn-sm btn-pill btn-outline-primary mr-2">
                       <i class="material-icons mr-1">person_add</i>Follow</button>
                   </div>
@@ -233,7 +228,7 @@
                     </li>
                     <li class="list-group-item p-4">
                       <strong class="text-muted d-block mb-2">Description</strong>
-                      <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?</span>
+                      <span> A Handsome Man Or a Beautiful Girl ...</span>
                     </li>
                   </ul>
                 </div>
@@ -247,26 +242,31 @@
                     <li class="list-group-item p-3">
                       <div class="row">
                         <div class="col">
-                          <form>
-                            <div class="form-row">
-                              <div class="form-group col-md-6">
-                                <label for="feFirstName">First Name</label>
-                                <input type="text" class="form-control" id="feFirstName" placeholder="First Name" value="Sierra"> </div>
-                              <div class="form-group col-md-6">
-                                <label for="feLastName">Last Name</label>
-                                <input type="text" class="form-control" id="feLastName" placeholder="Last Name" value="Brooks"> </div>
-                            </div>
-                            <div class="form-row">
-                              <div class="form-group col-md-6">
-                                <label for="feEmailAddress">Email</label>
-                                <input type="email" class="form-control" id="feEmailAddress" placeholder="Email" value="sierra@example.com"> </div>
-                              <div class="form-group col-md-6">
-                                <label for="fePassword">Password</label>
-                                <input type="password" class="form-control" id="fePassword" placeholder="Password"> </div>
-                            </div>
-                            <div class="form-group">
-                              <label for="feInputAddress">Address</label>
-                              <input type="text" class="form-control" id="feInputAddress" placeholder="1234 Main St"> </div>
+                          <form action="/updateUserInfo" method="post" id="form1" @submit="checkForm">
+                              <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                      <label for="email">Email</label>
+                                      <input type="text" class="form-control" id="email" placeholder="Email"
+                                      v-model="email" name="email"> </div>
+                                  <div class="form-group col-md-6">
+                                      <label for="age">age</label>
+                                      <input type="text" class="form-control" id="age" placeholder="18"
+                                      v-model="age" name="age">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="control-label" >性别:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                  <label class="radio-inline">
+                                      <input type="radio" name="sex" checked id="inlineRadio1" value="1"> 男
+                                  </label>
+                                  <label class="radio-inline">
+                                      <input type="radio" name="sex" id="inlineRadio2" value="2"> 女
+                                  </label>
+                              </div>
+                              <div class="form-group">
+                                  <label for="nickname">nickname</label>
+                                  <input type="text" class="form-control" id="nickname" placeholder="tiger" name="nickname">
+                              </div>
                             <div class="form-row">
                               <div class="form-group col-md-6">
                                 <label for="feInputCity">City</label>
@@ -281,12 +281,6 @@
                               <div class="form-group col-md-2">
                                 <label for="inputZip">Zip</label>
                                 <input type="text" class="form-control" id="inputZip"> </div>
-                            </div>
-                            <div class="form-row">
-                              <div class="form-group col-md-12">
-                                <label for="feDescription">Description</label>
-                                <textarea class="form-control" name="feDescription" rows="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio eaque, quidem, commodi soluta qui quae minima obcaecati quod dolorum sint alias, possimus illum assumenda eligendi cumque?</textarea>
-                              </div>
                             </div>
                             <button type="submit" class="btn btn-accent">Update Account</button>
                           </form>
@@ -330,6 +324,9 @@
       </div>
     </div>
 
+    <script src="../../../assets/js/core/vue.js"></script>
+    <script src="../../../assets/js/core/vue-resource.js"></script>
+    <script src="../../../assets/js/core/axios.js"></script>
     <script src="../../../assets/js/core/jquery-3.3.1.js"></script>
     <script src="../../../assets/js/core/popper.min.js" ></script>
     <script src="../../../assets/js/core/bootstrap.js"></script>
@@ -338,5 +335,37 @@
     <script src="../../../assets/js/admin/jquery.sharrre.min.js"></script>
     <script src="../../../assets/js/admin/extras.1.1.0.min.js"></script>
     <script src="../../../assets/js/admin/shards-dashboards.1.1.0.min.js"></script>
+
+  <script type="text/javascript">
+      var app = new Vue({
+          el : "form1",
+          data : {
+              age : 18,
+              email: ''
+          },
+          computed : {
+              ageflag : function () {
+                  return (this.age<140)
+              },
+              emailflag: function () {
+                  var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                  return regex.test(this.email);
+              }
+          },
+          methods : {
+              checkForm : function (e){
+                  if (this.ageflag&&this.emailflag)
+                      return true
+                  else{
+                      if(!this.emailflag)
+                          alert("邮箱格式不正确")
+                      else
+                          alert("年龄输入不合法")
+                      e.preventDefault()
+                  }
+              }
+          }
+      })
+  </script>
   </body>
 </html>

@@ -82,9 +82,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/errors">
-                  <i class="material-icons">error</i>
-                  <span>Errors</span>
+                <a class="nav-link active" href="/createAccount">
+                  <i class="material-icons">edit</i>
+                  <span>Create Account</span>
                 </a>
               </li>
             </ul>
@@ -193,16 +193,21 @@
             </nav>
           </div>
           <!-- / .main-navbar -->
-          <div class="error">
-            <div class="error__content">
-              <h2>500</h2>
-              <h3>Something went wrong!</h3>
-              <p>There was a problem on our end. Please try again later.</p>
-              <button type="button" class="btn btn-accent btn-pill">&larr; Go Back</button>
-            </div>
-            <!-- / .error_content -->
-          </div>
-          <!-- / .error -->
+          <c:choose>
+            <c:when test="${user.securities_account_id == '' || user.securities_account_id == null}">
+
+            </c:when>
+            <c:otherwise>
+              <div class="error">
+                <div class="error__content">
+                  <h2>NO</h2>
+                  <h3>You already have an account!</h3>
+                  <p>One person can only register one account, don't be greedy.</p>
+                  <button type="button" class="btn btn-accent btn-pill">&larr; Go Back</button>
+                </div>
+              </div>
+            </c:otherwise>
+          </c:choose>
         </main>
       </div>
     </div>

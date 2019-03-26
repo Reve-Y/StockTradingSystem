@@ -1,85 +1,132 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: hspcadmin
-  Date: 2019-03-13
-  Time: 17:05
-  To change this template use File | Settings | File Templates.
---%>
-<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html" charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../assets/css/bootstrap3.min.css">
-    <script src="../../assets/js/core/jquery-3.3.1.js"></script>
-    <script src="../../assets/js/core/bootstrap.js"></script>
-    <script src="../../assets/js/core/vue.js"></script>
-    <script src="../../assets/js/core/vue-resource.js"></script>
-    <style type="text/css">
-        .form-inputsize {
-            width: 320px;
-        }
-    </style>
-    <title>注册</title>
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/loginpage/favicon.png">
+    <link rel="icon" type="image/png" href="../../assets/img/loginpage/favicon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        注册
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="../../assets/css/google-font-family.css" rel="stylesheet">
+    <link href="../../assets/css/font-awesome.css" rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
+
+    <link href="../../assets/css/login/demo.css" rel="stylesheet" />
+    <%--<script src="../../js/common.js" type="text/javascript"></script>--%>
 </head>
-<body>
-<%@include file="navbar.jsp" %>
-<div class="d1"  style="margin-left:523px">
-    <h2>注册：</h2><br>
-    <form action="/doregist" method="post" id="form1" @submit="checkForm" >
-        <div class="form-group form-inputsize" :class="[telflag ? 'has-success' : 'has-error']" >
-            <label class="control-label" for="telephone">手机号</label>
-            <input type="text" class="form-control" id="telephone" v-model="telephone"
-                   name="telephone" aria-describedby="helpBlock2" >
+<body class="login-page sidebar-collapse">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
+    <div class="container">
+
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="#" rel="tooltip" title="" data-placement="bottom" target="_blank">
+                Stock Trade System
+            </a>
+            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar top-bar"></span>
+                <span class="navbar-toggler-bar middle-bar"></span>
+                <span class="navbar-toggler-bar bottom-bar"></span>
+            </button>
         </div>
-        <div class="form-group form-inputsize" :class="[passflag ? 'has-success' : 'has-error']">
-            <label class="control-label" for="password">密码</label>
-            <input type="password" class="form-control" name="password"
-                   v-model="password" id="password">
-            <span id="helpBlock2" class="help-block">密码6-15位,由数字和字母组成，且由字母开头</span>
+        <div class="collapse navbar-collapse justify-content-end" id="navigation" data-nav-image="../../assets/img/loginpage/blurred-image-1.jpg">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/start">Back to Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/registerPage">Want Regist?</a>
+                </li>
+
+            </ul>
         </div>
-        <div class="form-group form-inputsize" :class="[chekpassflag ? 'has-success' : 'has-error']">
-            <label class="control-label" for="check_password">确认密码</label>
-            <input type="password" class="form-control" id="check_password"
-                   v-model="checkpassword" name="check_password">
+    </div>
+</nav>
+<!-- End Navbar -->
+<div class="page-header clear-filter" filter-color="orange">
+    <div class="page-header-image" style="background-image:url(../../assets/img/loginpage/bg7.jpg)"></div>
+    <div class="content">
+        <div class="container">
+            <div class="col-md-4 ml-auto mr-auto">
+                <div class="card card-login card-plain">
+                    <form action="/doregist" method="POST" id="form1" @submit="checkForm" >
+                        <h3>Input Information :</h3>
+                        <div class="card-header text-center">
+                            <!-- <div class="logo-container"> -->
+                            <!-- <img src="../../assets/img/loginpage/now-logo.png" alt=""> -->
+                            <!-- </div> -->
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group no-border input-lg" >
+                                <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                        <i class="now-ui-icons users_circle-08"></i>
+                                      </span>
+                                </div>
+                                <input type="text" class="form-control" id="telephone" v-model="telephone"
+                                       name="telephone" placeholder="Telephone...">
+                            </div>
+                            <div class="input-group no-border input-lg" >
+                                <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                        <i class="now-ui-icons text_caps-small"></i>
+                                      </span>
+                                </div>
+                                <input type="password" placeholder="Password... 6~15 and start with letter"  name="password"
+                                       v-model="password" id="password" class="form-control" />
+                            </div>
+                            <div class="input-group no-border input-lg" >
+                                <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                        <i class="now-ui-icons text_caps-small"></i>
+                                      </span>
+                                </div>
+                                <input type="password" placeholder="Repeat Password..."  name="checkpassword"
+                                       v-model="checkpassword" id="checkpassword" class="form-control" />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-round btn-lg btn-block " :class="[btnflag ? 'btn-neutral':'btn-default']">Confirm And Create Account </button>
+                        <div class="pull-left">
+                            <h6>
+                                <a href="/login" class="link">Go Back Login</a>
+                            </h6>
+                        </div>
+                        <div class="pull-right">
+                            <h6>
+                                <a href="/help" class="link">Need Help?</a>
+                            </h6>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group form-inputsize" :class="[emailflag ? 'has-success' : 'has-error']">
-            <label class="control-label" for="email">邮箱</label>
-            <input type="text" class="form-control" id="email" name="email" v-model="email" >
-        </div>
-        <div class="form-group form-inputsize has-success" >
-            <label class="control-label" for="nickname">昵称</label>
-            <input type="text" class="form-control" id="nickname" name="nickname"
-                   v-model="nickname" >
-        </div>
-        <div class="form-group has-success" >
-            <label class="control-label" >性别:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <label class="radio-inline">
-                <input type="radio" name="sex" checked id="inlineRadio1" value="1"> 男
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="sex" id="inlineRadio2" value="2"> 女
-            </label>
-        </div>
-        <div class="form-group form-inputsize" :class="[ageflag ? 'has-success' : 'has-error']">
-            <label class="control-label" for="age">年龄</label>
-            <input type="text" class="form-control" id="age" v-model="age" name="age">
-        </div>
-        <button type="submit" class="btn btn-lg " :class="[btnflag ? 'btn-success':'btn-danger']">确认注册</button>
-    </form>
+    </div>
 </div>
+
+</div>
+
+<script src="../../assets/js/core/vue.js"></script>
+<script src="../../assets/js/core/jquery.min.js"></script>
+<script src="../../assets/js/core/popper.min.js"></script>
+<script src="../../assets/js/core/bootstrap.min.js"></script>
+<script src="../../assets/js/plugins/bootstrap-switch.js"></script>
+<script src="../../assets/js/plugins/nouislider.min.js"></script>
+<script src="../../assets/js/plugins/bootstrap-datepicker.js"></script>
+<script src="../../assets/js/now-ui-kit.js?v=1.2.0"></script>
+
 <script type="text/javascript">
     var app = new Vue({
         el : "#form1",
         data : {
             telephone:'',
             password:'',
-            checkpassword:'',
-            email:'',
-            nickname:'',
-            age:''
+            checkpassword:''
         },
         computed : {
             telflag : function () {
@@ -90,33 +137,23 @@
                 var regex = /[a-zA-Z][a-zA-Z0-9]{5,14}$/
                 return regex.test(this.password)
             },
-            chekpassflag: function () {
-                if(this.password=='')
-                    return false;
-                return (this.checkpassword==this.password)
-            },
-            emailflag: function () {
-                if(this.email=='')
-                    return true;
-                var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return regex.test(this.email);
-            },
-            ageflag: function () {
-                return(this.age<140)   //  不能活过140吧
+            checkpassflag : function () {
+                return (this.password == this.checkpassword)
             },
             btnflag: function () {
-                return this.telflag&&this.ageflag&&this.passflag&&this.chekpassflag&&this.emailflag
+                return this.telflag&&this.passflag&&this.checkpassflag
             }
         } ,
         methods : {
             checkForm : function (e){
-                if (this.telflag&&this.ageflag&&this.passflag&&this.chekpassflag&&this.emailflag)
+                if (this.telflag&&this.passflag&&this.checkpassflag)
                     return true
-                e.preventDefault()
+                else
+                    e.preventDefault()
             }
         }
     })
 </script>
-<%--<%@include file="footer.jsp" %>--%>
 </body>
+
 </html>

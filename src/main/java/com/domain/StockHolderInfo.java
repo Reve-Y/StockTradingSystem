@@ -9,6 +9,15 @@ public class StockHolderInfo {
     private int stock_code ;                 // 股票代码
     private String stock_name ;              // 股票名称
     private long hold_amount ;               // 持仓数量
+    private float buy_price ;                // 买入时价格
+
+    public float getBuy_price() {
+        return buy_price;
+    }
+
+    public void setBuy_price(float buy_price) {
+        this.buy_price = buy_price;
+    }
 
     public String getSecurities_account_id() {
         return securities_account_id;
@@ -49,6 +58,7 @@ public class StockHolderInfo {
                 ", stock_code=" + stock_code +
                 ", stock_name='" + stock_name + '\'' +
                 ", hold_amount=" + hold_amount +
+                ", buy_price=" + buy_price +
                 '}';
     }
 }

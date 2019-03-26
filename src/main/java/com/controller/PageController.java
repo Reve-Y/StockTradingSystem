@@ -61,10 +61,10 @@ public class PageController {
         return new ModelAndView("admin/blog");
     }
 
-    // admin/errors 页面
-    @RequestMapping("errors")
+    // admin/create 页面
+    @RequestMapping("createAccount")
     public ModelAndView toErrorsPage(){
-        return new ModelAndView("admin/errors");
+        return new ModelAndView("admin/create");
     }
 
     // 后台管理 表格页面
