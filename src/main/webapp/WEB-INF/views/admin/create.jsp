@@ -193,111 +193,152 @@
             </nav>
           </div>
           <!-- / .main-navbar -->
-          <c:choose>
-            <c:when test="${user.securities_account_id == '' || user.securities_account_id == null}">
-                <!-- 开户  -->
-                <div class="main-content-container container-fluid px-4">
-                    <!-- Page Header -->
-                    <div class="page-header row no-gutters py-4">
-                        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                            <span class="text-uppercase page-subtitle">Overview</span>
-                            <h3 class="page-title">Create Account </h3>
+            <c:choose>
+                <c:when test="${empty user}">
+                    <div class="error">
+                        <div class="error__content">
+                            <h2>Woops...</h2>
+                            <h3>You have not logged in yet</h3>
+                            <p>Please login to open this page</p>
+                            <button type="button" class="btn btn-accent btn-pill">&larr; Go Back</button>
                         </div>
                     </div>
-                    <!-- End Page Header -->
-                    <!-- Default Light Table -->
-                    <form action="/openaccount" id="form1" method="post" @submit="checkForm">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="card card-small mb-4">
-                                    <div class="card-header border-bottom">
-                                        <h6 class="m-0">Securities Account </h6>
+                </c:when>
+                <c:otherwise>
+                    <c:choose>
+                        <c:when test="${user.securities_account_id == '' || user.securities_account_id == null}">
+                            <!-- 开户  -->
+                            <div class="main-content-container container-fluid px-4">
+                                <!-- Page Header -->
+                                <div class="page-header row no-gutters py-4">
+                                    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                                        <span class="text-uppercase page-subtitle">Overview</span>
+                                        <h3 class="page-title">Create Account </h3>
                                     </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item p-3">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label for="securities">证券账户号码</label>
-                                                        <input type="text" class="form-control" id="securities" name="securities"
-                                                               v-model="securities" placeholder="10 characters beginning with A">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="opendate">开户日期</label>
-                                                        <input type="text" class="form-control" id="opendate" name="opendate"
-                                                               v-model="opendate" placeholder="today">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="company">证券公司</label>
-                                                        <input type="text" class="form-control" id="company" name="company"
-                                                               v-model="company" placeholder="Company name">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="capital1">资金账号</label>
-                                                        <input type="text" class="form-control" id="capital1" name="capital1"
-                                                               v-model="capital" placeholder="capital account">
-                                                    </div>
-                                                    <button type="button" class="btn btn-primary" @click="autoSecurity">Automatic generated</button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="card card-small mb-4">
-                                    <div class="card-header border-bottom">
-                                        <h6 class="m-0">Capital Account </h6>
+                                <!-- End Page Header -->
+                                <!-- Default Light Table -->
+                                <form action="/openaccount" id="form1" method="post" @submit="checkForm">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="card card-small mb-4">
+                                                <div class="card-header border-bottom">
+                                                    <h6 class="m-0">Securities Account </h6>
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item p-3">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="securities">证券账户号码</label>
+                                                                    <input type="text" class="form-control" id="securities" name="securities"
+                                                                           v-model="securities" placeholder="10 characters beginning with A">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="opendate">开户日期</label>
+                                                                    <input type="text" class="form-control" id="opendate" name="opendate"
+                                                                           v-model="opendate" placeholder="today">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="company">证券公司</label>
+                                                                    <input type="text" class="form-control" id="company" name="company"
+                                                                           v-model="company" placeholder="Company name">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="capital1">资金账号</label>
+                                                                    <input type="text" class="form-control" id="capital1" name="capital1"
+                                                                           v-model="capital" placeholder="capital account">
+                                                                </div>
+                                                                <button type="button" class="btn btn-primary" @click="autoSecurity">Automatic generated</button>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card card-small mb-4">
+                                                <div class="card-header border-bottom">
+                                                    <h6 class="m-0">Capital Account </h6>
+                                                </div>
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item p-3">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label for="capital2">资金账户号码</label>
+                                                                    <input type="text" class="form-control" id="capital2" name="capital2"
+                                                                           v-model="capital" placeholder="capital account">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="bank">开户行</label>
+                                                                    <input type="text" class="form-control" id="bank" name="bank"
+                                                                           v-model="bank" placeholder="China bank">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="bankcard">银行卡号</label>
+                                                                    <input type="text" class="form-control" id="bankcard" name="bankcard"
+                                                                           v-model="bankcard" placeholder="bank card number">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="balance">初始余额</label>
+                                                                    <input type="text" class="form-control" id="balance" name="balance"
+                                                                           v-model="balance" placeholder="0.00">
+                                                                </div>
+                                                                <button type="button" class="btn btn-primary" @click="autoCapital">Automatic generated</button>
+                                                                <button type="submit" class="btn btn-accent">Create Account</button>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item p-3">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="form-group">
-                                                        <label for="capital2">资金账户号码</label>
-                                                        <input type="text" class="form-control" id="capital2" name="capital2"
-                                                               v-model="capital" placeholder="capital account">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="bank">开户行</label>
-                                                        <input type="text" class="form-control" id="bank" name="bank"
-                                                               v-model="bank" placeholder="China bank">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="bankcard">银行卡号</label>
-                                                        <input type="text" class="form-control" id="bankcard" name="bankcard"
-                                                               v-model="bankcard" placeholder="bank card number">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="balance">初始余额</label>
-                                                        <input type="text" class="form-control" id="balance" name="balance"
-                                                               v-model="balance" placeholder="0.00">
-                                                    </div>
-                                                    <button type="button" class="btn btn-primary" @click="autoCapital">Automatic generated</button>
-                                                    <button type="submit" class="btn btn-accent">Create Account</button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                </form>
+                                <!-- End Default Light Table -->
                             </div>
-                        </div>
-                    </form>
-                    <!-- End Default Light Table -->
-                </div>
-                <!-- 开户结束 -->
-            </c:when>
-            <c:otherwise>
-              <div class="error">
-                <div class="error__content">
-                  <h2>NO</h2>
-                  <h3>You already have an account!</h3>
-                  <p>One person can only register one account, don't be greedy.</p>
-                  <button type="button" class="btn btn-accent btn-pill">&larr; Go Back</button>
-                </div>
-              </div>
-            </c:otherwise>
-          </c:choose>
+                            <!-- 开户结束 -->
+                        </c:when>
+                        <c:otherwise>
+                          <div class="error">
+                            <div class="error__content">
+                              <h2>NO</h2>
+                              <h3>You already have an account!</h3>
+                              <p>One person can only register one account, don't be greedy.</p>
+                              <button type="button" class="btn btn-accent btn-pill">&larr; Go Back</button>
+                            </div>
+                          </div>
+                        </c:otherwise>
+                    </c:choose>
+                </c:otherwise>
+            </c:choose>
+            <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/stockinfo">StockInfo</a>
+                    </li>
+                    <c:if test="${empty user}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registerPage">Regist</a>
+                        </li>
+                    </c:if>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/help">Help</a>
+                    </li>
+                </ul>
+                <span class="copyright ml-auto my-auto mr-2">Copyright © 2019
+              <a href="" rel="nofollow">Reve</a>
+            </span>
+            </footer>
         </main>
       </div>
     </div>
