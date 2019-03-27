@@ -18,10 +18,10 @@
 * 证券账户号码：     securities_account_id      varchar(12)  主键  非空 
 * 开户日期：         open_date                  varchar(8)    
 * 开户证券公司       securities_company_name    varchar(30) 
-* 资金账户id        account_id                  number(8)
+* 资金账户id        account_id                  varchar(12)
 
 #### 3. tCapitalAccount 资金账户表   
-* 资金账户序号       account_id             number(8) 主键 
+* 资金账户序号       account_id             varchar(12) 主键 
 * 开户行            bank_name              varchar(30) 
 * 银行卡号           bank_card_number       varchar(20) 
 * 冻结金额          frozen_balance          number(16,4) 
@@ -30,13 +30,13 @@
 
 #### 4. tHoldings  某一证券账户持仓信息表   
 * 证券账户号码：     securities_account_id      varchar(12)  主键  非空 
-* 证券id：          stock_code                 number(8)
+* 证券代码：         stock_code                 varchar(10)
 * 证券名称          stock_name                  varchar(40)
 * 持有数量          hold_amount                 number(12)
 * 买入时价格        buy_price                   number(16,8)
 
 #### 5. tStockInfo 证券信息表   
-* 证券代码：     stock_code                  number(6)
+* 证券代码：     stock_code                  varchar(10)
 * 证券名称       stock_name                  varchar(40)
 * 所属交易市场   market_name                  varchar(30)
 * 总股本         total_amount                 varchar(16)  
@@ -76,7 +76,7 @@
 * 指令序号    instruction_no               varchar(10)      primary key 
 * 日期        entrust_date                 varchar(20)
 * 证券账户号码 securities_account_id        varchar(12)   
-* 证券代码    stock_code                    number(8)       
+* 证券代码    stock_code                    varchar(10)       
 * 委托方向    entrust_direction             number(1)       1.买入    2.卖出
 * 交易数量    entrust_amount                number(8)       
 * 委托价格    entrust_price                 number(16,8)    

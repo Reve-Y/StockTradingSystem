@@ -3,10 +3,10 @@ package com.domain;
 /**
  * 某一证券账户持仓信息表
  */
-public class StockHolderInfo {
+public class Holdings {
 
     private String securities_account_id ;   // 证券账户号码
-    private int stock_code ;                 // 股票代码
+    private String stock_code ;                 // 股票代码
     private String stock_name ;              // 股票名称
     private long hold_amount ;               // 持仓数量
     private float buy_price ;                // 买入时价格
@@ -27,11 +27,11 @@ public class StockHolderInfo {
         this.securities_account_id = securities_account_id;
     }
 
-    public int getStock_code() {
+    public String getStock_code() {
         return stock_code;
     }
 
-    public void setStock_code(int stock_code) {
+    public void setStock_code(String stock_code) {
         this.stock_code = stock_code;
     }
 

@@ -195,7 +195,97 @@
           <!-- / .main-navbar -->
           <c:choose>
             <c:when test="${user.securities_account_id == '' || user.securities_account_id == null}">
-
+                <!-- 开户  -->
+                <div class="main-content-container container-fluid px-4">
+                    <!-- Page Header -->
+                    <div class="page-header row no-gutters py-4">
+                        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                            <span class="text-uppercase page-subtitle">Overview</span>
+                            <h3 class="page-title">Create Account </h3>
+                        </div>
+                    </div>
+                    <!-- End Page Header -->
+                    <!-- Default Light Table -->
+                    <form action="/openaccount" id="form1" method="post" @submit="checkForm">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="card card-small mb-4">
+                                    <div class="card-header border-bottom">
+                                        <h6 class="m-0">Securities Account </h6>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item p-3">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="securities">证券账户号码</label>
+                                                        <input type="text" class="form-control" id="securities" name="securities"
+                                                               v-model="securities" placeholder="10 characters beginning with A">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="opendate">开户日期</label>
+                                                        <input type="text" class="form-control" id="opendate" name="opendate"
+                                                               v-model="opendate" placeholder="today">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="company">证券公司</label>
+                                                        <input type="text" class="form-control" id="company" name="company"
+                                                               v-model="company" placeholder="Company name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="capital1">资金账号</label>
+                                                        <input type="text" class="form-control" id="capital1" name="capital1"
+                                                               v-model="capital" placeholder="capital account">
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary" @click="autoSecurity">Automatic generated</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card card-small mb-4">
+                                    <div class="card-header border-bottom">
+                                        <h6 class="m-0">Capital Account </h6>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item p-3">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="capital2">资金账户号码</label>
+                                                        <input type="text" class="form-control" id="capital2" name="capital2"
+                                                               v-model="capital" placeholder="capital account">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="bank">开户行</label>
+                                                        <input type="text" class="form-control" id="bank" name="bank"
+                                                               v-model="bank" placeholder="China bank">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="bankcard">银行卡号</label>
+                                                        <input type="text" class="form-control" id="bankcard" name="bankcard"
+                                                               v-model="bankcard" placeholder="bank card number">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="balance">初始余额</label>
+                                                        <input type="text" class="form-control" id="balance" name="balance"
+                                                               v-model="balance" placeholder="0.00">
+                                                    </div>
+                                                    <button type="button" class="btn btn-primary" @click="autoCapital">Automatic generated</button>
+                                                    <button type="submit" class="btn btn-accent">Create Account</button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- End Default Light Table -->
+                </div>
+                <!-- 开户结束 -->
             </c:when>
             <c:otherwise>
               <div class="error">
@@ -211,7 +301,7 @@
         </main>
       </div>
     </div>
-
+    <script src="../../../assets/js/core/vue.js"></script>
     <script src="../../../assets/js/core/jquery-3.3.1.js"></script>
     <script src="../../../assets/js/core/popper.min.js" ></script>
     <script src="../../../assets/js/core/bootstrap.js"></script>
@@ -221,5 +311,55 @@
     <script src="../../../assets/js/admin/extras.1.1.0.min.js"></script>
     <script src="../../../assets/js/admin/shards-dashboards.1.1.0.min.js"></script>
 
+    <script type="text/javascript">
+        var app = new Vue({
+            el : '#form1',
+            data : {
+                securities : '',
+                opendate : '',
+                company : '',
+                capital : '',
+                bank : '',
+                bankcard : '',
+                balance : 0.0
+            },
+            methods : {
+                autoSecurity : function (){
+                    this.securities = 'A'+this.randomNumber(9);   //  生成随机以A开头的证券账号
+                    var year = new Date().getFullYear().toString();
+                    var month = '0'+(new Date().getMonth()+1).toString();
+                    var day = new Date().getDate().toString();
+                    this.opendate = year + month + day;           //  获取字符串格式的日期
+                    this.company = 'Kangge.Inc';                  //  待改进
+                    this.capital = this.randomNumber(8)           //  随机生成9为纯数字串。
+                },
+                autoCapital : function (){
+                    this.bank = 'China Bank'
+                    this.bankcard = '6'+this.randomNumber(14)
+                    this.balance = 100000000.0
+                },
+                checkForm : function (e){
+                    if(this.securities.trim()=='' || this.opendate.trim()=='' || this.company.trim()=='' || this.capital.trim()==''|| this.bank.trim()=='' || this.bankcard.trim()=='' )
+                    {
+                        alert("除初始余额外其余不能为空")
+                        e.preventDefault()
+                    }else{
+                        return true
+                    }
+                },
+                randomNumber : function (number){
+                    //  自动生成数字串,参数number为长度
+                    var arr = new Array;
+                    var arr1 = new Array("0","1","2","3","4","5","6","7","8","9");
+                    for(var i=0;i<number;i++){
+                        var n = Math.floor(Math.random()*10);
+                        arr[i] =arr1[n];
+                    }
+                    val = arr.join("")
+                    return val;
+                }
+            }
+        })
+    </script>
   </body>
 </html>

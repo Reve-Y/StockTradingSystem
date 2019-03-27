@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Reve
-  Date: 2019-03-14
-  Time: 14:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -12,39 +5,26 @@
     <meta http-equiv="content-type" content="text/html" charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/highcharts/gui.css">
-    <link rel="stylesheet" type="text/css" href="../../assets/css/highcharts/popup.css">
+    <title>股票信息与交易</title>
     <link rel="stylesheet" href="../../assets/css/bootstrap3.min.css">
+    <style>
+        #stockinfo {
+            width:99%;
+            height: 280px;
+            margin: 0 auto;
+        }
+    </style>
     <script src="../../assets/js/core/vue.js"></script>
     <script src="../../assets/js/core/vue-resource.js"></script>
     <script src="../../assets/js/core/axios.js"></script>
     <script src="../../assets/js/core/jquery-3.3.1.js"></script>
     <script src="../../assets/js/core/bootstrap.js"></script>
     <script src="../../assets/js/highcharts/highstock.js"></script>
-    <script src="../../assets/js/highcharts/indicators-all.js"></script>
-    <script src="../../assets/js/highcharts/drag-panes.js"></script>
-    <script src="../../assets/js/highcharts/annotations-advanced.js"></script>
-    <script src="../../assets/js/highcharts/price-indicator.js"></script>
-    <script src="../../assets/js/highcharts/full-screen.js"></script>
-    <script src="../../assets/js/highcharts/stock-tools.js"></script>
-
-    <style>
-        #stockinfo {
-            height: 300px;
-            width: 100%
-        }
-        /* Conflict with Bootstrap, not needed after v7.0.1 */
-        .highcharts-bindings-wrapper * {
-            box-sizing: content-box;
-        }
-    </style>
-    <title>股票交易模拟系统首页</title>
+    <script src="../../assets/js/highcharts/sand-signika.js"></script>
 </head>
 <body>
     <%@include file="navbar.jsp"%>
-
     <div id="stockinfo" class="chart">加载中</div>
-    <div id="stock"></div>
     <script>
         var ohlc = []
         var volume = []
@@ -58,7 +38,7 @@
         });
         var chart = null
         var app = new Vue({
-            el:"#stock",
+            el:"#stockinfo",
             created : function () {
                this.getData()
             },
@@ -132,6 +112,5 @@
             }
         })
     </script>
-
 </body>
 </html>

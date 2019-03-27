@@ -75,7 +75,34 @@ public class UserController {
      */
     @RequestMapping("updateUserInfo")
     public ModelAndView updateUserInfo(HttpServletRequest request){
-        // code here
+        String email = request.getParameter("email");
+        int age = 0;
+        if (request.getParameter("age")!="" && request.getParameter("age")!=null)
+            age = Integer.parseInt(request.getParameter("age"));
+        int sex = Integer.parseInt(request.getParameter("sex"));
+        String nickname = request.getParameter("nickname");
+        User user = (User) request.getSession().getAttribute("user");
+        user.setEmail(email);
+        user.setAge(age);
+        user.setSex(sex);
+        user.setNickname(nickname);
+        int flag = userService.updateUserInfo(user);
+        if (flag != 1){
+            log.info("更新用户"+user.getTelephone()+"信息失败...");
+            return new ModelAndView("admin/userprofile");
+        }else {
+            log.info("更新用户"+user.getTelephone()+"信息成功");
+            request.getSession().setAttribute("user",user);
+            return new ModelAndView("admin/index");
+        }
+    }
+
+    /**
+     * 开户
+     */
+    @RequestMapping("/openaccount")
+    public ModelAndView openAccount(HttpServletRequest request){
+        System.out.println("ok");
         return new ModelAndView("admin/index");
     }
 

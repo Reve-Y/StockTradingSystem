@@ -338,7 +338,7 @@
 
   <script type="text/javascript">
       var app = new Vue({
-          el : "form1",
+          el : "#form1",
           data : {
               age : 18,
               email: ''

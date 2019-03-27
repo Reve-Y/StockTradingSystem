@@ -12,4 +12,8 @@
     <select id="login" resultType="com.domain.User">
         SELECT * from tuser WHERE telephone=#{telephone} AND password=#{password}
     </select>
+
+    <update id="updateUserInfo" parameterType="com.domain.User">
+        UPDATE tuser SET nickname=#{nickname},email=#{email},sex=#{sex},age=#{age} WHERE telephone=#{telephone}
+    </update>
 </mapper>

@@ -32,4 +32,10 @@ public class UserServiceImpl implements UserService{
         return userDao.login(telephone,password);
     }
 
+    @Override
+    public int updateUserInfo(User user) {
+        log.info("开始更新用户："+user.getTelephone()+" 信息...");
+        return userDao.updateUserInfo(user);
+    }
+
 }

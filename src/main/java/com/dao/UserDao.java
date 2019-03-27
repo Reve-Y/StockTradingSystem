@@ -9,4 +9,5 @@ public interface UserDao {
 
     public User login(@Param("telephone")String telephone,@Param("password")String password);
 
+    int updateUserInfo(User user);
 }
