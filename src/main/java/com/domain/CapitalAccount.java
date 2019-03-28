@@ -8,9 +8,10 @@ public class CapitalAccount {
     private String account_id ;          //  资金账号号码
     private String bank_name;         //  存管银行
     private String bank_card_number ;  //  银行卡号
-    private float account_balance ;     //  账户余额
     private float frozen_balance ;    //  冻结金额
+    private float account_balance ;     //  账户余额
     private float enable_balance ;    //  可用余额
+
 
     public String getAccount_id() {
         return account_id;

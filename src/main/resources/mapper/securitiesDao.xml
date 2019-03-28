@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.SecuritiesDao">
+    <insert id="insertOneRecord" parameterType="com.domain.SecuritiesAccount">
+        INSERT into tsecuritiesaccount
+          VALUES (#{securities_account_id},#{open_date},#{securities_company_name},#{account_id})
+    </insert>
+</mapper>

@@ -1,5 +1,7 @@
 package com.controller;
 
+import com.domain.CapitalAccount;
+import com.domain.SecuritiesAccount;
 import com.domain.User;
 import com.service.interfaces.UserService;
 import org.apache.log4j.Logger;
@@ -51,6 +53,7 @@ public class UserController {
             return new ModelAndView("login");
         }else if(user.getRole() == 2){
             log.info("普通用户:"+user.getTelephone()+" 登陆成功");
+            request.getSession().setAttribute("logintel",telephone);
             request.getSession().setAttribute("user",user);
             return new ModelAndView("admin/index");
         }else{
@@ -65,8 +68,9 @@ public class UserController {
      */
     @RequestMapping("invalidate")
     public ModelAndView logoff(HttpServletRequest request){
+        String usertel = (String) request.getSession().getAttribute("logintel");
         request.getSession().invalidate();
-        log.info("用户已注销...");
+        log.info("用户"+usertel+"已注销...");
         return new ModelAndView("login");
     }
 
@@ -102,8 +106,28 @@ public class UserController {
      */
     @RequestMapping("/openaccount")
     public ModelAndView openAccount(HttpServletRequest request){
-        System.out.println("ok");
-        return new ModelAndView("admin/index");
+        String telephone = (String) request.getSession().getAttribute("logintel");
+        SecuritiesAccount sa = new SecuritiesAccount();
+        CapitalAccount ca = new CapitalAccount();
+        sa.setSecurities_account_id(request.getParameter("securities"));
+        sa.setSecurities_company_name(request.getParameter("company"));
+        sa.setOpen_date(request.getParameter("opendate"));
+        sa.setAccount_id(request.getParameter("capital1"));
+        ca.setAccount_id(request.getParameter("capital1"));
+        ca.setBank_name(request.getParameter("bank"));
+        ca.setBank_card_number(request.getParameter("bankcard"));
+        ca.setAccount_balance(Float.parseFloat(request.getParameter("balance")));
+        log.info("用户"+telephone+"开始开户");
+        log.info("证券账户信息为： "+sa.toString());
+        log.info("资金账户信息为： "+ca.toString());
+        int flag = userService.openAccount(telephone,sa,ca);
+        if (flag == 3) {
+            log.info("用户"+telephone+"开户成功...");
+            return new ModelAndView("admin/holdings");
+        }else{
+            log.info("用户"+telephone+"开户失败...");
+            return new ModelAndView("admin/create");
+        }
     }
 
 }

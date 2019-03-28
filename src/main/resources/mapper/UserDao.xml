@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dao.UserDao">
     <insert id="addUser" parameterType="com.domain.User">
         INSERT into tuser
-          values(ai.nextval,#{telephone},#{password},#{nickname},#{email},#{sex},#{age},NULL,2)
+        values(ai.nextval,#{telephone},#{password},#{nickname},#{email},#{sex},#{age},NULL,2)
     </insert>
 
     <select id="login" resultType="com.domain.User">
@@ -14,6 +14,12 @@
     </select>
 
     <update id="updateUserInfo" parameterType="com.domain.User">
-        UPDATE tuser SET nickname=#{nickname},email=#{email},sex=#{sex},age=#{age} WHERE telephone=#{telephone}
+        UPDATE tuser SET nickname=#{nickname},email=#{email},sex=#{sex},age=#{age}
+        WHERE telephone=#{telephone}
+    </update>
+
+    <update id="updateUserSecuritiesAccount">
+        UPDATE tuser SET securities_account_id=#{securities_account_id}
+         WHERE telephone=#{telephone}
     </update>
 </mapper>

@@ -104,41 +104,6 @@
                   <input class="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search"> </div>
               </form>
               <ul class="navbar-nav border-left flex-row ">
-                <li class="nav-item border-right dropdown notifications">
-                  <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="nav-link-icon__wrapper">
-                      <i class="material-icons">&#xE7F4;</i>
-                      <span class="badge badge-pill badge-danger">2</span>
-                    </div>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">
-                      <div class="notification__icon-wrapper">
-                        <div class="notification__icon">
-                          <i class="material-icons">&#xE6E1;</i>
-                        </div>
-                      </div>
-                      <div class="notification__content">
-                        <span class="notification__category">Analytics</span>
-                        <p>Your website’s active users count increased by
-                          <span class="text-success text-semibold">28%</span> in the last week. Great job!</p>
-                      </div>
-                    </a>
-                    <a class="dropdown-item" href="#">
-                      <div class="notification__icon-wrapper">
-                        <div class="notification__icon">
-                          <i class="material-icons">&#xE8D1;</i>
-                        </div>
-                      </div>
-                      <div class="notification__content">
-                        <span class="notification__category">Sales</span>
-                        <p>Last week your store’s sales count decreased by
-                          <span class="text-danger text-semibold">5.52%</span>. It could have been worse!</p>
-                      </div>
-                    </a>
-                    <a class="dropdown-item notification__all text-center" href="#"> View all Notifications </a>
-                  </div>
-                </li>
                   <c:choose>
                       <c:when test="${empty user}">
                           <li class="nav-item border-right dropdown notifications">
@@ -196,8 +161,8 @@
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
               <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <span class="text-uppercase page-subtitle">Dashboard</span>
-                <h3 class="page-title">Blog Overview</h3>
+                <span class="text-uppercase page-subtitle">Overview</span>
+                <h3 class="page-title">Your infomation</h3>
               </div>
             </div>
             <!-- End Page Header -->
@@ -285,63 +250,41 @@
               </div>
             </div>
             <!-- End Small Stats Blocks -->
-            <div class="row">
-              <!-- Users Stats -->
-              <div class="col-lg-8 col-md-12 col-sm-12 mb-4">
-                <div class="card card-small">
-                  <div class="card-header border-bottom">
-                    <h6 class="m-0">Users</h6>
-                  </div>
-                  <div class="card-body pt-0">
-                    <div class="row border-bottom py-2 bg-light">
-                      <div class="col-12 col-sm-6">
-                        <div id="blog-overview-date-range" class="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0" style="max-width: 350px;">
-                          <input type="text" class="input-sm form-control" name="start" placeholder="Start Date" id="blog-overview-date-range-1">
-                          <input type="text" class="input-sm form-control" name="end" placeholder="End Date" id="blog-overview-date-range-2">
-                          <span class="input-group-append">
-                            <span class="input-group-text">
-                              <i class="material-icons"></i>
-                            </span>
-                          </span>
-                        </div>
+              <!-- Default Light Table -->
+              <div class="row">
+                  <div class="col">
+                      <div class="card card-small mb-4">
+                          <div class="card-header border-bottom">
+                              <h6 class="m-0">Active Users</h6>
+                          </div>
+                          <div class="card-body p-0 pb-3 text-center">
+                              <table class="table mb-0">
+                                  <thead class="bg-light">
+                                  <tr>
+                                      <th scope="col" class="border-0">#</th>
+                                      <th scope="col" class="border-0">First Name</th>
+                                      <th scope="col" class="border-0">Last Name</th>
+                                      <th scope="col" class="border-0">Country</th>
+                                      <th scope="col" class="border-0">City</th>
+                                      <th scope="col" class="border-0">Phone</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr>
+                                      <td>1</td>
+                                      <td>Ali</td>
+                                      <td>Kerry</td>
+                                      <td>Russian Federation</td>
+                                      <td>Gdańsk</td>
+                                      <td>107-0339</td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
                       </div>
-                      <div class="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
-                        <button type="button" class="btn btn-sm btn-white ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">View Full Report &rarr;</button>
-                      </div>
-                    </div>
-                    <canvas height="130" style="max-width: 100% !important;" class="blog-overview-users"></canvas>
                   </div>
-                </div>
               </div>
-              <!-- End Users Stats -->
-              <!-- Users By Device Stats -->
-              <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                <div class="card card-small h-100">
-                  <div class="card-header border-bottom">
-                    <h6 class="m-0">Users by device</h6>
-                  </div>
-                  <div class="card-body d-flex py-0">
-                    <canvas height="220" class="blog-users-by-device m-auto"></canvas>
-                  </div>
-                  <div class="card-footer border-top">
-                    <div class="row">
-                      <div class="col">
-                        <select class="custom-select custom-select-sm" style="max-width: 130px;">
-                          <option selected>Last Week</option>
-                          <option value="1">Today</option>
-                          <option value="2">Last Month</option>
-                          <option value="3">Last Year</option>
-                        </select>
-                      </div>
-                      <div class="col text-right view-report">
-                        <a href="#">Full report &rarr;</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- End Users By Device Stats -->
-              </div>
+              <!-- End Default Light Table -->
             
           </div>
           <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
