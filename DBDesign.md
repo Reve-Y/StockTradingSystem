@@ -32,7 +32,8 @@
 * 证券账户号码：     securities_account_id      varchar(12)  主键  非空 
 * 证券代码：         stock_code                 varchar(10)
 * 证券名称          stock_name                  varchar(40)
-* 持有数量          hold_amount                 number(12)
+* 当前持有数量       hold_amount                 number(12)
+* 冻结数量          frozen_amount                 number(12)
 * 买入时价格        buy_price                   number(16,8)
 
 #### 5. tStockInfo 证券信息表   
