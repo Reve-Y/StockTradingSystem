@@ -73,7 +73,7 @@
 * 卖五数量       sale_amount5                   number(8)
 * 成交量         deal_amount                    number(16)
 
-#### 6. tInstruction 委托指令表   
+#### 6. tCurrentEntrust 委托指令表   
 * 指令序号    instruction_no               varchar(10)      primary key 
 * 日期        entrust_date                 varchar(20)
 * 证券账户号码 securities_account_id        varchar(12)   
@@ -81,3 +81,7 @@
 * 委托方向    entrust_direction             number(1)       1.买入    2.卖出
 * 交易数量    entrust_amount                number(8)       
 * 委托价格    entrust_price                 number(16,8)    
+
+#### 7. tHistoryEntrust 历史委托表（包含所有委托）
+
+#### 8. tRealDeal 成交信息表 
