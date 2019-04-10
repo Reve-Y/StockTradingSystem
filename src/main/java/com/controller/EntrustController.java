@@ -4,6 +4,7 @@ import com.domain.CurrentEntrust;
 import com.domain.User;
 import com.service.interfaces.EntrustService;
 import com.util.DateUtils;
+import com.util.UUIDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class EntrustController {
         ce.setEntrust_amount(entrustAmount);
         ce.setEntrust_price(entrustPrice);
         ce.setAmount_money(amountOfMoney);
+        ce.setEntrust_key(UUIDUtils.getUUID());
         int flag = 0;
         flag = entrustService.normalEntrust(ce);
         return flag;

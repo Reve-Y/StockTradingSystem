@@ -12,6 +12,7 @@ public class CurrentEntrust {
     private long entrust_amount;      //  委托数量
     private float entrust_price;        //  委托价格
     private float amount_money;         //  委托总金额
+    private String entrust_key;          //  该笔委托的唯一标识字符串
 
     public String getEntrust_date() {
         return entrust_date;
@@ -27,6 +28,28 @@ public class CurrentEntrust {
 
     public void setSecurities_account_id(String securities_account_id) {
         this.securities_account_id = securities_account_id;
+    }
+
+    @Override
+    public String toString() {
+        return "CurrentEntrust{" +
+                "entrust_date='" + entrust_date + '\'' +
+                ", securities_account_id='" + securities_account_id + '\'' +
+                ", stock_code='" + stock_code + '\'' +
+                ", entrust_direction=" + entrust_direction +
+                ", entrust_amount=" + entrust_amount +
+                ", entrust_price=" + entrust_price +
+                ", amount_money=" + amount_money +
+                ", entrust_key='" + entrust_key + '\'' +
+                '}';
+    }
+
+    public String getEntrust_key() {
+        return entrust_key;
+    }
+
+    public void setEntrust_key(String entrust_key) {
+        this.entrust_key = entrust_key;
     }
 
     public String getStock_code() {
@@ -69,16 +92,4 @@ public class CurrentEntrust {
         this.amount_money = amount_money;
     }
 
-    @Override
-    public String toString() {
-        return "CurrentEntrust{" +
-                "entrust_date='" + entrust_date + '\'' +
-                ", securities_account_id='" + securities_account_id + '\'' +
-                ", stock_code='" + stock_code + '\'' +
-                ", entrust_direction=" + entrust_direction +
-                ", entrust_amount=" + entrust_amount +
-                ", entrust_price=" + entrust_price +
-                ", amount_money=" + amount_money +
-                '}';
-    }
 }
