@@ -1,19 +1,24 @@
+package com.data;
+
+import com.service.impls.DataServiceImpl;
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class GetDataTest {
+public class URLTest {
+    private static Logger log = Logger.getLogger(DataServiceImpl.class);
 
-    public static void main(String[] args){
+    public String getHistoryStockDataOld(String requestUrl) {
         URL url = null;
         HttpURLConnection conn = null;
         InputStream in = null;
         BufferedReader br = null;
-        BufferedWriter bw = null;
         try {
-            url = new URL("http://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData?symbol=sh600570&scale=5&ma=5&datalen=1023");
+            url = new URL(requestUrl);
             //调用URL对象的openConnection( )来获取HttpURLConnection对象实例
             conn = (HttpURLConnection) url.openConnection();
             //请求方法为GET
@@ -24,17 +29,17 @@ public class GetDataTest {
             if (conn.getResponseCode() == 200) {
                 //用getInputStream()方法获得服务器返回的输入流
                 in = conn.getInputStream();
+                br = new BufferedReader(new InputStreamReader(in,"utf-8"));
+                char[] data = new char[40960];
                 int b = 0;
-                File file = new File("D:stock.txt");
-                if(!file.exists()){
-                    file.createNewFile();
+                while ((b=br.read(data,0,data.length-1))!=-1){
+                    System.out.print(data);
                 }
                 br = new BufferedReader(new InputStreamReader(in,"utf-8"));
-                bw = new BufferedWriter(new FileWriter(file));
-                while ((b=br.read())!=-1){
-                    bw.write(b);
-                }
-//                JSONObject jsonObject = (JSONObject) JSONObject.parse(html);
+                String html = String.valueOf(data);
+                System.out.println(html.length());
+                log.info("字符串长度为："+html.length());
+                return html;
             }
         }catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -44,15 +49,15 @@ public class GetDataTest {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 in.close();
                 br.close();
-                bw.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
+        return null;
     }
+
 }

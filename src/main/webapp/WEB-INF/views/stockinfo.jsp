@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>股票信息与交易</title>
     <link rel="stylesheet" href="../../assets/css/bootstrap3.min.css">
+    <link rel="stylesheet" href="../../assets/css/stockinfo/stocktrade.css">
     <style>
         #stockinfo {
             width:99%;
@@ -25,6 +26,17 @@
 <body>
     <%@include file="navbar.jsp"%>
     <div id="stockinfo" class="chart">加载中</div>
+    <div class="container1">
+        <div class="d1 dd">
+            基本信息
+        </div>
+        <div class="d2 dd">
+            十档行情、其他信息
+        </div>
+        <div class="d3 dd">
+            输入表单
+        </div>
+    </div>
     <script>
         var ohlc = []
         var volume = []
@@ -53,7 +65,7 @@
                         }
                     }).then(function (resp) {
                         console.log(resp.data)
-                        var stockdata =eval('('+resp.data+')')
+                        var stockdata = eval('('+resp.data+')')
                         console.log(stockdata.length)
                         console.log(stockdata)
                         // split the data set into ohlc and volume

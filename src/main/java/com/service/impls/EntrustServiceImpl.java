@@ -34,4 +34,12 @@ public class EntrustServiceImpl implements EntrustService{
             log.info("执行委托失败");
         return flag;
     }
+
+    @Override
+    public int countNumberOfEntrustBySid(String securities_account_id) {
+        log.info("begin 根据证券账户"+securities_account_id+"获取当前委托笔数");
+        int count = entrustDao.queryNumberOfEntrustBySid(securities_account_id);
+        log.info(" end  证券账户"+securities_account_id+"下当前有"+count+"笔正在执行的委托");
+        return count;
+    }
 }

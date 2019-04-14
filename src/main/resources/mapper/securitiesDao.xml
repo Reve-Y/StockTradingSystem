@@ -8,4 +8,5 @@
         INSERT into tsecuritiesaccount
           VALUES (#{securities_account_id},#{open_date},#{securities_company_name},#{account_id})
     </insert>
+
 </mapper>

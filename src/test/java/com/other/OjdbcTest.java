@@ -1,4 +1,4 @@
-
+package com.other;
 
 import org.junit.Test;
 

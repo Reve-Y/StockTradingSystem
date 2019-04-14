@@ -1,3 +1,5 @@
+package com.other;
+
 import org.apache.log4j.Logger;
 
 public class LogTest {
@@ -9,5 +11,6 @@ public class LogTest {
         log.debug("this is debug message");
         log.warn("this is warn message");
         log.error("this is error message");
+        System.out.println("咋整的？？");
     }
 }

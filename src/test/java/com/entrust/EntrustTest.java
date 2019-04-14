@@ -1,3 +1,5 @@
+package com.entrust;
+
 import com.domain.CurrentEntrust;
 import com.service.interfaces.EntrustService;
 import com.util.DateUtils;

@@ -157,7 +157,7 @@
             </nav>
           </div>
           <!-- / .main-navbar -->
-          <div class="main-content-container container-fluid px-4">
+          <div class="main-content-container container-fluid px-4" id="infobox">
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
               <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
@@ -173,8 +173,8 @@
                   <div class="card-body p-0 d-flex">
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
-                        <span class="stats-small__label text-uppercase">Posts</span>
-                        <h6 class="stats-small__value count my-3">2,390</h6>
+                        <span class="stats-small__label text-uppercase">持有总市值</span>
+                        <h6 class="stats-small__value count my-3">{{total_market_value}}</h6>
                       </div>
                       <div class="stats-small__data">
                         <span class="stats-small__percentage stats-small__percentage--increase">4.7%</span>
@@ -189,8 +189,8 @@
                   <div class="card-body p-0 d-flex">
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
-                        <span class="stats-small__label text-uppercase">Pages</span>
-                        <h6 class="stats-small__value count my-3">182</h6>
+                        <span class="stats-small__label text-uppercase">累计收益</span>
+                        <h6 class="stats-small__value count my-3">{{earnings}}</h6>
                       </div>
                       <div class="stats-small__data">
                         <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -205,8 +205,8 @@
                   <div class="card-body p-0 d-flex">
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
-                        <span class="stats-small__label text-uppercase">Comments</span>
-                        <h6 class="stats-small__value count my-3">8,147</h6>
+                        <span class="stats-small__label text-uppercase">可用资金</span>
+                        <h6 class="stats-small__value count my-3">{{enable_balance}}</h6>
                       </div>
                       <div class="stats-small__data">
                         <span class="stats-small__percentage stats-small__percentage--decrease">3.8%</span>
@@ -221,11 +221,11 @@
                   <div class="card-body p-0 d-flex">
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
-                        <span class="stats-small__label text-uppercase">Users</span>
-                        <h6 class="stats-small__value count my-3">2,413</h6>
+                        <span class="stats-small__label text-uppercase">冻结资金</span>
+                        <h6 class="stats-small__value count my-3">{{frozen_balance}}</h6>
                       </div>
                       <div class="stats-small__data">
-                        <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                        <span class="stats-small__percentage stats-small__percentage--increase"></span>
                       </div>
                     </div>
                     <canvas height="120" class="blog-overview-stats-small-4"></canvas>
@@ -237,8 +237,8 @@
                   <div class="card-body p-0 d-flex">
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
-                        <span class="stats-small__label text-uppercase">Subscribers</span>
-                        <h6 class="stats-small__value count my-3">17,281</h6>
+                        <span class="stats-small__label text-uppercase">当前委托笔数</span>
+                        <h6 class="stats-small__value count my-3">{{entrust_num}}</h6>
                       </div>
                       <div class="stats-small__data">
                         <span class="stats-small__percentage stats-small__percentage--decrease">2.4%</span>
@@ -262,21 +262,21 @@
                                   <thead class="bg-light">
                                   <tr>
                                       <th scope="col" class="border-0">#</th>
-                                      <th scope="col" class="border-0">First Name</th>
-                                      <th scope="col" class="border-0">Last Name</th>
-                                      <th scope="col" class="border-0">Country</th>
-                                      <th scope="col" class="border-0">City</th>
-                                      <th scope="col" class="border-0">Phone</th>
+                                      <th scope="col" class="border-0">Telephone</th>
+                                      <th scope="col" class="border-0">Nickname</th>
+                                      <th scope="col" class="border-0">SecuritiesAccount</th>
+                                      <th scope="col" class="border-0">CapitalAccount</th>
+                                      <th scope="col" class="border-0">Email</th>
                                   </tr>
                                   </thead>
                                   <tbody>
                                   <tr>
                                       <td>1</td>
-                                      <td>Ali</td>
-                                      <td>Kerry</td>
-                                      <td>Russian Federation</td>
-                                      <td>Gdańsk</td>
-                                      <td>107-0339</td>
+                                      <td>{{telephone}}</td>
+                                      <td>{{nickname}}</td>
+                                      <td>{{securitiesAccount}}</td>
+                                      <td>{{capitalAccount}}</td>
+                                      <td>{{email}}</td>
                                   </tr>
                                   </tbody>
                               </table>
@@ -285,7 +285,6 @@
                   </div>
               </div>
               <!-- End Default Light Table -->
-            
           </div>
           <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
               <ul class="nav">
@@ -318,6 +317,9 @@
       </div>
     </div>
 
+    <script src="../../../assets/js/core/vue.js"></script>
+    <script src="../../../assets/js/core/vue-resource.js"></script>
+    <script src="../../../assets/js/core/axios.js"></script>
     <script src="../../../assets/js/core/jquery-3.3.1.js"></script>
     <script src="../../../assets/js/core/popper.min.js" ></script>
     <script src="../../../assets/js/core/bootstrap.js"></script>
@@ -328,5 +330,7 @@
     <script src="../../../assets/js/admin/shards-dashboards.1.1.0.min.js"></script>
     <script src="../../../assets/js/admin/quill.min.js"></script>
     <script src="../../../assets/js/admin/app/app-blog-overview.1.1.0.js"></script>
+
+    <script src="../../../assets/js/admin/onload/index-onload.js"></script>
   </body>
 </html>

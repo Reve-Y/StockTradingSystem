@@ -1,3 +1,5 @@
+package com.data;
+
 import com.util.HttpUtils;
 import org.apache.log4j.Logger;
 
