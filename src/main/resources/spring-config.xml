@@ -31,6 +31,22 @@
         <property name="configLocation" value="classpath:mybatis-config.xml"></property>
         <!--<property name="typeAliasesPackage" value="com.pojo"></property>-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <value>
+                            helperDialect=oracle
+                            pageSizeZero=true
+                            offsetAsPageNum=true
+                            pageSizeZero=true
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
     <!--mapper.xml  -->
     <!-- 配置接口-->
@@ -52,6 +68,10 @@
     </bean>
     <bean id="holdingMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.dao.HoldingDao"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+    <bean id="dealMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.dao.DealDao"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
     <!-- 配置事务管理器 -->

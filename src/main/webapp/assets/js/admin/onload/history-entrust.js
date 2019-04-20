@@ -1,10 +1,8 @@
-var app1 = new Vue({
-    el : "#holding",
+var he = new Vue({
+    el : "#history-entrust",
     data : {
-        holdingInfo : null,
-        count_company : 0,
-        count_stock : 0,
-        market_value : 0.00,
+        historyInfo: null,
+        count_history: 0,
         pageNum : 1 ,
         total : 1
     },
@@ -17,16 +15,15 @@ var app1 = new Vue({
         },
         getFirstPage : function () {
             var that = this
-            axios.get('/getHoldingData',{
+            axios.get('/getHistoryEntrustData',{
                 params: {
-                    pageNum : 1
+                    pageNum:1
                 }
             }).then(function (resp) {
+                // console.log(resp)
                 var resdata = resp.data
-                that.holdingInfo = resdata.holdingInfo
-                that.count_company = resdata.count_company
-                that.count_stock = resdata.count_stock
-                that.market_value = resdata.marketValue
+                that.historyInfo = resdata.historyInfo
+                that.count_history = resdata.count_history
                 that.pageNum = resdata.pageNum
                 that.total = resdata.total
             }).catch(function (err) {
@@ -34,23 +31,22 @@ var app1 = new Vue({
             })
         },
         getPreviousPage : function () {
-            console.log("getHoldingData");
+            console.log("getPreviousPage");
             var that = this
             if (that.pageNum == 1){
                 alert("当前已经是第一页")
                 return
             }
             that.pageNum = that.pageNum - 1
-            axios.get('/getHoldingData',{
+            axios.get('/getHistoryEntrustData',{
                 params: {
                     pageNum:that.pageNum
                 }
             }).then(function (resp) {
+                // console.log(resp)
                 var resdata = resp.data
-                that.holdingInfo = resdata.holdingInfo
-                that.count_company = resdata.count_company
-                that.count_stock = resdata.count_stock
-                that.market_value = resdata.marketValue
+                that.historyInfo = resdata.historyInfo
+                that.count_history = resdata.count_history
                 that.pageNum = resdata.pageNum
                 that.total = resdata.total
             }).catch(function (err) {
@@ -65,16 +61,15 @@ var app1 = new Vue({
                 return
             }
             that.pageNum = that.pageNum + 1
-            axios.get('/getHoldingData',{
+            axios.get('/getHistoryEntrustData',{
                 params: {
                     pageNum:that.pageNum
                 }
             }).then(function (resp) {
+                // console.log(resp)
                 var resdata = resp.data
-                that.holdingInfo = resdata.holdingInfo
-                that.count_company = resdata.count_company
-                that.count_stock = resdata.count_stock
-                that.market_value = resdata.marketValue
+                that.historyInfo = resdata.historyInfo
+                that.count_history = resdata.count_history
                 that.pageNum = resdata.pageNum
                 that.total = resdata.total
             }).catch(function (err) {
@@ -87,16 +82,15 @@ var app1 = new Vue({
                 alert("已经是最后一页")
                 return
             }
-            axios.get('/getHoldingData',{
+            axios.get('/getHistoryEntrustData',{
                 params: {
                     pageNum:that.total
                 }
             }).then(function (resp) {
+                // console.log(resp)
                 var resdata = resp.data
-                that.holdingInfo = resdata.holdingInfo
-                that.count_company = resdata.count_company
-                that.count_stock = resdata.count_stock
-                that.market_value = resdata.marketValue
+                that.historyInfo = resdata.historyInfo
+                that.count_history = resdata.count_history
                 that.pageNum = resdata.pageNum
                 that.total = resdata.total
             }).catch(function (err) {

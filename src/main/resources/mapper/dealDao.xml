@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.DealDao">
+    <select id="queryDealRecordsBySid" resultType="com.domain.RealDeal">
+        SELECT
+            DEAL_DATE,STOCK_CODE,DEAL_DIRECTION,DEAL_AMOUNT,DEAL_PRICE,DEAL_AMOUNT_MONEY,DEAL_CAPITAL_BALANCE
+        FROM TREALDEAL
+        WHERE securities_account_id=#{securities_account_id}
+    </select>
+
+    <select id="queryNumberOfDealBySid" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM TREALDEAL WHERE securities_account_id=#{securities_account_id}
+    </select>
+</mapper>

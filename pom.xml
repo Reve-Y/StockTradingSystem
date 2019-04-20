@@ -174,7 +174,12 @@
       <artifactId>log4j-core</artifactId>
       <version>2.11.1</version>
     </dependency>
-
+    <!--分页插件-->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.1.8</version>
+    </dependency>
   </dependencies>
 
   <build>

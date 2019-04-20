@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>后台管理-blog</title>
+    <title>当前委托</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -49,43 +49,44 @@
               <li class="nav-item">
                 <a class="nav-link " href="/admin">
                   <i class="material-icons">edit</i>
-                  <span>Home  </span>
+                  <span>基本信息 </span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/blog">
+                <a class="nav-link active" href="/currentEntrust">
                   <i class="material-icons">vertical_split</i>
-                  <span>待定 </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/newPost">
-                  <i class="material-icons">note_add</i>
-                  <span>Add New Post</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/adminForm">
-                  <i class="material-icons">view_module</i>
-                  <span>Forms </span>
+                  <span>当前委托 </span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link " href="/holdings">
                   <i class="material-icons">table_chart</i>
-                  <span>Holdings </span>
+                  <span>持仓信息 </span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/userProfile">
+                <a class="nav-link " href="/dealRecord">
+                  <i class="material-icons">note_add</i>
+                  <span>成交记录</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/historyEntrust">
+                  <i class="material-icons">view_module</i>
+                  <span>历史委托 </span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/userProfile">
                   <i class="material-icons">person</i>
-                  <span>User Profile</span>
+                  <span>更新信息</span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/createAccount">
                   <i class="material-icons">edit</i>
-                  <span>Create Account</span>
+                  <span>自助开户</span>
                 </a>
               </li>
             </ul>
@@ -150,7 +151,6 @@
                     </li>
                   </c:otherwise>
                 </c:choose>
-
               </ul>
               <nav class="nav">
                 <a href="#" class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left" data-toggle="collapse" data-target=".header-navbar" aria-expanded="false" aria-controls="header-navbar">
@@ -159,7 +159,71 @@
               </nav>
             </nav>
           </div>
-           
+          <!-- /End .main-navbar -->
+
+          <div class="main-content-container container-fluid px-4" id="entrustData">
+            <!-- Page Header -->
+            <div class="page-header row no-gutters py-4">
+              <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+                <span class="text-uppercase page-subtitle">Overview</span>
+                <h3 class="page-title">当前委托查询</h3>
+              </div>
+            </div>
+            <!-- End Page Header -->
+            <!-- Default Light Table -->
+            <div class="row" id="holding">
+              <div class="col">
+                <div class="card card-small mb-4">
+                  <div class="card-header border-bottom">
+                    <h6 class="m-0">当前委托总条数：&nbsp;<span style="color:#ff130e">{{count_entrust}}</span>&nbsp;</h6>
+                  </div>
+                  <div class="card-body p-0 pb-3 text-center">
+                    <table class="table mb-0">
+                      <thead class="bg-light">
+                      <tr>
+                        <th scope="col" class="border-0">#</th>
+                        <th scope="col" class="border-0">委托时间</th>
+                        <th scope="col" class="border-0">股票代码</th>
+                        <th scope="col" class="border-0">股票名称</th>
+                        <th scope="col" class="border-0">委托方向</th>
+                        <th scope="col" class="border-0">委托数量</th>
+                        <th scope="col" class="border-0">委托价格</th>
+                        <th scope="col" class="border-0">委托金额</th>
+                        <th scope="col" class="border-0">操作</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item,index) in entrustInfo">
+                          <td>{{index+1}}</td>
+                          <td>{{item.entrust_date}}</td>
+                          <td>{{item.stock_code}}</td>
+                          <td>{{item.stock_name}}</td>
+                          <td>{{item.entrust_direction==1 ? '买入' : '卖出'}}</td>
+                          <td>{{item.entrust_amount}}</td>
+                          <td>{{item.entrust_price}}</td>
+                          <td>{{item.amount_money}}</td>
+                          <td><button class="btn-primary" @click="withdraw" :id="item.entrust_key">撤单</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Default Light Table -->
+            <!-- 分页条 -->
+            <div class="container">
+              <ul class="pagination pagination-lg " style="position:relative;left:50%;margin-left:-250px;">
+                <li class="page-item"><a class="page-link" @click="getFirstPage()"><span style="color: #0cdbff">First</span></a></li>
+                <li class="page-item"><a class="page-link" @click="getPreviousPage()"><span style="color: #0cdbff">Previous</span></a></li>
+                <li class="page-item"><a class="page-link" >当前第&nbsp;<span style="color: purple">{{pageNum}}</span>&nbsp;页,共&nbsp;<span style="color:purple">{{total}}</span>页</a></li>
+                <li class="page-item"><a class="page-link" @click="getNextPage()"><span style="color: #0cdbff">Next</span></a></li>
+                <li class="page-item"><a class="page-link" @click="getLastPage()"><span style="color: #0cdbff">Last</span></a></li>
+              </ul>
+            </div>
+            <!-- 分页条 end -->
+          </div>
+
           <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
               <ul class="nav">
                   <li class="nav-item">
@@ -190,7 +254,9 @@
         </main>
       </div>
     </div>
-
+    <script src="../../../assets/js/core/vue.js"></script>
+    <script src="../../../assets/js/core/vue-resource.js"></script>
+    <script src="../../../assets/js/core/axios.js"></script>
     <script src="../../../assets/js/core/jquery-3.3.1.js"></script>
     <script src="../../../assets/js/core/popper.min.js" ></script>
     <script src="../../../assets/js/core/bootstrap.js"></script>
@@ -199,6 +265,6 @@
     <script src="../../../assets/js/admin/jquery.sharrre.min.js"></script>
     <script src="../../../assets/js/admin/extras.1.1.0.min.js"></script>
     <script src="../../../assets/js/admin/shards-dashboards.1.1.0.min.js"></script>
-
+    <script src="../../../assets/js/admin/onload/current-entrust.js"></script>
   </body>
 </html>

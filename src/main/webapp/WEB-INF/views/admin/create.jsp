@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Create Your Account</title>
+    <title>开立账户</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -45,48 +45,49 @@
           </form>
           <div class="nav-wrapper">
             <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link " href="/admin">
-                  <i class="material-icons">edit</i>
-                  <span>Home  </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/blog">
-                  <i class="material-icons">vertical_split</i>
-                  <span>待定 </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/newPost">
-                  <i class="material-icons">note_add</i>
-                  <span>Add New Post</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/adminForm">
-                  <i class="material-icons">view_module</i>
-                  <span>Forms </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/holdings">
-                  <i class="material-icons">table_chart</i>
-                  <span>Holdings </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/userProfile">
-                  <i class="material-icons">person</i>
-                  <span>User Profile</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/createAccount">
-                  <i class="material-icons">edit</i>
-                  <span>Create Account</span>
-                </a>
-              </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/admin">
+                        <i class="material-icons">edit</i>
+                        <span>基本信息 </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/currentEntrust">
+                        <i class="material-icons">vertical_split</i>
+                        <span>当前委托 </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/holdings">
+                        <i class="material-icons">table_chart</i>
+                        <span>持仓信息 </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/dealRecord">
+                        <i class="material-icons">note_add</i>
+                        <span>成交记录</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/historyEntrust">
+                        <i class="material-icons">view_module</i>
+                        <span>历史委托 </span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/userProfile">
+                        <i class="material-icons">person</i>
+                        <span>更新信息</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/createAccount">
+                        <i class="material-icons">edit</i>
+                        <span>自助开户</span>
+                    </a>
+                </li>
             </ul>
           </div>
         </aside>

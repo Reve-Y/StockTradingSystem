@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>后台管理-用户信息</title>
+    <title>更新个人信息</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -48,43 +48,44 @@
               <li class="nav-item">
                 <a class="nav-link " href="/admin">
                   <i class="material-icons">edit</i>
-                  <span>Home  </span>
+                  <span>基本信息 </span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/blog">
+                <a class="nav-link " href="/currentEntrust">
                   <i class="material-icons">vertical_split</i>
-                  <span>待定 </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/newPost">
-                  <i class="material-icons">note_add</i>
-                  <span>Add New Post</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/adminForm">
-                  <i class="material-icons">view_module</i>
-                  <span>Forms </span>
+                  <span>当前委托 </span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link " href="/holdings">
                   <i class="material-icons">table_chart</i>
-                  <span>Holdings </span>
+                  <span>持仓信息 </span>
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link " href="/dealRecord">
+                  <i class="material-icons">note_add</i>
+                  <span>成交记录</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/historyEntrust">
+                  <i class="material-icons">view_module</i>
+                  <span>历史委托 </span>
+                </a>
+              </li>
+
+              <li class="nav-item">
                 <a class="nav-link active" href="/userProfile">
                   <i class="material-icons">person</i>
-                  <span>User Profile</span>
+                  <span>更新信息</span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/createAccount">
                   <i class="material-icons">edit</i>
-                  <span>Create Account</span>
+                  <span>自助开户</span>
                 </a>
               </li>
             </ul>

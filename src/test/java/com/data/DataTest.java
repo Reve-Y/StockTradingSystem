@@ -19,6 +19,12 @@ public class DataTest {
         System.out.println(dataService.queryCurrentStockPrice("600570"));
         System.out.println(dataService.queryCurrentStockPrice("000001"));
     }
+
+    @Test
+    public void t2(){
+        System.out.println(dataService.getStockName("600570"));
+        System.out.println(dataService.getStockName("000001"));
+    }
 }
 
 

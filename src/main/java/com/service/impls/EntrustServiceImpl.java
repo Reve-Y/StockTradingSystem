@@ -2,11 +2,16 @@ package com.service.impls;
 
 import com.dao.EntrustDao;
 import com.domain.CurrentEntrust;
+import com.domain.HistoryEntrust;
+import com.github.pagehelper.PageHelper;
+import com.service.interfaces.DataService;
 import com.service.interfaces.EntrustService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class EntrustServiceImpl implements EntrustService{
@@ -14,6 +19,9 @@ public class EntrustServiceImpl implements EntrustService{
 
     @Autowired
     private EntrustDao entrustDao;
+
+    @Autowired
+    private DataService dataService;
 
     /**
      *  普通委托 ： 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中
@@ -41,5 +49,46 @@ public class EntrustServiceImpl implements EntrustService{
         int count = entrustDao.queryNumberOfEntrustBySid(securities_account_id);
         log.info(" end  证券账户"+securities_account_id+"下当前有"+count+"笔正在执行的委托");
         return count;
+    }
+
+    @Override
+    public List<CurrentEntrust> queryCurrentEntrustBySid(String securities_account_id, int pageNum) {
+        log.info("begin--开始获取第"+pageNum+"页当前委托");
+
+        PageHelper.offsetPage(pageNum,5);
+        List<CurrentEntrust> list = entrustDao.queryCurrentEntrustBySid(securities_account_id);
+
+        log.info("end--第"+pageNum+"页当前委托信息查询结束");
+        // 设置stock_name
+        for (CurrentEntrust currentEntrust : list){
+            currentEntrust.setStock_name(dataService.getStockName(currentEntrust.getStock_code()));
+        }
+        return list;
+    }
+
+    @Override
+    public List<HistoryEntrust> queryHistoryEntrustBySid(String securities_account_id, int pageNum) {
+        PageHelper.offsetPage(pageNum,5);
+        List<HistoryEntrust> list = entrustDao.queryHistoryEntrustBySid(securities_account_id);
+
+        // 获取股票名称以及完成委托状态的转换
+        for (HistoryEntrust historyEntrust : list){
+            historyEntrust.setStock_name(dataService.getStockName(historyEntrust.getStock_code()));
+            int status = historyEntrust.getEntrust_status();
+            if (status == 0)
+                historyEntrust.setStatus("执行中");
+            else if (status == 1)
+                historyEntrust.setStatus("已成交");
+            else if (status == 2)
+                historyEntrust.setStatus("已撤单");
+            else
+                historyEntrust.setStatus("系统废弃");
+        }
+        return list;
+    }
+
+    @Override
+    public int countNumberOfHistoryEntBySid(String securities_account_id) {
+        return entrustDao.queryNumberOfHistoryEntBySid(securities_account_id);
     }
 }

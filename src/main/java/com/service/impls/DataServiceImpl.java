@@ -61,4 +61,29 @@ public class DataServiceImpl implements DataService {
         log.info("证券代码"+stock_code+"目前的价格为"+price);
         return price;
     }
+
+    /**
+     * 根据股票代码获取股票名称
+     */
+    public String getStockName(String stockCode){
+        // 开源api
+        StringBuilder url = new StringBuilder("http://hq.sinajs.cn/list=");
+
+        // 判断该证券是上交所还是深交所上市的股票
+        if (stockCode.charAt(0) == '6')
+            url.append("sh");
+        else
+            url.append("sz");
+        url.append(stockCode);
+        String data;
+        String stockName = "";
+        try {
+            data = HttpUtils.get(new String(url));
+            stockName = data.split(",")[0].replaceAll(".*=\"","");
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("获取"+stockCode+"信息失败");
+        }
+        return stockName;
+    }
 }

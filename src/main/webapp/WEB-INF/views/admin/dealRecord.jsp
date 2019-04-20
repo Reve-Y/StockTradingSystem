@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Shards Dashboard Lite - Free Bootstrap Admin Template – DesignRevision</title>
+    <title>成交记录</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -49,43 +49,44 @@
               <li class="nav-item">
                 <a class="nav-link " href="/admin">
                   <i class="material-icons">edit</i>
-                  <span>Home  </span>
+                  <span>基本信息 </span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/blog">
+                <a class="nav-link" href="/currentEntrust">
                   <i class="material-icons">vertical_split</i>
-                  <span>待定 </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/newPost">
-                  <i class="material-icons">note_add</i>
-                  <span>Add New Post</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/adminForm">
-                  <i class="material-icons">view_module</i>
-                  <span>Forms </span>
+                  <span>当前委托 </span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link " href="/holdings">
                   <i class="material-icons">table_chart</i>
-                  <span>Holdings </span>
+                  <span>持仓信息 </span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/userProfile">
+                <a class="nav-link active" href="/dealRecord">
+                  <i class="material-icons">note_add</i>
+                  <span>成交记录</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/historyEntrust">
+                  <i class="material-icons">view_module</i>
+                  <span>历史委托 </span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/userProfile">
                   <i class="material-icons">person</i>
-                  <span>User Profile</span>
+                  <span>更新信息</span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/createAccount">
                   <i class="material-icons">edit</i>
-                  <span>Create Account</span>
+                  <span>自助开户</span>
                 </a>
               </li>
             </ul>
@@ -159,114 +160,67 @@
             </nav>
           </div>
           <!-- / .main-navbar -->
-          <div class="main-content-container container-fluid px-4">
+          <div class="main-content-container container-fluid px-4" id="dealData">
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
               <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-                <span class="text-uppercase page-subtitle">Blog Posts</span>
-                <h3 class="page-title">Add New Post</h3>
+                <span class="text-uppercase page-subtitle">Overview</span>
+                <h3 class="page-title">成交记录查询</h3>
               </div>
             </div>
             <!-- End Page Header -->
-            <div class="row">
-              <div class="col-lg-9 col-md-12">
-                <!-- Add New Post Form -->
-                <div class="card card-small mb-3">
-                  <div class="card-body">
-                    <form class="add-new-post">
-                      <input class="form-control form-control-lg mb-3" type="text" placeholder="Your Post Title">
-                      <div id="editor-container" class="add-new-post__editor mb-1"></div>
-                    </form>
-                  </div>
-                </div>
-                <!-- / Add New Post Form -->
-              </div>
-              <div class="col-lg-3 col-md-12">
-                <!-- Post Overview -->
-                <div class='card card-small mb-3'>
+            <!-- Default Light Table -->
+            <div class="row" id="holding">
+              <div class="col">
+                <div class="card card-small mb-4">
                   <div class="card-header border-bottom">
-                    <h6 class="m-0">Actions</h6>
+                    <h6 class="m-0">当前共有&nbsp;<span style="color:#ff130e">{{count_deal}}</span>&nbsp;条成交记录</h6>
                   </div>
-                  <div class='card-body p-0'>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item p-3">
-                        <span class="d-flex mb-2">
-                          <i class="material-icons mr-1">flag</i>
-                          <strong class="mr-1">Status:</strong> Draft
-                          <a class="ml-auto" href="#">Edit</a>
-                        </span>
-                        <span class="d-flex mb-2">
-                          <i class="material-icons mr-1">visibility</i>
-                          <strong class="mr-1">Visibility:</strong>
-                          <strong class="text-success">Public</strong>
-                          <a class="ml-auto" href="#">Edit</a>
-                        </span>
-                        <span class="d-flex mb-2">
-                          <i class="material-icons mr-1">calendar_today</i>
-                          <strong class="mr-1">Schedule:</strong> Now
-                          <a class="ml-auto" href="#">Edit</a>
-                        </span>
-                        <span class="d-flex">
-                          <i class="material-icons mr-1">score</i>
-                          <strong class="mr-1">Readability:</strong>
-                          <strong class="text-warning">Ok</strong>
-                        </span>
-                      </li>
-                      <li class="list-group-item d-flex px-3">
-                        <button class="btn btn-sm btn-outline-accent">
-                          <i class="material-icons">save</i> Save Draft</button>
-                        <button class="btn btn-sm btn-accent ml-auto">
-                          <i class="material-icons">file_copy</i> Publish</button>
-                      </li>
-                    </ul>
+                  <div class="card-body p-0 pb-3 text-center">
+                    <table class="table mb-0">
+                      <thead class="bg-light">
+                      <tr>
+                        <th scope="col" class="border-0">#</th>
+                        <th scope="col" class="border-0">成交时间</th>
+                        <th scope="col" class="border-0">股票代码</th>
+                        <th scope="col" class="border-0">股票名称</th>
+                        <th scope="col" class="border-0">成交方向</th>
+                        <th scope="col" class="border-0">成交价格</th>
+                        <th scope="col" class="border-0">成交数量</th>
+                        <th scope="col" class="border-0">成交金额/th>
+                        <th scope="col" class="border-0">成交后余额</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item,index) in dealInfo">
+                          <td>{{index+1}}</td>
+                          <td>{{item.deal_date}}</td>
+                          <td>{{item.stock_code}}</td>
+                          <td>{{item.stock_name}}</td>
+                          <td>{{item.deal_direction==1 ? '买入' : '卖出'}}</td>
+                          <td>{{item.deal_price}}</td>
+                          <td>{{item.deal_amount}}</td>
+                          <td>{{item.deal_amount_money}}</td>
+                          <td>{{item.deal_capital_balance}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-                <!-- / Post Overview -->
-                <!-- Post Overview -->
-                <div class='card card-small mb-3'>
-                  <div class="card-header border-bottom">
-                    <h6 class="m-0">Categories</h6>
-                  </div>
-                  <div class='card-body p-0'>
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item px-3 pb-2">
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category1" checked>
-                          <label class="custom-control-label" for="category1">Uncategorized</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category2" checked>
-                          <label class="custom-control-label" for="category2">Design</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category3">
-                          <label class="custom-control-label" for="category3">Development</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category4">
-                          <label class="custom-control-label" for="category4">Writing</label>
-                        </div>
-                        <div class="custom-control custom-checkbox mb-1">
-                          <input type="checkbox" class="custom-control-input" id="category5">
-                          <label class="custom-control-label" for="category5">Books</label>
-                        </div>
-                      </li>
-                      <li class="list-group-item d-flex px-3">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="New category" aria-label="Add new category" aria-describedby="basic-addon2">
-                          <div class="input-group-append">
-                            <button class="btn btn-white px-2" type="button">
-                              <i class="material-icons">add</i>
-                            </button>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <!-- / Post Overview -->
               </div>
             </div>
+            <!-- End Default Light Table -->
+            <!-- 分页条 -->
+            <div class="container">
+              <ul class="pagination pagination-lg " style="position:relative;left:50%;margin-left:-250px;">
+                <li class="page-item"><a class="page-link" @click="getFirstPage()"><span style="color: #0cdbff">First</span></a></li>
+                <li class="page-item"><a class="page-link" @click="getPreviousPage()"><span style="color: #0cdbff">Previous</span></a></li>
+                <li class="page-item"><a class="page-link" >当前第&nbsp;<span style="color: purple">{{pageNum}}</span>&nbsp;页,共&nbsp;<span style="color:purple">{{total}}</span>页</a></li>
+                <li class="page-item"><a class="page-link" @click="getNextPage()"><span style="color: #0cdbff">Next</span></a></li>
+                <li class="page-item"><a class="page-link" @click="getLastPage()"><span style="color: #0cdbff">Last</span></a></li>
+              </ul>
+            </div>
+            <!-- 分页条 end -->
           </div>
           <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
             <ul class="nav">
@@ -298,7 +252,9 @@
         </main>
       </div>
     </div>
-    
+    <script src="../../../assets/js/core/vue.js"></script>
+    <script src="../../../assets/js/core/vue-resource.js"></script>
+    <script src="../../../assets/js/core/axios.js"></script>
     <script src="../../../assets/js/core/jquery-3.3.1.js"></script>
     <script src="../../../assets/js/core/popper.min.js" ></script>
     <script src="../../../assets/js/core/bootstrap.js"></script>
@@ -308,6 +264,7 @@
     <script src="../../../assets/js/admin/extras.1.1.0.min.js"></script>
     <script src="../../../assets/js/admin/shards-dashboards.1.1.0.min.js"></script>
     <script src="../../../assets/js/admin/quill.min.js"></script>
-    <script src="../../../assets/js/admin/app/app-blog-new-post.1.1.0.js"></script>
+    <%--<script src="../../../assets/js/admin/app/app-blog-new-post.1.1.0.js"></script>--%>
+    <script src="../../../assets/js/admin/onload/realdeal-onload.js"></script>
   </body>
 </html>

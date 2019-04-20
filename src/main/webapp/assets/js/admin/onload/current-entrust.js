@@ -1,10 +1,8 @@
-var app1 = new Vue({
-    el : "#holding",
+var ce = new Vue({
+    el : "#entrustData",
     data : {
-        holdingInfo : null,
-        count_company : 0,
-        count_stock : 0,
-        market_value : 0.00,
+        entrustInfo: null,
+        count_entrust: 0,
         pageNum : 1 ,
         total : 1
     },
@@ -17,16 +15,15 @@ var app1 = new Vue({
         },
         getFirstPage : function () {
             var that = this
-            axios.get('/getHoldingData',{
+            axios.get('/getCurrentEntrustData',{
                 params: {
-                    pageNum : 1
+                    pageNum:1
                 }
             }).then(function (resp) {
+                // console.log(resp)
                 var resdata = resp.data
-                that.holdingInfo = resdata.holdingInfo
-                that.count_company = resdata.count_company
-                that.count_stock = resdata.count_stock
-                that.market_value = resdata.marketValue
+                that.entrustInfo = resdata.entrustInfo
+                that.count_entrust = resdata.count_entrust
                 that.pageNum = resdata.pageNum
                 that.total = resdata.total
             }).catch(function (err) {
@@ -34,23 +31,22 @@ var app1 = new Vue({
             })
         },
         getPreviousPage : function () {
-            console.log("getHoldingData");
+            console.log("getPreviousPage");
             var that = this
             if (that.pageNum == 1){
                 alert("当前已经是第一页")
                 return
             }
             that.pageNum = that.pageNum - 1
-            axios.get('/getHoldingData',{
+            axios.get('/getCurrentEntrustData',{
                 params: {
                     pageNum:that.pageNum
                 }
             }).then(function (resp) {
+                // console.log(resp)
                 var resdata = resp.data
-                that.holdingInfo = resdata.holdingInfo
-                that.count_company = resdata.count_company
-                that.count_stock = resdata.count_stock
-                that.market_value = resdata.marketValue
+                that.entrustInfo = resdata.entrustInfo
+                that.count_entrust = resdata.count_entrust
                 that.pageNum = resdata.pageNum
                 that.total = resdata.total
             }).catch(function (err) {
@@ -65,16 +61,15 @@ var app1 = new Vue({
                 return
             }
             that.pageNum = that.pageNum + 1
-            axios.get('/getHoldingData',{
+            axios.get('/getCurrentEntrustData',{
                 params: {
                     pageNum:that.pageNum
                 }
             }).then(function (resp) {
+                // console.log(resp)
                 var resdata = resp.data
-                that.holdingInfo = resdata.holdingInfo
-                that.count_company = resdata.count_company
-                that.count_stock = resdata.count_stock
-                that.market_value = resdata.marketValue
+                that.entrustInfo = resdata.entrustInfo
+                that.count_entrust = resdata.count_entrust
                 that.pageNum = resdata.pageNum
                 that.total = resdata.total
             }).catch(function (err) {
@@ -87,21 +82,31 @@ var app1 = new Vue({
                 alert("已经是最后一页")
                 return
             }
-            axios.get('/getHoldingData',{
+            axios.get('/getCurrentEntrustData',{
                 params: {
                     pageNum:that.total
                 }
             }).then(function (resp) {
+                // console.log(resp)
                 var resdata = resp.data
-                that.holdingInfo = resdata.holdingInfo
-                that.count_company = resdata.count_company
-                that.count_stock = resdata.count_stock
-                that.market_value = resdata.marketValue
+                that.entrustInfo = resdata.entrustInfo
+                that.count_entrust = resdata.count_entrust
                 that.pageNum = resdata.pageNum
                 that.total = resdata.total
             }).catch(function (err) {
                 console.log(err)
             })
+        },
+
+        // 撤单
+        withdraw : function (e) {
+            var flag = confirm("确定撤单？")
+            if (!flag)
+                return
+            var btn = e.target
+
+            console.log(btn.getAttribute("id"))
+            // 待实现
         }
     }
 })

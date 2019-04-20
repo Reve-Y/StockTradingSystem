@@ -1,9 +1,6 @@
 package com.domain;
 
-/**
- *  当前委托
- */
-public class CurrentEntrust {
+public class HistoryEntrust {
 
     private String entrust_date;    // 委托日期
     private String securities_account_id ; // 证券账户id
@@ -12,8 +9,16 @@ public class CurrentEntrust {
     private int entrust_direction;   //  委托方向： 1 买入 2 卖出
     private long entrust_amount;      //  委托数量
     private float entrust_price;        //  委托价格
-    private float amount_money;         //  委托总金额
-    private String entrust_key;          //  该笔委托的唯一标识字符串
+    private int entrust_status;         // 委托状态： 0 执行中 ， 1 已成交 ，2 已撤单 ，3 系统废弃
+    private String status ;             // 委托状态，数据库没有这个字段，根据上个属性转换
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getEntrust_date() {
         return entrust_date;
@@ -21,6 +26,21 @@ public class CurrentEntrust {
 
     public void setEntrust_date(String entrust_date) {
         this.entrust_date = entrust_date;
+    }
+
+    @Override
+    public String toString() {
+        return "HistoryEntrust{" +
+                "entrust_date='" + entrust_date + '\'' +
+                ", securities_account_id='" + securities_account_id + '\'' +
+                ", stock_code='" + stock_code + '\'' +
+                ", stock_name='" + stock_name + '\'' +
+                ", entrust_direction=" + entrust_direction +
+                ", entrust_amount=" + entrust_amount +
+                ", entrust_price=" + entrust_price +
+                ", entrust_status=" + entrust_status +
+                ", status='" + status + '\'' +
+                '}';
     }
 
     public String getSecurities_account_id() {
@@ -31,20 +51,20 @@ public class CurrentEntrust {
         this.securities_account_id = securities_account_id;
     }
 
-    public String getEntrust_key() {
-        return entrust_key;
-    }
-
-    public void setEntrust_key(String entrust_key) {
-        this.entrust_key = entrust_key;
-    }
-
     public String getStock_code() {
         return stock_code;
     }
 
     public void setStock_code(String stock_code) {
         this.stock_code = stock_code;
+    }
+
+    public String getStock_name() {
+        return stock_name;
+    }
+
+    public void setStock_name(String stock_name) {
+        this.stock_name = stock_name;
     }
 
     public int getEntrust_direction() {
@@ -67,38 +87,16 @@ public class CurrentEntrust {
         return entrust_price;
     }
 
-    @Override
-    public String toString() {
-        return "CurrentEntrust{" +
-                "entrust_date='" + entrust_date + '\'' +
-                ", securities_account_id='" + securities_account_id + '\'' +
-                ", stock_code='" + stock_code + '\'' +
-                ", stock_name='" + stock_name + '\'' +
-                ", entrust_direction=" + entrust_direction +
-                ", entrust_amount=" + entrust_amount +
-                ", entrust_price=" + entrust_price +
-                ", amount_money=" + amount_money +
-                ", entrust_key='" + entrust_key + '\'' +
-                '}';
-    }
-
     public void setEntrust_price(float entrust_price) {
         this.entrust_price = entrust_price;
     }
 
-    public float getAmount_money() {
-        return amount_money;
+    public int getEntrust_status() {
+        return entrust_status;
     }
 
-    public void setAmount_money(float amount_money) {
-        this.amount_money = amount_money;
+    public void setEntrust_status(int entrust_status) {
+        this.entrust_status = entrust_status;
     }
 
-    public String getStock_name() {
-        return stock_name;
-    }
-
-    public void setStock_name(String stock_name) {
-        this.stock_name = stock_name;
-    }
 }

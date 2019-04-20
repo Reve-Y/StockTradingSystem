@@ -3,6 +3,7 @@ package com.service.impls;
 import com.dao.HoldingDao;
 import com.dao.SecuritiesDao;
 import com.domain.Holdings;
+import com.github.pagehelper.PageHelper;
 import com.service.interfaces.DataService;
 import com.service.interfaces.SecuritiesService;
 import org.apache.log4j.Logger;
@@ -41,15 +42,26 @@ public class SecuritiesServiceImpl implements SecuritiesService {
     }
 
     /**
-     * 根据传入的证券账户查询当前持仓情况，返回一个list集合
+     * 根据传入的证券账户查询当前持仓情况，返回一个list集合,使用PageHelper分页查询，默认每页记录数为5,如果pageNum为0，则不分页，查询所有
      * @param securities_account_id 证券账户id
-     * @return List<Holdings>，查询到的集合
      */
     @Override
-    public List<Holdings> queryHoldingsBySid(String securities_account_id) {
-        log.info("根据证券账户 "+securities_account_id+" 查询持仓情况");
+    public List<Holdings> queryHoldingsBySid(String securities_account_id,int pageNum) {
+        log.info("begin --- 根据证券账户 "+securities_account_id+" 查询持仓情况");
+
+        PageHelper.offsetPage(pageNum,5);
         List<Holdings> list = holdingDao.queryHoldingsBySid(securities_account_id);
-        log.info("查询持仓信息完毕");
+        log.info("end --- 查询持仓信息完毕");
+
+        // 获取每只股票的现价
+        for (Holdings holdings : list){
+            holdings.setNow_price(dataService.queryCurrentStockPrice(holdings.getStock_code()));
+        }
         return list;
+    }
+
+    @Override
+    public int countNumberOfCompanyBySid(String securities_account_id) {
+        return holdingDao.countNumberOfCompanyBySid(securities_account_id);
     }
 }

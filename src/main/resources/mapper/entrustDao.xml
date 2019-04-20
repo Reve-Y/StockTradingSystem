@@ -19,4 +19,16 @@
     <select id="queryNumberOfEntrustBySid" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM TCURRENTENTRUST WHERE securities_account_id=#{securities_account_id}
     </select>
+
+    <select id="queryCurrentEntrustBySid" resultType="com.domain.CurrentEntrust">
+        SELECT * FROM TCURRENTENTRUST WHERE securities_account_id=#{securities_account_id}
+    </select>
+
+    <select id="queryHistoryEntrustBySid" resultType="com.domain.HistoryEntrust">
+        SELECT * FROM tHistoryEntrust WHERE securities_account_id=#{securities_account_id}
+    </select>
+
+    <select id="queryNumberOfHistoryEntBySid" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tHistoryEntrust WHERE securities_account_id=#{securities_account_id}
+    </select>
 </mapper>

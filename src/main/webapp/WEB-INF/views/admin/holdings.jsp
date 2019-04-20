@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>持仓明细</title>
+    <title>持仓信息</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -48,43 +48,44 @@
               <li class="nav-item">
                 <a class="nav-link " href="/admin">
                   <i class="material-icons">edit</i>
-                  <span>Home  </span>
+                  <span>基本信息 </span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/blog">
+                <a class="nav-link " href="/currentEntrust">
                   <i class="material-icons">vertical_split</i>
-                  <span>待定 </span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/newPost">
-                  <i class="material-icons">note_add</i>
-                  <span>Add New Post</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " href="/adminForm">
-                  <i class="material-icons">view_module</i>
-                  <span>Forms </span>
+                  <span>当前委托 </span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="/holdings">
                   <i class="material-icons">table_chart</i>
-                  <span>Holdings </span>
+                  <span>持仓信息 </span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="/userProfile">
+                <a class="nav-link " href="/dealRecord">
+                  <i class="material-icons">note_add</i>
+                  <span>成交记录</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/historyEntrust">
+                  <i class="material-icons">view_module</i>
+                  <span>历史委托 </span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="/userProfile">
                   <i class="material-icons">person</i>
-                  <span>User Profile</span>
+                  <span>更新信息</span>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/createAccount">
                   <i class="material-icons">edit</i>
-                  <span>Create Account</span>
+                  <span>自助开户</span>
                 </a>
               </li>
             </ul>
@@ -158,7 +159,8 @@
             </nav>
           </div>
           <!-- / .main-navbar -->
-          <div class="main-content-container container-fluid px-4">
+
+          <div class="main-content-container container-fluid px-4" id="holding">
             <!-- Page Header -->
             <div class="page-header row no-gutters py-4">
               <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
@@ -168,11 +170,11 @@
             </div>
             <!-- End Page Header -->
             <!-- Default Light Table -->
-            <div class="row" id="holding">
+            <div class="row" >
               <div class="col">
                 <div class="card card-small mb-4">
                   <div class="card-header border-bottom">
-                    <h6 class="m-0">当前持仓信息</h6>
+                    <h6 class="m-0">当前持仓信息:共拥有&nbsp;<span style="color: #c91f0b">{{count_company}}</span>&nbsp;家公司总计&nbsp;<span style="color: #dd250e">{{count_stock}}</span>&nbsp;股，总市值&nbsp;<span style="color: #df2210">{{market_value}}</span>&nbsp;元（人民币）</h6>
                   </div>
                   <div class="card-body p-0 pb-3 text-center">
                     <table class="table mb-0">
@@ -187,15 +189,14 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Ali</td>
-                          <td>Kerry</td>
-                          <td>Russian Federation</td>
-                          <td>Gdańsk</td>
-                          <td>107-0339</td>
+                        <tr v-for="(item,index) in holdingInfo">
+                          <td>{{index+1}}</td>
+                          <td>{{item.stock_name}}</td>
+                          <td>{{item.stock_code}}</td>
+                          <td>{{item.hold_amount}}</td>
+                          <td>{{item.buy_price}}</td>
+                          <td>{{item.now_price}}</td>
                         </tr>
-
                       </tbody>
                     </table>
                   </div>
@@ -203,8 +204,19 @@
               </div>
             </div>
             <!-- End Default Light Table -->
-
+              <!-- 分页条 -->
+              <div class="container">
+                <ul class="pagination pagination-lg " style="position:relative;left:50%;margin-left:-250px;">
+                  <li class="page-item"><a class="page-link" @click="getFirstPage()"><span style="color: #0cdbff">First</span></a></li>
+                  <li class="page-item"><a class="page-link" @click="getPreviousPage()"><span style="color: #0cdbff">Previous</span></a></li>
+                  <li class="page-item"><a class="page-link" >当前第&nbsp;<span style="color: purple">{{pageNum}}</span>&nbsp;页,共&nbsp;<span style="color:#4f004f">{{total}}</span>页</a></li>
+                  <li class="page-item"><a class="page-link" @click="getNextPage()"><span style="color: #0cdbff">Next</span></a></li>
+                  <li class="page-item"><a class="page-link" @click="getLastPage()"><span style="color: #0cdbff">Last</span></a></li>
+                </ul>
+              </div>
+              <!-- 分页条 end -->
           </div>
+
           <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
               <ul class="nav">
                   <li class="nav-item">

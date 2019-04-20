@@ -61,11 +61,11 @@ public class PageController {
             return new ModelAndView("login");
     }
 
-    // blog页面
-    @RequestMapping("blog")
+    // 当前委托
+    @RequestMapping("currentEntrust")
     public ModelAndView toBlogPage(HttpServletRequest request){
         if (checkSessionUserExists(request))
-            return new ModelAndView("admin/blog");
+            return new ModelAndView("admin/currentEntrust");
         else
             return new ModelAndView("login");
     }
@@ -80,15 +80,15 @@ public class PageController {
     }
 
     // 后台管理 表格页面
-    @RequestMapping("adminForm")
+    @RequestMapping("historyEntrust")
     public ModelAndView toAdminFormPage(HttpServletRequest request){
         if (checkSessionUserExists(request))
-            return new ModelAndView("admin/form");
+            return new ModelAndView("admin/historyEntrust");
         else
             return new ModelAndView("login");
     }
 
-    // 后台管理 持仓情况页
+    // 后台管理 持仓情况
     @RequestMapping("holdings")
     public ModelAndView toHoldingsPage(HttpServletRequest request){
         if (checkSessionUserExists(request))
@@ -97,16 +97,16 @@ public class PageController {
             return new ModelAndView("login");
     }
 
-    // 后台管理 post页
-    @RequestMapping("newPost")
+    // 后台管理 成交记录
+    @RequestMapping("dealRecord")
     public ModelAndView toPostPage(HttpServletRequest request){
         if (checkSessionUserExists(request))
-            return new ModelAndView("admin/newpost");
+            return new ModelAndView("admin/dealRecord");
         else
             return new ModelAndView("login");
     }
 
-    // 后台管理 用户信息页 userProfile
+    // 后台管理 更新信息 userProfile
     @RequestMapping("userProfile")
     public ModelAndView toUserProfilePage(HttpServletRequest request){
         if (checkSessionUserExists(request))

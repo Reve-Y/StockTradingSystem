@@ -10,9 +10,18 @@ public class Holdings {
     private String stock_name ;              // 股票名称
     private long hold_amount ;               // 持仓数量
     private float buy_price ;                // 买入时价格
+    private float now_price ;               //  现价 数据库表中没有此字段，后期获取
 
     public float getBuy_price() {
         return buy_price;
+    }
+
+    public float getNow_price() {
+        return now_price;
+    }
+
+    public void setNow_price(float now_price) {
+        this.now_price = now_price;
     }
 
     public void setBuy_price(float buy_price) {
@@ -53,12 +62,13 @@ public class Holdings {
 
     @Override
     public String toString() {
-        return "StockHolderInfo{" +
+        return "Holdings{" +
                 "securities_account_id='" + securities_account_id + '\'' +
-                ", stock_code=" + stock_code +
+                ", stock_code='" + stock_code + '\'' +
                 ", stock_name='" + stock_name + '\'' +
                 ", hold_amount=" + hold_amount +
                 ", buy_price=" + buy_price +
+                ", now_price=" + now_price +
                 '}';
     }
 }

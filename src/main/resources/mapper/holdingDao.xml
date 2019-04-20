@@ -7,4 +7,8 @@
     <select id="queryHoldingsBySid" resultType="com.domain.Holdings">
         SELECT * FROM tholdings WHERE securities_account_id = #{securities_account_id}
     </select>
+
+    <select id="countNumberOfCompanyBySid" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tholdings WHERE securities_account_id=#{securities_account_id}
+    </select>
 </mapper>

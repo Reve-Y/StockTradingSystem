@@ -206,9 +206,33 @@ public class UserController {
         if (user.getSecurities_account_id() == null || user.getSecurities_account_id() == "")
             return "";
         String securities_account_id = user.getSecurities_account_id();
-        List<Holdings> list = securitiesService.queryHoldingsBySid(securities_account_id);
+        int pageNum = Integer.parseInt(request.getParameter("pageNum"));    //  获取页码
+        Map<String, Object> map = new HashMap<>();
 
-        // 还要在加上现价哦
-        return JsonUtils.toJson(list);
+        List<Holdings> list = securitiesService.queryHoldingsBySid(securities_account_id,pageNum);
+        map.put("holdingInfo",list);
+
+        // 计算总市值
+        float marketValue = securitiesService.calTotalMarketValue(securities_account_id);
+        map.put("marketValue",marketValue);
+
+        // 计算证券种类数量（公司数），也是总记录条数
+        int count_company = securitiesService.countNumberOfCompanyBySid(securities_account_id);
+        map.put("count_company",count_company);
+
+        // 计算总页数
+        int total = count_company%5==0 ? (count_company/5) : (count_company/5+1);   // 计算总页数
+        map.put("total",total);
+
+        // 计算总持有数量
+        int count_stock = 0;
+        for (Holdings holdings : list)
+            count_stock += holdings.getHold_amount();
+        map.put("count_stock",count_stock);
+
+        pageNum = pageNum > 0 ? pageNum : 1 ; //  pageNum为0的时候重置pageNum为1
+        map.put("pageNum",pageNum) ;
+
+        return JsonUtils.toJson(map);
     }
 }

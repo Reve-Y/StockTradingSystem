@@ -43,7 +43,7 @@ public class QueryTest {
 
     @Test
     public void t4(){
-        List<Holdings> list = securitiesService.queryHoldingsBySid("A500271877");
+        List<Holdings> list = securitiesService.queryHoldingsBySid("A500271877",1);
         for (Holdings holdings : list)
             System.out.println(holdings.toString());
     }
