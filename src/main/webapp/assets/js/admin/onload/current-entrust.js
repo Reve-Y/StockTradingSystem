@@ -103,10 +103,29 @@ var ce = new Vue({
             var flag = confirm("确定撤单？")
             if (!flag)
                 return
-            var btn = e.target
 
-            console.log(btn.getAttribute("id"))
-            // 待实现
+            var that = this
+            var btn = e.target
+            // console.log(btn.getAttribute("id"))
+            var entrust_key = btn.getAttribute("id");
+
+            axios.get('/withdrawEntrust',{
+                params: {
+                    entrust_key:entrust_key
+                }
+            }).then(function (resp) {
+                // console.log(resp)
+                var resdata = resp.data
+                console.log(resdata.status)
+                if (resdata.status == "ok")
+                    alert("撤单成功")
+                else
+                    alert("撤单失败")
+                that.getFirstPage()
+            }).catch(function (err) {
+                console.log(err)
+            })
+
         }
     }
 })

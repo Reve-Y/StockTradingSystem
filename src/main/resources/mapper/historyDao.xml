@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.HistoryDao">
+
+    <insert id="addOneHistoryEntrust" parameterType="com.domain.CurrentEntrust">
+        INSERT into tHistoryEntrust
+        VALUES (he.nextval,#{entrust_date},#{securities_account_id},#{stock_code},
+        #{entrust_direction},#{entrust_amount},#{entrust_price},#{amount_money},0,#{entrust_key})
+    </insert>
+
+    <select id="queryHistoryEntrustBySid" resultType="com.domain.HistoryEntrust">
+        SELECT * FROM tHistoryEntrust WHERE securities_account_id=#{securities_account_id}
+    </select>
+
+    <select id="queryNumberOfHistoryEntBySid" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tHistoryEntrust WHERE securities_account_id=#{securities_account_id}
+    </select>
+
+    <update id="updateStatusToWithdrawByKey" parameterType="java.lang.String">
+        UPDATE tHistoryEntrust SET entrust_status=2 WHERE entrust_key=#{entrust_key}
+    </update>
+</mapper>

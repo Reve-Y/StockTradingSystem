@@ -9,13 +9,10 @@ import java.util.List;
 public interface EntrustDao {
     int addOneCurrentEntrust(CurrentEntrust ce);
 
-    int addOneHistoryEntrust(CurrentEntrust ce);
-
     int queryNumberOfEntrustBySid(@Param("securities_account_id") String securities_account_id);
 
     List<CurrentEntrust> queryCurrentEntrustBySid(@Param("securities_account_id") String securities_account_id);
 
-    List<HistoryEntrust> queryHistoryEntrustBySid(@Param("securities_account_id")String securities_account_id);
+    int withdrawEntrustByKey(@Param("entrust_key") String entrust_key);
 
-    int queryNumberOfHistoryEntBySid(@Param("securities_account_id")String securities_account_id);
 }

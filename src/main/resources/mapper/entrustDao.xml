@@ -10,12 +10,6 @@
                 #{entrust_direction},#{entrust_amount},#{entrust_price},#{amount_money},#{entrust_key})
     </insert>
 
-    <insert id="addOneHistoryEntrust" parameterType="com.domain.CurrentEntrust">
-        INSERT into tHistoryEntrust
-        VALUES (he.nextval,#{entrust_date},#{securities_account_id},#{stock_code},
-                #{entrust_direction},#{entrust_amount},#{entrust_price},#{amount_money},0,#{entrust_key})
-    </insert>
-
     <select id="queryNumberOfEntrustBySid" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM TCURRENTENTRUST WHERE securities_account_id=#{securities_account_id}
     </select>
@@ -24,11 +18,7 @@
         SELECT * FROM TCURRENTENTRUST WHERE securities_account_id=#{securities_account_id}
     </select>
 
-    <select id="queryHistoryEntrustBySid" resultType="com.domain.HistoryEntrust">
-        SELECT * FROM tHistoryEntrust WHERE securities_account_id=#{securities_account_id}
-    </select>
-
-    <select id="queryNumberOfHistoryEntBySid" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM tHistoryEntrust WHERE securities_account_id=#{securities_account_id}
-    </select>
+    <delete id="withdrawEntrustByKey" parameterType="java.lang.String">
+        DELETE FROM TCURRENTENTRUST WHERE entrust_key=#{entrust_key}
+    </delete>
 </mapper>

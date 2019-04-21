@@ -1,6 +1,7 @@
 package com.service.impls;
 
 import com.dao.EntrustDao;
+import com.dao.HistoryDao;
 import com.domain.CurrentEntrust;
 import com.domain.HistoryEntrust;
 import com.github.pagehelper.PageHelper;
@@ -23,6 +24,9 @@ public class EntrustServiceImpl implements EntrustService{
     @Autowired
     private DataService dataService;
 
+    @Autowired
+    private HistoryDao historyDao;
+
     /**
      *  普通委托 ： 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中
      * @param ce 传入的委托信息
@@ -35,7 +39,7 @@ public class EntrustServiceImpl implements EntrustService{
         flag = entrustDao.addOneCurrentEntrust(ce);
         if (flag == 1)
             log.info("向tCurrentEntrust表中插入委托记录成功");
-        flag += entrustDao.addOneHistoryEntrust(ce);
+        flag += historyDao.addOneHistoryEntrust(ce);
         if (flag == 2)
             log.info("向tHistoryEntrust表中插入委托记录成功,委托已受理");
         else
@@ -69,7 +73,7 @@ public class EntrustServiceImpl implements EntrustService{
     @Override
     public List<HistoryEntrust> queryHistoryEntrustBySid(String securities_account_id, int pageNum) {
         PageHelper.offsetPage(pageNum,5);
-        List<HistoryEntrust> list = entrustDao.queryHistoryEntrustBySid(securities_account_id);
+        List<HistoryEntrust> list = historyDao.queryHistoryEntrustBySid(securities_account_id);
 
         // 获取股票名称以及完成委托状态的转换
         for (HistoryEntrust historyEntrust : list){
@@ -89,6 +93,33 @@ public class EntrustServiceImpl implements EntrustService{
 
     @Override
     public int countNumberOfHistoryEntBySid(String securities_account_id) {
-        return entrustDao.queryNumberOfHistoryEntBySid(securities_account_id);
+        return historyDao.queryNumberOfHistoryEntBySid(securities_account_id);
+    }
+
+    /**
+     * 委托撤单 ： 1.删除当前委托记录 2 修改历史委托记录的委托状态
+     */
+    @Override
+    @Transactional
+    public int withdrawEntrustByKey(String entrust_key) {
+        log.info("开始执行撤单....key为"+entrust_key);
+        int flag = 0;
+
+        log.info("删除tCurrentEntrust表中entrust_key为"+entrust_key+"的记录");
+        flag += entrustDao.withdrawEntrustByKey(entrust_key);
+        if (flag == 1) {
+            log.info("....OK");
+        } else {
+            log.info("...fail");
+        }
+
+        log.info("修改tHistoryEntrust表中相应的状态...");
+        flag += historyDao.updateStatusToWithdrawByKey(entrust_key);
+        if (flag == 2) {
+            log.info("....OK，撤单成功");
+        } else {
+            log.info("...fail，撤单失败");
+        }
+        return flag;
     }
 }

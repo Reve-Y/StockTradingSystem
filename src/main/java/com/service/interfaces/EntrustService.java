@@ -15,4 +15,6 @@ public interface EntrustService {
     List<HistoryEntrust> queryHistoryEntrustBySid(String securities_account_id, int pageNum);
 
     int countNumberOfHistoryEntBySid(String securities_account_id);
+
+    int withdrawEntrustByKey(String entrust_key);
 }

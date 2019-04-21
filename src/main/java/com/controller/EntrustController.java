@@ -108,4 +108,22 @@ public class EntrustController {
 
         return JsonUtils.toJson(map);
     }
+
+    /**
+     *  委托撤单：根据每笔执行中的委托的唯一标识 entrust_key 来进行撤单
+     *  成功返回"ok",失败返回"fail"
+     */
+    @RequestMapping("withdrawEntrust")
+    @ResponseBody
+    public String withdrawEntrust(@Param("entrust_key")String entrust_key){
+        int flag = entrustService.withdrawEntrustByKey(entrust_key);
+        Map<String,String> map = new HashMap<>();
+
+        if(flag == 2) {
+            map.put("status","ok");
+        } else {
+            map.put("status","fail");
+        }
+        return JsonUtils.toJson(map);
+    }
 }

@@ -21,7 +21,7 @@ public class EntrustTest {
     public void t1(){
         CurrentEntrust ce = new CurrentEntrust();
         ce.setEntrust_date(DateUtils.getDateAndTime());
-        ce.setSecurities_account_id("A123456789");
+        ce.setSecurities_account_id("A500271877");
         ce.setStock_code("600570");
         ce.setEntrust_direction(1);
         ce.setEntrust_amount(200);
