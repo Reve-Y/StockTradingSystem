@@ -60,6 +60,11 @@ public class SecuritiesServiceImpl implements SecuritiesService {
         return list;
     }
 
+    /**
+     * 计算持仓中 公司的数量
+     * @param securities_account_id
+     * @return
+     */
     @Override
     public int countNumberOfCompanyBySid(String securities_account_id) {
         return holdingDao.countNumberOfCompanyBySid(securities_account_id);

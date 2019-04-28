@@ -19,7 +19,6 @@
     <link href="../../assets/css/now-ui-kit.css?v=1.2.0" rel="stylesheet" />
 
     <link href="../../assets/css/login/demo.css" rel="stylesheet" />
-    <%--<script src="../../js/common.js" type="text/javascript"></script>--%>
 </head>
 
 <body class="login-page sidebar-collapse">

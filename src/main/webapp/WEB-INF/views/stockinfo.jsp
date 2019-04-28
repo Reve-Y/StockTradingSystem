@@ -22,6 +22,7 @@
     <script src="../../assets/js/core/bootstrap.js"></script>
     <script src="../../assets/js/highcharts/highstock.js"></script>
     <script src="../../assets/js/highcharts/sand-signika.js"></script>
+    <script src="../../assets/js/stockinfo/stocktrade.js"></script>
 </head>
 <body>
     <%@include file="navbar.jsp"%>
@@ -33,96 +34,75 @@
         <div class="d2 dd">
             十档行情、其他信息
         </div>
-        <div class="d3 dd">
-            输入表单
-        </div>
+        <c:choose>
+            <c:when test="${empty user}">
+                <h5>点此<a href="/login">登录</a>以进行交易...</h5>
+            </c:when>
+            <c:otherwise>
+                <div class="d3 dd" id="entrust">
+                    <div class="d3-1 dd">
+
+                    </div>
+                    <div class="d3-2 dd">
+                        <form action="/doentrust" method="POST" @submit="checkForm">
+                            <br>
+                            <ul>
+                                <div class="input-group input-compo" style="width:281px">
+                                    <span class="input-group-addon" id="basic-addon1">证券代码</span>
+                                    <input type="text" class="form-control" style="width:200px" name="stock_code"
+                                           v-model="stock_code" aria-describedby="basic-addon1" @blur="getStockName">
+                                    <!-- <span style="width:"></span> -->
+                                </div>
+                                <div class="box"></div>
+                                <div class="message">{{message_stockname}}</div>
+                            </ul>
+                            <ul>
+                                <div class="input-group input-compo" style="width:281px">
+                                    <span class="input-group-addon" id="basic-addon2">委托方向</span>
+                                    <select class="form-control" style="width:200px" name="entrust_direction"
+                                            v-model="entrust_direction" @blur="getInfo" >
+                                        <option value="1" >买入</option>
+                                        <option value="2" >卖出</option>
+                                    </select>
+                                </div>
+                                <div class="box"></div>
+                                <div class="message"></div>
+                            </ul>
+                            <ul>
+                                <div class="input-group input-compo" style="width:281px">
+                                    <span class="input-group-addon" id="basic-addon3">委托数量</span>
+                                    <input type="text" class="form-control"  style="width:114px" name="entrust_amount"
+                                           v-model="entrust_amount" aria-describedby="basic-addon3">
+                                    <span class="input-group-addon">手(100股)</span>
+                                </div>
+                                <div class="box"></div>
+                                <div class="message">{{message_amount}}</div>
+                            </ul>
+                            <ul>
+                                <div class="input-group input-compo" style="width:281px">
+                                    <span class="input-group-addon" id="basic-addon4">委托价格</span>
+                                    <input type="text" class="form-control" style="width:161px" name="entrust_price"
+                                           v-model="entrust_price" aria-describedby="basic-addon4">
+                                    <span class="input-group-addon">元</span>
+                                </div>
+                                <div class="box"></div>
+                                <div class="message">{{message_price}}</div>
+                            </ul>
+                            <ul>
+                                <div class="input-group input-compo" style="width:281px">
+                                    <span class="input-group-addon" id="basic-addon5">委托金额</span>
+                                    <input type="text" class="form-control" style="width:161px" name="amount_money"
+                                           v-model="amount_money" aria-describedby="basic-addon5">
+                                    <span class="input-group-addon">元</span>
+                                </div>
+                                <div class="box"></div>
+                                <div class="message">{{message_balance}}</div>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </c:otherwise>
+        </c:choose>
     </div>
-    <script>
-        var ohlc = []
-        var volume = []
-        Highcharts.setOptions({
-            lang: {
-                rangeSelectorZoom: ' '
-            },
-            credits:{
-                enabled: false // 禁用版权信息
-            }
-        });
-        var chart = null
-        var app = new Vue({
-            el:"#stockinfo",
-            created : function () {
-               this.getData()
-            },
-            methods : {
-                getData : function () {
-                    axios.get('/getHistoryData',{
-                        params: {
-                            symbol:'sh600570',
-                            scale:'5',
-                            ma:'5',
-                            datalen:'1023',
-                        }
-                    }).then(function (resp) {
-                        console.log(resp.data)
-                        var stockdata = eval('('+resp.data+')')
-                        console.log(stockdata.length)
-                        console.log(stockdata)
-                        // split the data set into ohlc and volume
-                        var i = 0
-                        for (i; i < stockdata.length; i += 1) {
-                            ohlc.push([
-                                (new Date(stockdata[i].day)).getTime(),
-                                parseFloat(stockdata[i].open),
-                                parseFloat(stockdata[i].high),
-                                parseFloat(stockdata[i].low),
-                                parseFloat(stockdata[i].close)
-                            ]);
-                            volume.push([
-                                (new Date(stockdata[i].day)).getTime(),
-                                parseInt(stockdata[i].volume)
-                            ]);
-                        }
-                        chart = Highcharts.stockChart('stockinfo', {
-                            yAxis: [{
-                                labels: {
-                                    align: 'left'
-                                },
-                                height: '80%',
-                                resize: {
-                                    enabled: true
-                                }
-                            }, {
-                                labels: {
-                                    align: 'left'
-                                },
-                                top: '80%',
-                                height: '20%',
-                                offset: 0
-                            }],
-                            tooltip: {
-                                split: false,
-                                shared: true,
-                            },
-                            series: [{
-                                type: 'candlestick',
-                                id: 'HS-ohlc',
-                                name: '恒生电子',
-                                data: ohlc
-                            }, {
-                                type: 'column',
-                                id: 'HS-volume',
-                                name: 'HS Volume',
-                                data: volume,
-                                yAxis: 1
-                            }],
-                        });
-                    }).catch(function (err) {
-                        console.log(err)
-                    })
-                }
-            }
-        })
-    </script>
 </body>
 </html>

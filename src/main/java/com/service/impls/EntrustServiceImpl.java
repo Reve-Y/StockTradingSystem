@@ -47,6 +47,11 @@ public class EntrustServiceImpl implements EntrustService{
         return flag;
     }
 
+    /**
+     * 获取该证券账户下当前正在执行的委托的数量
+     * @param securities_account_id
+     * @return
+     */
     @Override
     public int countNumberOfEntrustBySid(String securities_account_id) {
         log.info("begin 根据证券账户"+securities_account_id+"获取当前委托笔数");
@@ -55,6 +60,12 @@ public class EntrustServiceImpl implements EntrustService{
         return count;
     }
 
+    /**
+     * 获取第pageNum页当前正在执行的委托
+     * @param securities_account_id
+     * @param pageNum 页号
+     * @return
+     */
     @Override
     public List<CurrentEntrust> queryCurrentEntrustBySid(String securities_account_id, int pageNum) {
         log.info("begin--开始获取第"+pageNum+"页当前委托");
@@ -70,6 +81,12 @@ public class EntrustServiceImpl implements EntrustService{
         return list;
     }
 
+    /**
+     * 获取第pageNum页历史委托信息
+     * @param securities_account_id
+     * @param pageNum 页号
+     * @return
+     */
     @Override
     public List<HistoryEntrust> queryHistoryEntrustBySid(String securities_account_id, int pageNum) {
         PageHelper.offsetPage(pageNum,5);
@@ -91,6 +108,11 @@ public class EntrustServiceImpl implements EntrustService{
         return list;
     }
 
+    /**
+     * 获取该证券账户下历史委托的总记录数
+     * @param securities_account_id
+     * @return
+     */
     @Override
     public int countNumberOfHistoryEntBySid(String securities_account_id) {
         return historyDao.queryNumberOfHistoryEntBySid(securities_account_id);

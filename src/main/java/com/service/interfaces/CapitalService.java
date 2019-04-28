@@ -8,4 +8,6 @@ public interface CapitalService {
     CapitalAccount getCapitalAccountBySecuritiesId(String securities_account_id);
 
     String getAccountIdBySid(String securities_account_id);
+
+    String queryEnableBalanceByCid(String capital_id);
 }

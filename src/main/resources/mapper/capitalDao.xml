@@ -17,4 +17,8 @@
     <select id="queryAccountInfoById" resultType="com.domain.CapitalAccount">
         SELECT * FROM TCAPITALACCOUNT WHERE account_id = #{account_id}
     </select>
+
+    <select id="queryEnableBalanceByCid" resultType="java.lang.Float">
+        SELECT ENABLE_BALANCE FROM TCAPITALACCOUNT WHERE account_id = #{account_id}
+    </select>
 </mapper>
