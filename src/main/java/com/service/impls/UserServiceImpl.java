@@ -25,7 +25,11 @@ public class UserServiceImpl implements UserService{
     @Autowired
     public CapitalDao capitalDao;
 
-    //  用户注册
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
     @Override
     public int addUser(User user) {
         log.info("开始注册 ");
@@ -37,12 +41,23 @@ public class UserServiceImpl implements UserService{
         return flag;
     }
 
+    /**
+     * 校验登录信息，返回查询到的用户信息
+     * @param telephone
+     * @param password
+     * @return
+     */
     @Override
     public User login(String telephone, String password) {
         log.info("开始验证登录信息");
         return userDao.login(telephone,password);
     }
 
+    /**
+     * 更新用户信息
+     * @param user
+     * @return 返回被影响的记录数
+     */
     @Override
     public int updateUserInfo(User user) {
         log.info("开始更新用户："+user.getTelephone()+" 信息...");
@@ -54,7 +69,7 @@ public class UserServiceImpl implements UserService{
      * @param telephone 开户用户的手机号
      * @param sa 证券账户
      * @param ca 资金账户
-     * @return
+     * @return 返回被影响的记录数 返回 3 时表示开户成功
      */
     @Override
     @Transactional

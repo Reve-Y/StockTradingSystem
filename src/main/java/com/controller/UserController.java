@@ -4,10 +4,7 @@ import com.domain.CapitalAccount;
 import com.domain.Holdings;
 import com.domain.SecuritiesAccount;
 import com.domain.User;
-import com.service.interfaces.CapitalService;
-import com.service.interfaces.EntrustService;
-import com.service.interfaces.SecuritiesService;
-import com.service.interfaces.UserService;
+import com.service.interfaces.*;
 import com.util.DateUtils;
 import com.util.JsonUtils;
 import org.apache.log4j.Logger;
@@ -39,6 +36,9 @@ public class UserController {
     @Autowired
     private EntrustService entrustService;
 
+    @Autowired
+    private DataService dataService;
+
     /**
      * 注册，完成后默认直接登录，并跳转到后台管理页面
      */
@@ -68,7 +68,9 @@ public class UserController {
         String telephone = request.getParameter("telephone");
         String password = request.getParameter("password");
         log.info("获取到请求登录信息： 手机号为："+telephone+" ; 密码为："+password);
+
         User user = userService.login(telephone,password);
+
         if(user == null || (user.getUser_id() == 0)){
             log.info("登录失败，跳转到登录页面");
             return new ModelAndView("login");
@@ -139,12 +141,16 @@ public class UserController {
         ca.setBank_name(request.getParameter("bank"));
         ca.setBank_card_number(request.getParameter("bankcard"));
         ca.setAccount_balance(Float.parseFloat(request.getParameter("balance")));
+        ca.setEnable_balance(Float.parseFloat(request.getParameter("balance")));
         log.info("用户"+telephone+"开始开户");
         log.info("证券账户信息为： "+sa.toString());
         log.info("资金账户信息为： "+ca.toString());
         int flag = userService.openAccount(telephone,sa,ca);
         if (flag == 3) {
             log.info("用户"+telephone+"开户成功...");
+            User user = (User) request.getSession().getAttribute("user");
+            user.setSecurities_account_id(sa.getSecurities_account_id());
+            request.getSession().setAttribute("user",user);
             return new ModelAndView("admin/holdings");
         }else{
             log.info("用户"+telephone+"开户失败...");
@@ -232,6 +238,30 @@ public class UserController {
 
         pageNum = pageNum > 0 ? pageNum : 1 ; //  pageNum为0的时候重置pageNum为1
         map.put("pageNum",pageNum) ;
+
+        return JsonUtils.toJson(map);
+    }
+
+    /**
+     * 获取单只股票持仓信息
+     * 返回 现价、可用数量
+     */
+    @RequestMapping("getHoldingInfoByStockCode")
+    @ResponseBody
+    public String getHoldingInfo(HttpServletRequest request){
+        Map<String,String> map = new HashMap<>();
+        User user = (User) request.getSession().getAttribute("user");
+        String securities_account_id = user.getSecurities_account_id();
+        if (securities_account_id == null || securities_account_id == "") {
+            map.put("errCode","1");
+            return JsonUtils.toJson(map);
+        }
+        map.put("errCode","0");
+
+        String stock_code = request.getParameter("stock_code");
+        long hold_amount = securitiesService.queryEnableAmountByStockAndSid(securities_account_id,stock_code);
+        map.put("hold_amount", String.valueOf(hold_amount));   // 当前该支股票持仓可用数量
+        map.put("current_price", String.valueOf(dataService.queryCurrentStockPrice(stock_code)));
 
         return JsonUtils.toJson(map);
     }

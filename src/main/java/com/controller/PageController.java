@@ -70,7 +70,7 @@ public class PageController {
             return new ModelAndView("login");
     }
 
-    // admin/create 页面
+    // admin/create 开户页面
     @RequestMapping("createAccount")
     public ModelAndView toErrorsPage(HttpServletRequest request){
         if (checkSessionUserExists(request))

@@ -56,6 +56,8 @@ public class DataController {
     /**
      * 在交易界面输入完证券代码后，获取相应的证券名称并显示
      */
+    @RequestMapping("getStockNameByCode")
+    @ResponseBody
     public String getStockNameByCode(@Param("stock_code")String stock_code){
         Map<String,String> map = new HashMap<>();
         map.put("stock_name",dataService.getStockName(stock_code));
@@ -66,24 +68,25 @@ public class DataController {
      *  试图买入某只股票时获取的数据，返回一些账户信息和该支股票的信息
      *  具体包括这只股票的现价、以及当前登录用户的余额信息等
      */
+    @RequestMapping("getBuyInfoByStockCode")
+    @ResponseBody
     public String getBuyInfoByStockCode(HttpServletRequest request){
         Map<String,String> map = new HashMap<>();
         User user = (User) request.getSession().getAttribute("user");
         String securities_account_id = user.getSecurities_account_id();
         if (securities_account_id == null || securities_account_id == "") {
             map.put("errCode","1");
-            map.put("errMsg","尚未开户");
             return JsonUtils.toJson(map);
         }
         map.put("errCode","0");  //  0 表示ok
 
         // 获取这只股票的现价
         String stock_code = request.getParameter("stock_code");
-        map.put("current_price", String.valueOf(dataService.queryCurrentStockPrice(stock_code)));
+        map.put("current_price", Float.toString(dataService.queryCurrentStockPrice(stock_code)));
 
         // 获取账户可用余额
         String capital_id = capitalService.getAccountIdBySid(securities_account_id);
-        map.put("balance",capitalService.queryEnableBalanceByCid(capital_id));
+        map.put("enable_balance",String.valueOf(capitalService.queryEnableBalanceByCid(capital_id)));
 
         return JsonUtils.toJson(map);
     }

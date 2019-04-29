@@ -50,6 +50,7 @@ public class EntrustController {
         ce.setAmount_money(amountOfMoney);
         ce.setEntrust_key(UUIDUtils.getUUID());
         int flag = 0;
+
         flag = entrustService.normalEntrust(ce);
         return flag;
     }

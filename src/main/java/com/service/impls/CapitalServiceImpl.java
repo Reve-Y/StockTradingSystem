@@ -51,7 +51,7 @@ public class CapitalServiceImpl implements CapitalService{
      * @return enable_balance 可用余额
      */
     @Override
-    public String queryEnableBalanceByCid(String capital_id) {
+    public float queryEnableBalanceByCid(String capital_id) {
         return capitalDao.queryEnableBalanceByCid(capital_id);
     }
 

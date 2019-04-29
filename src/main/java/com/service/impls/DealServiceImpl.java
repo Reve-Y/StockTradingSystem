@@ -22,6 +22,12 @@ public class DealServiceImpl implements DealService {
     @Autowired
     private DataService dataService;
 
+    /**
+     * 根据证券账号获取pageNum页的成交记录
+     * @param securities_account_id
+     * @param pageNum
+     * @return
+     */
     @Override
     public List<RealDeal> queryDealRecordBySid(String securities_account_id, int pageNum) {
         log.info("begin--开始获取第"+pageNum+"页成交记录");
@@ -37,6 +43,11 @@ public class DealServiceImpl implements DealService {
         return list;
     }
 
+    /**
+     * 计算该证券账户下的总成交记录条数
+     * @param securities_account_id
+     * @return
+     */
     @Override
     public int countNumberOfDealsBySid(String securities_account_id) {
         return dealDao.queryNumberOfDealBySid(securities_account_id);

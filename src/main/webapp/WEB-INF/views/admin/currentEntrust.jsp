@@ -178,7 +178,7 @@
                     <h6 class="m-0">当前委托总条数：&nbsp;<span style="color:#ff130e">{{count_entrust}}</span>&nbsp;</h6>
                   </div>
                   <div class="card-body p-0 pb-3 text-center">
-                    <table class="table mb-0">
+                    <table class="table mb-0 table-striped">
                       <thead class="bg-light">
                       <tr>
                         <th scope="col" class="border-0">#</th>

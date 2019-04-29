@@ -10,5 +10,5 @@ public interface CapitalDao {
 
     CapitalAccount queryAccountInfoById(@Param("account_id") String account_id);
 
-    String queryEnableBalanceByCid(@Param("account_id") String account_id);
+    float queryEnableBalanceByCid(@Param("account_id") String account_id);
 }

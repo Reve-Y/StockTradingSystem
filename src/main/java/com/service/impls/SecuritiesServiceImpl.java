@@ -42,7 +42,8 @@ public class SecuritiesServiceImpl implements SecuritiesService {
     }
 
     /**
-     * 根据传入的证券账户查询当前持仓情况，返回一个list集合,使用PageHelper分页查询，默认每页记录数为5,如果pageNum为0，则不分页，查询所有
+     * 根据传入的证券账户查询当前持仓情况，返回一个list集合,使用PageHelper分页查询，
+     * 默认每页记录数为5,如果pageNum为0，则不分页，查询所有
      * @param securities_account_id 证券账户id
      */
     @Override
@@ -69,4 +70,17 @@ public class SecuritiesServiceImpl implements SecuritiesService {
     public int countNumberOfCompanyBySid(String securities_account_id) {
         return holdingDao.countNumberOfCompanyBySid(securities_account_id);
     }
+
+    /**
+     * 根据证券账户和证券代码查询当前账户下持有该证券的可用数量
+     * @param securities_account_id
+     * @param stock_code
+     * @return
+     */
+    @Override
+    public long queryEnableAmountByStockAndSid(String securities_account_id, String stock_code) {
+        return 0;
+    }
+
+
 }

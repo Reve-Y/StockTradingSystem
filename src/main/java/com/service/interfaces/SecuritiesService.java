@@ -10,4 +10,6 @@ public interface SecuritiesService {
     List<Holdings> queryHoldingsBySid(String securities_account_id,int pageNum);
 
     int countNumberOfCompanyBySid(String securities_account_id);
+
+    long queryEnableAmountByStockAndSid(String securities_account_id, String stock_code);
 }

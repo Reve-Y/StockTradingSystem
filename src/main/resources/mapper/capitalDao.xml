@@ -7,7 +7,7 @@
 
     <insert id="insertOneRecord" parameterType="com.domain.CapitalAccount">
         INSERT into tcapitalaccount
-          VALUES (#{account_id},#{bank_name},#{bank_card_number},0,#{account_balance},0)
+          VALUES (#{account_id},#{bank_name},#{bank_card_number},0,#{account_balance},#{enable_balance})
     </insert>
 
     <select id="queryAccountIdBySecuritiesId" resultType="java.lang.String">

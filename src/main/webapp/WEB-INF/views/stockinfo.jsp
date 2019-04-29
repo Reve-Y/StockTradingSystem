@@ -22,7 +22,7 @@
     <script src="../../assets/js/core/bootstrap.js"></script>
     <script src="../../assets/js/highcharts/highstock.js"></script>
     <script src="../../assets/js/highcharts/sand-signika.js"></script>
-    <script src="../../assets/js/stockinfo/stocktrade.js"></script>
+
 </head>
 <body>
     <%@include file="navbar.jsp"%>
@@ -36,7 +36,13 @@
         </div>
         <c:choose>
             <c:when test="${empty user}">
-                <h5>点此<a href="/login">登录</a>以进行交易...</h5>
+                <div class="d3 dd" id="entrust">
+                    <div class="d3-1 dd">
+                        <h4>点此<a href="/login">登录</a>以进行交易...</h4>
+                    </div>
+                    <div class="d3-2 dd">
+                    </div>
+                </div>
             </c:when>
             <c:otherwise>
                 <div class="d3 dd" id="entrust">
@@ -51,10 +57,9 @@
                                     <span class="input-group-addon" id="basic-addon1">证券代码</span>
                                     <input type="text" class="form-control" style="width:200px" name="stock_code"
                                            v-model="stock_code" aria-describedby="basic-addon1" @blur="getStockName">
-                                    <!-- <span style="width:"></span> -->
                                 </div>
                                 <div class="box"></div>
-                                <div class="message">{{message_stockname}}</div>
+                                <div class="message" id="m1"><a @click="getStockDetail" class="info">{{message_stockname}}</a></div>
                             </ul>
                             <ul>
                                 <div class="input-group input-compo" style="width:281px">
@@ -66,7 +71,7 @@
                                     </select>
                                 </div>
                                 <div class="box"></div>
-                                <div class="message"></div>
+                                <div class="message" id="m2"></div>
                             </ul>
                             <ul>
                                 <div class="input-group input-compo" style="width:281px">
@@ -76,7 +81,7 @@
                                     <span class="input-group-addon">手(100股)</span>
                                 </div>
                                 <div class="box"></div>
-                                <div class="message">{{message_amount}}</div>
+                                <div class="message" id="m3">{{message_amount}}</div>
                             </ul>
                             <ul>
                                 <div class="input-group input-compo" style="width:281px">
@@ -86,7 +91,7 @@
                                     <span class="input-group-addon">元</span>
                                 </div>
                                 <div class="box"></div>
-                                <div class="message">{{message_price}}</div>
+                                <div class="message" id="m4">{{message_price}}</div>
                             </ul>
                             <ul>
                                 <div class="input-group input-compo" style="width:281px">
@@ -96,7 +101,7 @@
                                     <span class="input-group-addon">元</span>
                                 </div>
                                 <div class="box"></div>
-                                <div class="message">{{message_balance}}</div>
+                                <div class="message" id="m5">{{message_balance}}</div>
                             </ul>
                         </form>
                     </div>
@@ -104,5 +109,7 @@
             </c:otherwise>
         </c:choose>
     </div>
+
+    <script src="../../assets/js/stockinfo/stocktrade.js"></script>
 </body>
 </html>
