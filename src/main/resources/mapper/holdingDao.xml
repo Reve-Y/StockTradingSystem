@@ -11,4 +11,22 @@
     <select id="countNumberOfCompanyBySid" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM tholdings WHERE securities_account_id=#{securities_account_id}
     </select>
+
+    <select id="queryOneEnableAmount" resultType="java.lang.Long">
+        SELECT nvl(MAX(enable_amount),0) as enable_amount FROM tholdings
+           WHERE SECURITIES_ACCOUNT_ID=#{securities_account_id} AND STOCK_CODE=#{stock_code}
+    </select>
+
+    <update id="updateOneHoldingRecord" parameterType="com.domain.Holdings">
+        UPDATE tholdings
+          SET HOLD_AMOUNT=#{hold_amount},
+              BUY_PRICE=#{buy_price},
+              ENABLE_AMOUNT=#{enable_amount}
+          WHERE SECURITIES_ACCOUNT_ID=#{securities_account_id} AND STOCK_CODE=#{stock_code}
+    </update>
+
+    <select id="queryOneHoldingInfo" resultType="com.domain.Holdings">
+        SELECT * FROM tholdings
+        WHERE SECURITIES_ACCOUNT_ID=#{securities_account_id} AND STOCK_CODE=#{stock_code}
+    </select>
 </mapper>

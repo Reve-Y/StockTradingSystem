@@ -24,6 +24,10 @@ import java.util.Map;
 public class UserController {
     private static Logger log= Logger.getLogger(UserController.class);
 
+    // 错误码:没什么必要用
+//    public static final int ACCOUNT_ERROR = 1 ; //  未开户
+//    public static final int STOCK_ERROR = 2 ;   //  证券代码不合法
+
     @Autowired
     private UserService userService;
 
@@ -132,8 +136,10 @@ public class UserController {
         String telephone = (String) request.getSession().getAttribute("logintel");
         SecuritiesAccount sa = new SecuritiesAccount();
         CapitalAccount ca = new CapitalAccount();
+
+        //  dataService.checkSecuritiesAndCapital();  先检查账号合法性，随机出来的数据是否重复了
+
         sa.setSecurities_account_id(request.getParameter("securities"));
-        //  dataService.checkSecuritiesAndCapital();检查账号合法性
         sa.setSecurities_company_name(request.getParameter("company"));
         sa.setOpen_date(request.getParameter("opendate"));
         sa.setAccount_id(request.getParameter("capital1"));
@@ -142,9 +148,11 @@ public class UserController {
         ca.setBank_card_number(request.getParameter("bankcard"));
         ca.setAccount_balance(Float.parseFloat(request.getParameter("balance")));
         ca.setEnable_balance(Float.parseFloat(request.getParameter("balance")));
+
         log.info("用户"+telephone+"开始开户");
         log.info("证券账户信息为： "+sa.toString());
         log.info("资金账户信息为： "+ca.toString());
+
         int flag = userService.openAccount(telephone,sa,ca);
         if (flag == 3) {
             log.info("用户"+telephone+"开户成功...");
@@ -168,12 +176,26 @@ public class UserController {
         Map<String,String> map = new HashMap<>();
         User user = (User) request.getSession().getAttribute("user");
         String securities_account_id = user.getSecurities_account_id();
+
+        // 没有开户时
+        if (securities_account_id == null || securities_account_id == ""){
+            map.put("total_market_value","0");
+            map.put("enable_balance","0");
+            map.put("frozen_balance","0");
+            map.put("earnings","0");
+            map.put("entrust_num","0");
+            map.put("telephone",user.getTelephone());
+            map.put("nickname",user.getNickname());
+            map.put("securitiesAccount","");
+            map.put("capitalAccount","");
+            map.put("email",user.getEmail());
+            return JsonUtils.toJson(map);
+        }
+
         float marketValue = 0.0f;
 
         // 1. 获取当前持仓信息：证券代码和持有数量
-        if (user.getSecurities_account_id() != "" && user.getSecurities_account_id() != null){
-           marketValue = securitiesService.calTotalMarketValue(securities_account_id);
-        }
+        marketValue = securitiesService.calTotalMarketValue(securities_account_id);
 
         // 2. 获取当前资金情况: 可用余额和冻结金额
         CapitalAccount ca = capitalService.getCapitalAccountBySecuritiesId(securities_account_id);
@@ -253,14 +275,20 @@ public class UserController {
         User user = (User) request.getSession().getAttribute("user");
         String securities_account_id = user.getSecurities_account_id();
         if (securities_account_id == null || securities_account_id == "") {
-            map.put("errCode","1");
+            map.put("errCode", "1");
             return JsonUtils.toJson(map);
         }
-        map.put("errCode","0");
 
         String stock_code = request.getParameter("stock_code");
-        long hold_amount = securitiesService.queryEnableAmountByStockAndSid(securities_account_id,stock_code);
-        map.put("hold_amount", String.valueOf(hold_amount));   // 当前该支股票持仓可用数量
+        if (!dataService.checkStockCode(stock_code)) {
+            map.put("errCode", "2");
+            return JsonUtils.toJson(map);
+        }
+
+        map.put("errCode","0");
+
+        long enable_amount = securitiesService.queryEnableAmountByStockAndSid(securities_account_id,stock_code);
+        map.put("enable_amount", String.valueOf(enable_amount));   // 当前该支股票持仓可用数量
         map.put("current_price", String.valueOf(dataService.queryCurrentStockPrice(stock_code)));
 
         return JsonUtils.toJson(map);

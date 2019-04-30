@@ -1,4 +1,4 @@
-### 数据库表设计：  
+### 数据库表设计： 不更新了，直接看数据字典吧  路径：pdm/StockTrade.pdm
 #### 模拟流程    
     注册(User) --> 开立证券账户(SecuritiesAccount)--> 开立资金账户(CapitalAccount) --> 委托
 

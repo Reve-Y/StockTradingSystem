@@ -2,6 +2,7 @@ package com.query;
 
 import com.domain.Holdings;
 import com.service.interfaces.CapitalService;
+import com.service.interfaces.DataService;
 import com.service.interfaces.EntrustService;
 import com.service.interfaces.SecuritiesService;
 import org.junit.Test;
@@ -25,6 +26,9 @@ public class QueryTest {
     @Autowired
     private EntrustService entrustService;
 
+    @Autowired
+    private DataService dataService;
+
     @Test
     public void t1(){
         System.out.println(securitiesService.calTotalMarketValue("A500271877"));
@@ -46,5 +50,10 @@ public class QueryTest {
         List<Holdings> list = securitiesService.queryHoldingsBySid("A500271877",1);
         for (Holdings holdings : list)
             System.out.println(holdings.toString());
+    }
+
+    @Test
+    public void t5(){
+        System.out.println(dataService.checkIfAccountExist("A836342142","60467723"));
     }
 }

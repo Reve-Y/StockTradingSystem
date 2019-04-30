@@ -60,6 +60,10 @@ public class DataController {
     @ResponseBody
     public String getStockNameByCode(@Param("stock_code")String stock_code){
         Map<String,String> map = new HashMap<>();
+        if (!dataService.checkStockCode(stock_code)){
+            map.put("errCode","2");
+            return JsonUtils.toJson(map);
+        }
         map.put("stock_name",dataService.getStockName(stock_code));
         return JsonUtils.toJson(map);
     }
@@ -78,10 +82,16 @@ public class DataController {
             map.put("errCode","1");
             return JsonUtils.toJson(map);
         }
+
+        String stock_code = request.getParameter("stock_code");
+        if (!dataService.checkStockCode(stock_code)){
+            map.put("errCode","2");
+            return JsonUtils.toJson(map);
+        }
+
         map.put("errCode","0");  //  0 表示ok
 
         // 获取这只股票的现价
-        String stock_code = request.getParameter("stock_code");
         map.put("current_price", Float.toString(dataService.queryCurrentStockPrice(stock_code)));
 
         // 获取账户可用余额
@@ -89,5 +99,17 @@ public class DataController {
         map.put("enable_balance",String.valueOf(capitalService.queryEnableBalanceByCid(capital_id)));
 
         return JsonUtils.toJson(map);
+    }
+
+    /**
+     * 检查证券账户和资金账户是否已存在
+     */
+    @RequestMapping("checkIfAccountExist")
+    public String checkIfAccountExist(@Param("sid")String sid,@Param("cid") String cid){
+        int flag = dataService.checkIfAccountExist(sid,cid);
+        if (flag == 0)
+            return "ok";
+        else
+            return "fail";
     }
 }

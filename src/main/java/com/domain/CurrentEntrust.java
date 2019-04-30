@@ -74,7 +74,7 @@ public class CurrentEntrust {
                 ", securities_account_id='" + securities_account_id + '\'' +
                 ", stock_code='" + stock_code + '\'' +
                 ", stock_name='" + stock_name + '\'' +
-                ", entrust_direction=" + entrust_direction +
+                ", entrust_direction=" + (entrust_direction == 1 ? "买入":"卖出") +
                 ", entrust_amount=" + entrust_amount +
                 ", entrust_price=" + entrust_price +
                 ", amount_money=" + amount_money +

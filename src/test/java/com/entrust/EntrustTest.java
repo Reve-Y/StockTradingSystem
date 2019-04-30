@@ -21,14 +21,15 @@ public class EntrustTest {
     public void t1(){
         CurrentEntrust ce = new CurrentEntrust();
         ce.setEntrust_date(DateUtils.getDateAndTime());
-        ce.setSecurities_account_id("A500271877");
-        ce.setStock_code("600570");
-        ce.setEntrust_direction(1);
-        ce.setEntrust_amount(200);
-        ce.setEntrust_price(20.0f);
-        ce.setAmount_money(600.0f);
+        ce.setSecurities_account_id("A708624373");
+        ce.setStock_code("600000");
+        ce.setEntrust_direction(2);
+        ce.setEntrust_amount(1300);
+        ce.setEntrust_price(12.0f);
+        ce.setAmount_money(0);
         ce.setEntrust_key(UUIDUtils.getUUID());
-//        int flag = entrustService.normalEntrust(ce);
-//        System.out.println(flag);
+        int flag = 0;
+//      flag = entrustService.normalEntrust(ce);
+        System.out.println(flag);
     }
 }

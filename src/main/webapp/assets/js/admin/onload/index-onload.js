@@ -24,6 +24,7 @@ var app1 = new Vue({
             }).then(function (resp) {
                 console.log(resp.data)
                 var resdata = resp.data
+
                 that.total_market_value = resdata.total_market_value
                 that.earnings = resdata.earnings
                 that.enable_balance = resdata.enable_balance

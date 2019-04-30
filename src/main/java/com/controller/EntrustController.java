@@ -4,6 +4,7 @@ import com.domain.CurrentEntrust;
 import com.domain.HistoryEntrust;
 import com.domain.Holdings;
 import com.domain.User;
+import com.service.interfaces.DataService;
 import com.service.interfaces.EntrustService;
 import com.util.DateUtils;
 import com.util.JsonUtils;
@@ -25,34 +26,37 @@ public class EntrustController {
     @Autowired
     private EntrustService entrustService;
 
+    @Autowired
+    private DataService dataService;
+
     /**
      * 普通委托
-     * 传入的信息在这里不做校验，前端已做过相关校验
+     * 如果没有开户前端是不会发送请求的，所以这里只校验传入的证券代码是否合理
      */
     @RequestMapping("doentrust")
-    public int doEntrust(HttpServletRequest request){
+    @ResponseBody
+    public String doEntrust(HttpServletRequest request){
+        if (!dataService.checkStockCode(request.getParameter("stock_code"))){
+            return "fail";
+        }
+
         User user = (User) request.getSession().getAttribute("user");
         // 获取委托信息
-        String securitiesAccount = user.getSecurities_account_id();
-        String date = DateUtils.getDateAndTime();
-        String stockCode = request.getParameter("stockcode");
-        int entrustDirection = Integer.parseInt(request.getParameter("entrustdirection"));
-        long entrustAmount = Long.parseLong(request.getParameter("entrustamount"));
-        float entrustPrice = Float.parseFloat(request.getParameter("entrustprice"));
-        float amountOfMoney = entrustAmount * entrustPrice;
         CurrentEntrust ce = new CurrentEntrust();
-        ce.setEntrust_date(date);
-        ce.setSecurities_account_id(securitiesAccount);
-        ce.setStock_code(stockCode);
-        ce.setEntrust_direction(entrustDirection);
-        ce.setEntrust_amount(entrustAmount);
-        ce.setEntrust_price(entrustPrice);
-        ce.setAmount_money(amountOfMoney);
+
+        ce.setEntrust_date(DateUtils.getDateAndTime());
+        ce.setSecurities_account_id(user.getSecurities_account_id());
+        ce.setStock_code(request.getParameter("stock_code"));
+        ce.setEntrust_direction(Integer.parseInt(request.getParameter("entrust_direction")));
+        ce.setEntrust_amount(Long.parseLong(request.getParameter("entrust_amount")));
+        ce.setEntrust_price(Float.parseFloat(request.getParameter("entrust_price")));
+        ce.setAmount_money(Float.parseFloat(request.getParameter("amount_money")));
         ce.setEntrust_key(UUIDUtils.getUUID());
+
         int flag = 0;
 
         flag = entrustService.normalEntrust(ce);
-        return flag;
+        return (flag == 0 ? "fail" : "ok" );
     }
 
     /**

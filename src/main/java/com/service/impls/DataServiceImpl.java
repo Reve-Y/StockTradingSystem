@@ -1,8 +1,12 @@
 package com.service.impls;
 
+import com.dao.CapitalDao;
+import com.dao.SecuritiesDao;
 import com.service.interfaces.DataService;
+import com.service.interfaces.SecuritiesService;
 import com.util.HttpUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -14,6 +18,12 @@ import java.net.URL;
 @Service
 public class DataServiceImpl implements DataService {
     private static Logger log = Logger.getLogger(DataServiceImpl.class);
+
+    @Autowired
+    private SecuritiesDao securitiesDao;
+
+    @Autowired
+    private CapitalDao capitalDao;
 
     /**
      * 获取某只股票近日的行情数据
@@ -34,7 +44,7 @@ public class DataServiceImpl implements DataService {
     }
 
     /**
-     * 获取某只股票当前的价格
+     * 获取某只股票当前的价格：url示例：http://hq.sinajs.cn/list=sh600570
      * @param stock_code 证券代码
      * @return 现价
      */
@@ -85,5 +95,46 @@ public class DataServiceImpl implements DataService {
             log.info("获取"+stockCode+"信息失败");
         }
         return stockName;
+    }
+
+    /**
+     * 用来校验某证券代码的合法性:根据返回的数据长度来判断，查询不到那就当做是非法的吧。。。
+     * 已经停牌的也是可以查到的
+     * @param stockCode 需要校验的代码
+     * @return
+     */
+    @Override
+    public boolean checkStockCode(String stockCode) {
+        StringBuilder url = new StringBuilder("http://hq.sinajs.cn/list=");
+
+        // 判断该证券是上交所还是深交所上市的股票
+        if (stockCode.charAt(0) == '6')
+            url.append("sh");
+        else
+            url.append("sz");
+        url.append(stockCode);
+        String data = "";
+        try {
+            data = HttpUtils.get(new String(url));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (data.length() < 40)
+            return false;
+        return true;
+    }
+
+    /**
+     * 检查证券账户和资金账户是否已存在，重复
+     * @param sid
+     * @param cid
+     * @return 返回 0 即表示没有重复
+     */
+    @Override
+    public int checkIfAccountExist(String sid, String cid) {
+        int flag = 0;
+        flag += securitiesDao.checkIfSidExists(sid);
+        flag += capitalDao.checkIfCidExists(cid);
+        return flag;
     }
 }

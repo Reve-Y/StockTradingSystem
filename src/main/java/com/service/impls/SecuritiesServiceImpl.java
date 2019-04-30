@@ -79,7 +79,7 @@ public class SecuritiesServiceImpl implements SecuritiesService {
      */
     @Override
     public long queryEnableAmountByStockAndSid(String securities_account_id, String stock_code) {
-        return 0;
+        return holdingDao.queryOneEnableAmount(securities_account_id,stock_code);
     }
 
 

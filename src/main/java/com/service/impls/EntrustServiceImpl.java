@@ -1,9 +1,13 @@
 package com.service.impls;
 
+import com.dao.CapitalDao;
 import com.dao.EntrustDao;
 import com.dao.HistoryDao;
+import com.dao.HoldingDao;
+import com.domain.CapitalAccount;
 import com.domain.CurrentEntrust;
 import com.domain.HistoryEntrust;
+import com.domain.Holdings;
 import com.github.pagehelper.PageHelper;
 import com.service.interfaces.DataService;
 import com.service.interfaces.EntrustService;
@@ -27,8 +31,16 @@ public class EntrustServiceImpl implements EntrustService{
     @Autowired
     private HistoryDao historyDao;
 
+    @Autowired
+    private HoldingDao holdingDao;
+
+    @Autowired
+    private CapitalDao capitalDao;
+
     /**
-     *  普通委托 ： 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中
+     *  普通委托 ： 根据委托方向不同，落库的过程不同
+     *      买入时 ： 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中 3. 更改资金情况
+     *      卖出时 ： 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中 3. 更改持仓可用数量
      * @param ce 传入的委托信息
      */
     @Override
@@ -36,14 +48,15 @@ public class EntrustServiceImpl implements EntrustService{
     public int normalEntrust(CurrentEntrust ce) {
         int flag = 0;
         log.info("接收到委托信息："+ce.toString());
-        flag = entrustDao.addOneCurrentEntrust(ce);
-        if (flag == 1)
-            log.info("向tCurrentEntrust表中插入委托记录成功");
-        flag += historyDao.addOneHistoryEntrust(ce);
-        if (flag == 2)
-            log.info("向tHistoryEntrust表中插入委托记录成功,委托已受理");
-        else
-            log.info("执行委托失败");
+
+        if (ce.getEntrust_direction() == 1){
+            flag = doBuyEntrust(ce);
+        }else if(ce.getEntrust_direction() == 2){
+            flag = doSellEntrust(ce);
+        }
+        String msg = (flag == 3 ? "委托落库成功":"委托落库失败");
+        log.info(msg);
+
         return flag;
     }
 
@@ -142,6 +155,50 @@ public class EntrustServiceImpl implements EntrustService{
         } else {
             log.info("...fail，撤单失败");
         }
+        return flag;
+    }
+
+    /**
+     * 委托方向为买入的委托
+     * 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中 3. 更改资金情况
+     * @param ce
+     * @return 受影响的行数，具体来说返回 3 时表示落库正常
+     */
+    @Transactional
+    public int doBuyEntrust(CurrentEntrust ce){
+        int flag = 0;
+
+        flag += entrustDao.addOneCurrentEntrust(ce);
+        flag += historyDao.addOneHistoryEntrust(ce);
+
+        // 更新资金账户信息
+        String account_id = capitalDao.queryAccountIdBySecuritiesId(ce.getSecurities_account_id());
+        CapitalAccount ca = capitalDao.queryAccountInfoById(account_id);
+        ca.setEnable_balance(ca.getEnable_balance() - ce.getAmount_money());   //  可用余额要减去委托金额
+        ca.setFrozen_balance(ce.getAmount_money());
+        flag += capitalDao.updateAccountInfo(ca);
+
+        return flag;
+    }
+
+    /**
+     * 委托方向为卖出的委托
+     * 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中 3. 更改持仓可用数量
+     * @param ce
+     * @return 受影响的行数，具体来说返回 3 时表示落库正常
+     */
+    @Transactional
+    public int doSellEntrust(CurrentEntrust ce){
+        int flag = 0;
+
+        flag += entrustDao.addOneCurrentEntrust(ce);
+        flag += historyDao.addOneHistoryEntrust(ce);
+
+        // 更新持仓情况
+        Holdings holding = holdingDao.queryOneHoldingInfo(ce.getSecurities_account_id(),ce.getStock_code());
+        holding.setEnable_amount(holding.getEnable_amount() - ce.getEntrust_amount());
+        flag += holdingDao.updateOneHoldingRecord(holding);
+
         return flag;
     }
 }

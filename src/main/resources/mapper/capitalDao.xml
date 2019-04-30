@@ -21,4 +21,16 @@
     <select id="queryEnableBalanceByCid" resultType="java.lang.Float">
         SELECT ENABLE_BALANCE FROM TCAPITALACCOUNT WHERE account_id = #{account_id}
     </select>
+
+    <update id="updateAccountInfo" parameterType="com.domain.CapitalAccount">
+        UPDATE TCAPITALACCOUNT
+          SET FROZEN_BALANCE=#{frozen_balance},
+              ACCOUNT_BALANCE=#{account_balance},
+              ENABLE_BALANCE=#{enable_balance}
+          WHERE ACCOUNT_ID=#{account_id}
+    </update>
+
+    <select id="checkIfCidExists" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM TCAPITALACCOUNT WHERE account_id = #{account_id}
+    </select>
 </mapper>

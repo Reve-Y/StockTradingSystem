@@ -9,4 +9,7 @@
           VALUES (#{securities_account_id},#{open_date},#{securities_company_name},#{account_id})
     </insert>
 
+    <select id="checkIfSidExists" resultType="java.lang.Integer">
+        SELECT count(1) FROM tsecuritiesaccount WHERE securities_account_id=#{securities_account_id}
+    </select>
 </mapper>

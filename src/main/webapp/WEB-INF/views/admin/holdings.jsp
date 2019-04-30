@@ -139,10 +139,10 @@
                       <div class="dropdown-menu dropdown-menu-small">
                         <a class="dropdown-item" href="/userProfile">
                           <i class="material-icons">&#xE7FD;</i> Profile</a>
-                        <a class="dropdown-item" href="/blog">
-                          <i class="material-icons">vertical_split</i> Blog Posts</a>
-                        <a class="dropdown-item" href="/newPost">
-                          <i class="material-icons">note_add</i> Add New Post</a>
+                        <a class="dropdown-item" href="/currentEntrust">
+                          <i class="material-icons">vertical_split</i>Current Entrusts</a>
+                        <a class="dropdown-item" href="/stockinfo">
+                          <i class="material-icons">note_add</i>Start Trading</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item text-danger" href="/invalidate">
                           <i class="material-icons text-danger">&#xE879;</i> Logout </a>
@@ -184,6 +184,7 @@
                           <th scope="col" class="border-0">股票名称</th>
                           <th scope="col" class="border-0">股票代码</th>
                           <th scope="col" class="border-0">持仓数量</th>
+                          <th scope="col" class="border-0">可用数量</th>
                           <th scope="col" class="border-0">买入时价格</th>
                           <th scope="col" class="border-0">当前价格</th>
                         </tr>
@@ -194,6 +195,7 @@
                           <td>{{item.stock_name}}</td>
                           <td>{{item.stock_code}}</td>
                           <td>{{item.hold_amount}}</td>
+                          <td>{{item.enable_amount}}</td>
                           <td>{{item.buy_price}}</td>
                           <td>{{item.now_price}}</td>
                         </tr>
