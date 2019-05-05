@@ -35,4 +35,10 @@ public interface EntrustDao {
      */
     int withdrawEntrustByKey(@Param("entrust_key") String entrust_key);
 
+    /**
+     * 根据 entrust_key 获取委托明细
+     * @param entrust_key
+     * @return
+     */
+    CurrentEntrust getCurrentEntrustDetailByKey(@Param("entrust_key") String entrust_key);
 }

@@ -116,7 +116,7 @@ public class EntrustController {
 
     /**
      *  委托撤单：根据每笔执行中的委托的唯一标识 entrust_key 来进行撤单
-     *  成功返回"ok",失败返回"fail"
+     *  返回以status属性标识撤单状态，成功返回"ok",失败返回"fail"
      */
     @RequestMapping("withdrawEntrust")
     @ResponseBody
@@ -124,7 +124,7 @@ public class EntrustController {
         int flag = entrustService.withdrawEntrustByKey(entrust_key);
         Map<String,String> map = new HashMap<>();
 
-        if(flag == 2) {
+        if(flag == 3) {
             map.put("status","ok");
         } else {
             map.put("status","fail");

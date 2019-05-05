@@ -55,7 +55,8 @@ public class EntrustServiceImpl implements EntrustService{
             flag = doSellEntrust(ce);
         }
         String msg = (flag == 3 ? "委托落库成功":"委托落库失败");
-        log.info(msg);
+        // 呵呵，扣除手续费哦 （万分之5）
+        debuctServiceCharge(ce);
 
         return flag;
     }
@@ -132,34 +133,7 @@ public class EntrustServiceImpl implements EntrustService{
     }
 
     /**
-     * 委托撤单 ： 1.删除当前委托记录 2 修改历史委托记录的委托状态
-     */
-    @Override
-    @Transactional
-    public int withdrawEntrustByKey(String entrust_key) {
-        log.info("开始执行撤单....key为"+entrust_key);
-        int flag = 0;
-
-        log.info("删除tCurrentEntrust表中entrust_key为"+entrust_key+"的记录");
-        flag += entrustDao.withdrawEntrustByKey(entrust_key);
-        if (flag == 1) {
-            log.info("....OK");
-        } else {
-            log.info("...fail");
-        }
-
-        log.info("修改tHistoryEntrust表中相应的状态...");
-        flag += historyDao.updateStatusToWithdrawByKey(entrust_key);
-        if (flag == 2) {
-            log.info("....OK，撤单成功");
-        } else {
-            log.info("...fail，撤单失败");
-        }
-        return flag;
-    }
-
-    /**
-     * 委托方向为买入的委托
+     * 普通委托：委托方向为买入的委托
      * 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中 3. 更改资金情况
      * @param ce
      * @return 受影响的行数，具体来说返回 3 时表示落库正常
@@ -175,14 +149,14 @@ public class EntrustServiceImpl implements EntrustService{
         String account_id = capitalDao.queryAccountIdBySecuritiesId(ce.getSecurities_account_id());
         CapitalAccount ca = capitalDao.queryAccountInfoById(account_id);
         ca.setEnable_balance(ca.getEnable_balance() - ce.getAmount_money());   //  可用余额要减去委托金额
-        ca.setFrozen_balance(ce.getAmount_money());
+        ca.setFrozen_balance(ca.getFrozen_balance() + ce.getAmount_money());   //  原有的冻结加上新的冻结金额
         flag += capitalDao.updateAccountInfo(ca);
 
         return flag;
     }
 
     /**
-     * 委托方向为卖出的委托
+     * 普通委托：委托方向为卖出的委托
      * 1.向tCurrentEntrust表中插入记录 2. 插入tHistoryEntrust(全部委托表)中 3. 更改持仓可用数量
      * @param ce
      * @return 受影响的行数，具体来说返回 3 时表示落库正常
@@ -200,5 +174,82 @@ public class EntrustServiceImpl implements EntrustService{
         flag += holdingDao.updateOneHoldingRecord(holding);
 
         return flag;
+    }
+
+    /**
+     * 委托撤单 ：根据委托方向进行撤单
+     *   委托方向为买入的撤单： 1.删除当前委托记录 2.修改历史委托记录的委托状态 3. 还原资金：恢复冻结、增加可用
+     *   委托方向为卖出的撤单： 1.删除当前委托记录 2.修改历史委托记录的委托状态 3. 恢复持仓可用数量
+     */
+    @Override
+    public int withdrawEntrustByKey(String entrust_key) {
+        log.info("开始执行撤单....key为"+entrust_key);
+        int flag = 0;
+        CurrentEntrust ce = entrustDao.getCurrentEntrustDetailByKey(entrust_key);
+
+        if (ce.getEntrust_direction() == 1)
+            flag = doWithdrawBuyEntrust(ce);
+        else
+            flag = doWithdrawSellEntrust(ce);
+
+        debuctServiceCharge(ce);
+        String msg = (flag == 3 ? "撤单成功":"撤单失败");
+        log.info(msg);
+
+        return flag;
+    }
+
+    /**
+     * 撤销委托方向为卖出的委托时调用
+     */
+    @Transactional
+    public int doWithdrawSellEntrust(CurrentEntrust ce) {
+        int flag = 0;
+        String entrust_key = ce.getEntrust_key();
+
+        flag += entrustDao.withdrawEntrustByKey(entrust_key);
+        flag += historyDao.updateStatusToWithdrawByKey(entrust_key);
+        // 更新持仓情况
+        Holdings holding = holdingDao.queryOneHoldingInfo(ce.getSecurities_account_id(),ce.getStock_code());
+        holding.setEnable_amount(holding.getEnable_amount() + ce.getEntrust_amount());
+        flag += holdingDao.updateOneHoldingRecord(holding);
+
+        return flag;
+    }
+
+    /**
+     * 撤销委托方向为买入的委托时调用
+     */
+    @Transactional
+    public int doWithdrawBuyEntrust(CurrentEntrust ce) {
+        int flag = 0;
+        String entrust_key = ce.getEntrust_key();
+
+        flag += entrustDao.withdrawEntrustByKey(entrust_key);
+        flag += historyDao.updateStatusToWithdrawByKey(entrust_key);
+        // 更新资金账户信息
+        String account_id = capitalDao.queryAccountIdBySecuritiesId(ce.getSecurities_account_id());
+        CapitalAccount ca = capitalDao.queryAccountInfoById(account_id);
+        ca.setEnable_balance(ca.getEnable_balance() + ce.getAmount_money());   //  可用余额加上委托金额
+        ca.setFrozen_balance(ca.getFrozen_balance() - ce.getAmount_money());   //  释放这笔冻结金额
+        flag += capitalDao.updateAccountInfo(ca);
+
+        return flag;
+    }
+
+    /**
+     * 手续费扣除：该笔委托总额的万分之五 ，更新相应资金账户的总金额和可用余额
+     * @param ce
+     */
+    @Transactional
+    public void debuctServiceCharge(CurrentEntrust ce) {
+        String account_id = capitalDao.queryAccountIdBySecuritiesId(ce.getSecurities_account_id());
+        CapitalAccount ca = capitalDao.queryAccountInfoById(account_id);
+
+        float serviceMoney = ce.getAmount_money()/2000;
+        ca.setAccount_balance(ca.getAccount_balance() - serviceMoney);
+        ca.setEnable_balance(ca.getEnable_balance() - serviceMoney);
+
+        capitalDao.updateAccountInfo(ca);
     }
 }

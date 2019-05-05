@@ -21,4 +21,8 @@
     <delete id="withdrawEntrustByKey" parameterType="java.lang.String">
         DELETE FROM TCURRENTENTRUST WHERE entrust_key=#{entrust_key}
     </delete>
+
+    <select id="getCurrentEntrustDetailByKey" resultType="com.domain.CurrentEntrust">
+        SELECT * FROM TCURRENTENTRUST WHERE entrust_key=#{entrust_key}
+    </select>
 </mapper>
