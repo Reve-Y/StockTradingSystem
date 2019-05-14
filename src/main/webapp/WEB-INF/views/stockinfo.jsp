@@ -21,18 +21,88 @@
     <script src="../../assets/js/core/jquery-3.3.1.js"></script>
     <script src="../../assets/js/core/bootstrap.js"></script>
     <script src="../../assets/js/highcharts/highstock.js"></script>
-    <script src="../../assets/js/highcharts/sand-signika.js"></script>
+    <%--<script src="../../assets/js/highcharts/sand-signika.js"></script>--%>
 
 </head>
 <body>
     <%@include file="navbar.jsp"%>
     <div id="stockinfo" class="chart">加载中</div>
     <div class="container1">
-        <div class="d1 dd">
-            基本信息
+        <div class="d1 dd"  id="basicInfo">
+            <div class="dd"><h4 style="text-align:center">基本信息</h4></div>
+            <div style="height:30px"></div>
+            <ul>
+                <li>名称：{{stock_name}}</li>
+                <%--<li>总股本:{{total_equity}}</li>--%>
+                <%--<li>流通股本{{circulation_capital}}</li>--%>
+                <%--<li>总市值:{{total_market_value}}</li>--%>
+                <%--<li>流通市值:{{circulation_market_value}}</li>--%>
+                <li>今开：{{today_open}}</li>
+                <li>昨收：{{yes_close}}</li>
+                <li>现价：{{current_price}}</li>
+                <li>今高：{{today_high}}</li>
+                <li>今低：{{today_low}}</li>
+            </ul>
         </div>
-        <div class="d2 dd">
-            十档行情、其他信息
+        <div class="d2 dd"  id="basicInfo2">
+            <div class="dd"><h4 style="text-align:center">十档行情</h4></div>
+            <div style="height:10px"></div>
+            <table class=" table-condensed table-style">
+                <tr>
+                    <td class="tdhead">买一</td>
+                    <td>{{buy_amount1}}</td>
+                    <td>{{buy_price1}}元</td>
+                </tr>
+                <tr>
+                    <td class="tdhead">买二</td>
+                    <td>{{buy_amount2}}</td>
+                    <td>{{buy_price2}}元</td>
+                </tr>
+                <tr>
+                    <td class="tdhead">买三</td>
+                    <td>{{buy_amount3}}</td>
+                    <td>{{buy_price3}}元</td>
+                </tr>
+                <tr>
+                    <td class="tdhead">买四</td>
+                    <td>{{buy_amount4}}</td>
+                    <td>{{buy_price4}}元</td>
+                </tr>
+                <tr>
+                    <td class="tdhead">买五</td>
+                    <td>{{buy_amount5}}</td>
+                    <td>{{buy_price5}}元</td>
+                </tr>
+            </table>
+            <br>
+            <!-- <hr style="size: 2px"> -->
+            <table class=" table-condensed table-style">
+                <tr>
+                    <td class="tdhead">卖一</td>
+                    <td>{{sell_amount1}}</td>
+                    <td>{{sell_price1}}元</td>
+                </tr>
+                <tr>
+                    <td class="tdhead">卖二</td>
+                    <td>{{sell_amount2}}</td>
+                    <td>{{sell_price2}}元</td>
+                </tr>
+                <tr>
+                    <td class="tdhead">卖三</td>
+                    <td>{{sell_amount3}}</td>
+                    <td>{{sell_price3}}元</td>
+                </tr>
+                <tr>
+                    <td class="tdhead">卖四</td>
+                    <td>{{sell_amount4}}</td>
+                    <td>{{sell_price4}}元</td>
+                </tr>
+                <tr>
+                    <td class="tdhead">卖五</td>
+                    <td>{{sell_amount5}}</td>
+                    <td>{{sell_price5}}元</td>
+                </tr>
+            </table>
         </div>
         <c:choose>
             <c:when test="${empty user}">
@@ -46,9 +116,7 @@
             </c:when>
             <c:otherwise>
                 <div class="d3 dd" id="entrust">
-                    <div class="d3-1 dd">
-
-                    </div>
+                    <div class="dd"><h4 style="text-align:center">限价交易</h4></div>
                     <div class="d3-2 dd">
                         <br>
                         <ul>

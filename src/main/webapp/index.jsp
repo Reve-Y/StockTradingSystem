@@ -25,11 +25,16 @@
         var app = new Vue({
             el:"#app",
             data:{
-                
+            },
+            created : function () {
+                this.start()
             },
             methods:{
                 register : function () {
                     window.location.href="/registerPage"
+                },
+                start : function () {
+                    window.location.href = "/start"
                 }
             }
         })

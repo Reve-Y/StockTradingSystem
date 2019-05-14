@@ -2,6 +2,7 @@ package com.service.impls;
 
 import com.dao.CapitalDao;
 import com.dao.SecuritiesDao;
+import com.domain.StockInfo;
 import com.service.interfaces.DataService;
 import com.service.interfaces.SecuritiesService;
 import com.util.HttpUtils;
@@ -136,5 +137,49 @@ public class DataServiceImpl implements DataService {
         flag += securitiesDao.checkIfSidExists(sid);
         flag += capitalDao.checkIfCidExists(cid);
         return flag;
+    }
+
+    /**
+     * 获取股票基本信息，封装到StockInfo里，使用新浪股票数据接口
+     * @param stock_code 处理过的请求参数 例：600000 --> sh600000
+     */
+    @Override
+    public StockInfo getBasicStockInfo(String stock_code) {
+        StockInfo stockInfo = new StockInfo();
+        String url = "http://hq.sinajs.cn/list="+stock_code ;
+        try {
+            String data[] = HttpUtils.get(url).split(",");
+            stockInfo.setCompany_name(data[0].replaceAll(".*=\"",""));
+            stockInfo.setOpen_price(Float.parseFloat(data[1]));
+            stockInfo.setYesterday_closed_price(Float.parseFloat(data[2]));
+            stockInfo.setLast_price(Float.parseFloat(data[3]));
+            stockInfo.setMax_price(Float.parseFloat(data[4]));
+            stockInfo.setMin_price(Float.parseFloat(data[5]));
+
+            stockInfo.setBuy_amount1(Integer.parseInt(data[10]));
+            stockInfo.setBuy_price1(Float.parseFloat(data[11]));
+            stockInfo.setBuy_amount2(Integer.parseInt(data[12]));
+            stockInfo.setBuy_price2(Float.parseFloat(data[13]));
+            stockInfo.setBuy_amount3(Integer.parseInt(data[14]));
+            stockInfo.setBuy_price3(Float.parseFloat(data[15]));
+            stockInfo.setBuy_amount4(Integer.parseInt(data[16]));
+            stockInfo.setBuy_price4(Float.parseFloat(data[17]));
+            stockInfo.setBuy_amount5(Integer.parseInt(data[18]));
+            stockInfo.setBuy_price5(Float.parseFloat(data[19]));
+            stockInfo.setSale_amount1(Integer.parseInt(data[20]));
+            stockInfo.setSale_price1(Float.parseFloat(data[21]));
+            stockInfo.setSale_amount2(Integer.parseInt(data[22]));
+            stockInfo.setSale_price2(Float.parseFloat(data[23]));
+            stockInfo.setSale_amount3(Integer.parseInt(data[24]));
+            stockInfo.setSale_price3(Float.parseFloat(data[25]));
+            stockInfo.setSale_amount4(Integer.parseInt(data[26]));
+            stockInfo.setSale_price4(Float.parseFloat(data[27]));
+            stockInfo.setSale_amount5(Integer.parseInt(data[28]));
+            stockInfo.setSale_price5(Float.parseFloat(data[29]));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            return stockInfo;
+        }
     }
 }

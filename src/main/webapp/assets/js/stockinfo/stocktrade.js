@@ -1,5 +1,14 @@
 var ohlc = []
 var volume = []
+var chart = null
+var stock = {
+    symbol:'sh600570',  //默认值
+    scale : '5',
+    ma:'5',
+    datalen:'1023',
+    name:'恒生电子'
+}
+
 Highcharts.setOptions({
     lang: {
         rangeSelectorZoom: ' '
@@ -8,26 +17,30 @@ Highcharts.setOptions({
         enabled: false // 禁用版权信息
     }
 });
-var chart = null
+
 var app = new Vue({
     el:"#stockinfo",
     created : function () {
         this.getData()
     },
     methods : {
+        // 获取股票信息，参数保存在stock对象里
         getData : function () {
+            chart = null  //  以后会再次调用这个方法 所以先把之前的数据清空。
+            ohlc = []
+            volume = []
             axios.get('/getHistoryData',{
                 params: {
-                    symbol:'sh600570',
-                    scale:'5',
-                    ma:'5',
-                    datalen:'1023',
+                    symbol:stock.symbol,
+                    scale:stock.scale,
+                    ma:stock.ma,
+                    datalen:stock.datalen,
                 }
             }).then(function (resp) {
-                console.log(resp.data)
+                // console.log(resp.data)
                 var stockdata = eval('('+resp.data+')')
-                console.log(stockdata.length)
-                console.log(stockdata)
+                console.log("获取到数据，数组长度为"+stockdata.length)
+                // console.log(stockdata)
                 // split the data set into ohlc and volume
                 var i = 0
                 for (i; i < stockdata.length; i += 1) {
@@ -66,13 +79,13 @@ var app = new Vue({
                     },
                     series: [{
                         type: 'candlestick',
-                        id: 'HS-ohlc',
-                        name: '恒生电子',
+                        id: 'ohlc',
+                        name: stock.name,
                         data: ohlc
                     }, {
                         type: 'column',
-                        id: 'HS-volume',
-                        name: 'HS Volume',
+                        id: 'volume',
+                        name: 'Volume',
                         data: volume,
                         yAxis: 1
                     }],
@@ -161,7 +174,13 @@ var entrust = new Vue({
         getStockDetail : function (){
             if (this.ifClearMsg())
                 return
-            alert("stock-detail")
+            stock.name = this.message_stockname
+            if (this.stock_code[0] == '6')
+                stock.symbol = "sh" + this.stock_code
+            else
+                stock.symbol = "sz" + this.stock_code
+            app.getData()
+            basicInfo.getBasicInfo()
         },
 
         // 获取这只股票的即时信息
@@ -307,6 +326,96 @@ var entrust = new Vue({
                 alert("委托成功")
                 that.stock_code = ""
                 that.ifClearMsg()
+            }).catch(function (err) {
+                console.log(err)
+            })
+        }
+    }
+})
+
+var basicInfo2 = new Vue({
+    el:"#basicInfo2",
+    data : {
+        buy_amount1:0,               // 买一数量
+        buy_price1:0,                // 买一价格
+        buy_amount2:0,               // 买二数量
+        buy_price2:0,                // 买二价格
+        buy_amount3:0,               // 买三数量
+        buy_price3:0,                // 买三价格
+        buy_amount4:0,               // 买四数量
+        buy_price4:0,                // 买四价格
+        buy_amount5:0,               // 买五数量
+        buy_price5:0,                // 买五价格
+        sell_amount1:0,               // 卖一数量
+        sell_price1:0,                // 卖一价格
+        sell_amount2:0,               // 卖二数量
+        sell_price2:0,                // 卖二价格
+        sell_amount3:0,               // 卖三数量
+        sell_price3:0,                // 卖三价格
+        sell_amount4:0,               // 卖四数量
+        sell_price4:0,                // 卖四价格
+        sell_amount5:0,               // 卖五数量
+        sell_price5:0,                // 卖五价格
+    }
+})
+
+var basicInfo = new Vue({
+    el:"#basicInfo",
+    data:{
+        stock_name:'',               // 证券名称
+        // total_equity:0,              // 总股本
+        // circulation_capital:0,       // 流通股本
+        // total_market_value:0,        // 总市值
+        // circulation_market_value:0 , // 流通市值
+        today_open:0,                   // 今日开盘价
+        yes_close:0,                    // 昨日收盘价
+        current_price:0,                // 当前价格
+        today_high:0,                   // 今日最高价
+        today_low:0,                    // 今日最低价
+    },
+    created : function () {
+      this.getBasicInfo()
+    },
+    methods : {
+        // 获取股票基本信息
+        getBasicInfo : function () {
+            var that = this
+            axios.get('/getBasicStockInfo',{
+                params: {
+                    stock_code:stock.symbol
+                }
+            }).then(function (resp) {
+                var resdata = resp.data
+
+                that.stock_name = resdata.company_name
+                that.today_open = resdata.open_price
+                that.yes_close = resdata.yesterday_closed_price
+                that.current_price = resdata.last_price
+                that.today_high = resdata.max_price
+                that.today_low = resdata.min_price
+
+                basicInfo2.buy_amount1 = resdata.buy_amount1
+                basicInfo2.buy_price1 = resdata.buy_price1
+                basicInfo2.buy_amount2 = resdata.buy_amount2
+                basicInfo2.buy_price2 = resdata.buy_price2
+                basicInfo2.buy_amount3 = resdata.buy_amount3
+                basicInfo2.buy_price3 = resdata.buy_price3
+                basicInfo2.buy_amount4 = resdata.buy_amount4
+                basicInfo2.buy_price4 = resdata.buy_price4
+                basicInfo2.buy_amount5 = resdata.buy_amount5
+                basicInfo2.buy_price5 = resdata.buy_price5
+
+                basicInfo2.sell_amount1 = resdata.sale_amount1
+                basicInfo2.sell_price1 = resdata.sale_price1
+                basicInfo2.sell_amount2 = resdata.sale_amount2
+                basicInfo2.sell_price2 = resdata.sale_price2
+                basicInfo2.sell_amount3 = resdata.sale_amount3
+                basicInfo2.sell_price3 = resdata.sale_price3
+                basicInfo2.sell_amount4 = resdata.sale_amount4
+                basicInfo2.sell_price4 = resdata.sale_price4
+                basicInfo2.sell_amount5 = resdata.sale_amount5
+                basicInfo2.sell_price5 = resdata.sale_price5
+
             }).catch(function (err) {
                 console.log(err)
             })

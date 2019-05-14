@@ -23,6 +23,9 @@
 .d2 {
     -webkit-flex: 2;
         flex: 2;
+    padding-left: 40px;
+    padding-right: 30px;
+    padding-bottom: 10px;
 }
 .d3 {
     -webkit-flex: 3;
@@ -43,6 +46,8 @@
     -webkit-flex: 1;
     flex: 1;
     height: 320px;
+    padding-left: 20px;
+    padding-right: 20px ;
 }
 
 .message{
@@ -62,4 +67,13 @@ ul{
 }
 .info{
     height: 100%;
+}
+li{
+    height: 50px;
+}
+tr,table{
+    width: 100%;
+}
+td{
+    width: 33%
 }

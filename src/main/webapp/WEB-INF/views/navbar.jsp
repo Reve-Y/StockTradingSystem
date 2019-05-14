@@ -28,7 +28,6 @@
                 </c:when>
                 <c:otherwise>
                     <ul class=" nav navbar-nav navbar-right">
-                        <li><a href="#">hello,</a></li>
                         <c:choose>
                             <c:when test="${user.nickname != ''}">
                                 <li class="active"><a href="#">${user.nickname} <span class="sr-only">(current)</span></a></li>

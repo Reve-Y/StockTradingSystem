@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.domain.StockInfo;
 import com.domain.User;
 import com.service.interfaces.CapitalService;
 import com.service.interfaces.DataService;
@@ -111,5 +112,17 @@ public class DataController {
             return "ok";
         else
             return "fail";
+    }
+
+    /**
+     * 获取某只股票的基本信息，包括名称、买一~买五、卖一~卖五等信息
+     * @param stock_code
+     */
+    @RequestMapping("getBasicStockInfo")
+    @ResponseBody
+    public String getBasicStockInfo(@Param("stock_code")String stock_code){
+        StockInfo basicInfo = dataService.getBasicStockInfo(stock_code);
+        log.info("获取到"+stock_code+"基本信息为"+basicInfo.toString());
+        return JsonUtils.toJson(basicInfo);
     }
 }
