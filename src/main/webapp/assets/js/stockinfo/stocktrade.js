@@ -113,7 +113,8 @@ var entrust = new Vue({
         message_balance:null,
 
         enable_balance : -1,
-        enable_amount : -1
+        enable_amount : -1,
+        price_flag:false
     },
     computed : {
         amount_money : function () {
@@ -130,7 +131,7 @@ var entrust = new Vue({
             else{
                 return "确认卖出"
             }
-        }
+        },
     },
     methods : {
         //  输入代码后获取股票名称
@@ -267,6 +268,7 @@ var entrust = new Vue({
             this.entrust_price = null
             this.enable_balance = -1
             this.enable_amount = -1
+            this.price_flag = false
         },
 
         // 未开户时提示开户
@@ -278,6 +280,34 @@ var entrust = new Vue({
             var newLable = document.createElement("span")
             newLable.innerHTML="当前尚未开户，请先<a id='alertinfo' href='/createAccount'>开户</a>以进行交易"
             m2.appendChild(newLable)
+        },
+
+        // 检查委托价格是否在开盘价波动百分之十以内
+        checkPrice : function () {
+            var that = this
+            var code = '';
+            if (this.stock_code[0] == '6')
+                code = "sh" + this.stock_code
+            else
+                code = "sz" + this.stock_code
+            axios.get('/getBasicStockInfo',{
+                params: {
+                    stock_code : code
+                }
+            }).then(function (resp) {
+                var resdata = resp.data
+                var open_price = parseFloat(resdata.open_price)
+                console.log(that.stock_code+"开盘价为"+open_price)
+                var price_tmp = parseFloat(that.entrust_price)
+                if ((price_tmp > (open_price * 1.1)) || (price_tmp < (open_price * 0.9))) {
+                    that.price_flag = false
+                } else {
+                    that.price_flag = true
+                }
+                console.log("price_flag: "+that.price_flag)
+            }).catch(function (err) {
+                console.log(err)
+            })
         },
 
         // 试图提交时检查数据合法性，并alert确认
@@ -300,6 +330,12 @@ var entrust = new Vue({
             }
             if (this.entrust_amount == null || this.entrust_price == null){
                 alert("信息不完整")
+                return
+            }
+
+            this.checkPrice()
+            if (!this.price_flag){
+                alert("委托价格应该限制在开盘价上下浮动的百分之十范围内！");
                 return
             }
 

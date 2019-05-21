@@ -49,4 +49,20 @@ public interface HoldingDao {
      */
     Holdings queryOneHoldingInfo(@Param("securities_account_id") String securities_account_id,
                                  @Param("stock_code") String stock_code);
+
+    /**
+     * 插入一条持仓记录
+     * @param holdings
+     * @return
+     */
+    int addOneHoldingRecord(Holdings holdings);
+
+    /**
+     * 删除一条持仓记录，根据证券账户id和证券代码确定一条记录
+     * @param securities_account_id
+     * @param stock_code
+     * @return
+     */
+    int deleteOneRecord(@Param("securities_account_id") String securities_account_id,
+                        @Param("stock_code") String stock_code);
 }

@@ -19,4 +19,11 @@ public interface DealDao {
      * @return
      */
     int queryNumberOfDealBySid(@Param("securities_account_id")String securities_account_id);
+
+    /**
+     * 插入一条成交记录
+     * @param realDeal
+     * @return
+     */
+    int addOneDealRecord(RealDeal realDeal);
 }

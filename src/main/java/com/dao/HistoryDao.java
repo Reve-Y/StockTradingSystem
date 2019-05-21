@@ -35,4 +35,11 @@ public interface HistoryDao {
      * @return
      */
     int updateStatusToWithdrawByKey(@Param("entrust_key") String entrust_key);
+
+    /**
+     * 成交时修改历史记录中的委托状态为 “已成交”
+     * @param entrust_key
+     * @return
+     */
+    int updateStatusToDealByKey(@Param("entrust_key") String entrust_key);
 }

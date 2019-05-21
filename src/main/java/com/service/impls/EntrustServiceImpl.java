@@ -9,6 +9,7 @@ import com.domain.CurrentEntrust;
 import com.domain.HistoryEntrust;
 import com.domain.Holdings;
 import com.github.pagehelper.PageHelper;
+import com.matching.Matching;
 import com.service.interfaces.DataService;
 import com.service.interfaces.EntrustService;
 import org.apache.log4j.Logger;
@@ -22,11 +23,18 @@ import java.util.List;
 public class EntrustServiceImpl implements EntrustService{
     private static Logger log= Logger.getLogger(EntrustServiceImpl.class);
 
+    public static final int NORMAL_ENTRUST = 1 ;
+    public static final int WITHDRAW_ENTRUST = 2 ;
+    public static final int UPDATE_ENTRUST = 3 ;
+
     @Autowired
     private EntrustDao entrustDao;
 
     @Autowired
     private DataService dataService;
+
+//    @Autowired
+//    private Matching matching;
 
     @Autowired
     private HistoryDao historyDao;
@@ -54,9 +62,16 @@ public class EntrustServiceImpl implements EntrustService{
         }else if(ce.getEntrust_direction() == 2){
             flag = doSellEntrust(ce);
         }
-        String msg = (flag == 3 ? "委托落库成功":"委托落库失败");
-        // 呵呵，扣除手续费哦 （万分之5）
-        debuctServiceCharge(ce);
+
+        if (flag == 3){
+            log.info("委托落库成功");
+            // 呵呵，扣除手续费哦 （万分之5）
+            debuctServiceCharge(ce);
+
+            sendMessageToMatching(ce.getEntrust_key(),NORMAL_ENTRUST);
+        }else {
+            log.info("委托落库失败");
+        }
 
         return flag;
     }
@@ -84,7 +99,7 @@ public class EntrustServiceImpl implements EntrustService{
     public List<CurrentEntrust> queryCurrentEntrustBySid(String securities_account_id, int pageNum) {
         log.info("begin--开始获取第"+pageNum+"页当前委托");
 
-        PageHelper.offsetPage(pageNum,5);
+        PageHelper.startPage(pageNum,5);
         List<CurrentEntrust> list = entrustDao.queryCurrentEntrustBySid(securities_account_id);
 
         log.info("end--第"+pageNum+"页当前委托信息查询结束");
@@ -103,7 +118,7 @@ public class EntrustServiceImpl implements EntrustService{
      */
     @Override
     public List<HistoryEntrust> queryHistoryEntrustBySid(String securities_account_id, int pageNum) {
-        PageHelper.offsetPage(pageNum,5);
+        PageHelper.startPage(pageNum,5);
         List<HistoryEntrust> list = historyDao.queryHistoryEntrustBySid(securities_account_id);
 
         // 获取股票名称以及完成委托状态的转换
@@ -192,9 +207,14 @@ public class EntrustServiceImpl implements EntrustService{
         else
             flag = doWithdrawSellEntrust(ce);
 
-        debuctServiceCharge(ce);
-        String msg = (flag == 3 ? "撤单成功":"撤单失败");
-        log.info(msg);
+        if (flag == 3){
+            log.info("委托撤单成功");
+            debuctServiceCharge(ce);
+
+            sendMessageToMatching(entrust_key,WITHDRAW_ENTRUST);
+        }else {
+            log.info("委托撤单失败");
+        }
 
         return flag;
     }
@@ -241,6 +261,7 @@ public class EntrustServiceImpl implements EntrustService{
      * 手续费扣除：该笔委托总额的万分之五 ，更新相应资金账户的总金额和可用余额
      * @param ce
      */
+    @Override
     @Transactional
     public void debuctServiceCharge(CurrentEntrust ce) {
         String account_id = capitalDao.queryAccountIdBySecuritiesId(ce.getSecurities_account_id());
@@ -251,5 +272,15 @@ public class EntrustServiceImpl implements EntrustService{
         ca.setEnable_balance(ca.getEnable_balance() - serviceMoney);
 
         capitalDao.updateAccountInfo(ca);
+    }
+
+    /**
+     * 向matching发送消息。告诉它该更新委托序列了
+     * @param entrust_key 每笔委托的唯一标示
+     * @param entrust_type 委托类型 1. 普通买卖委托  2. 委托撤单
+     */
+    @Override
+    public void sendMessageToMatching(String entrust_key,int entrust_type){
+        Matching.updateWithdrawalKeyMap(entrust_key,entrust_type);
     }
 }

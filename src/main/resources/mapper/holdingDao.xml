@@ -29,4 +29,12 @@
         SELECT * FROM tholdings
         WHERE SECURITIES_ACCOUNT_ID=#{securities_account_id} AND STOCK_CODE=#{stock_code}
     </select>
+
+    <insert id="addOneHoldingRecord" parameterType="com.domain.Holdings">
+        INSERT INTO tholdings VALUES (#{securities_account_id},#{stock_code},#{stock_name},#{hold_amount},#{buy_price},#{enable_amount})
+    </insert>
+
+    <delete id="deleteOneRecord" parameterType="java.lang.String">
+        DELETE FROM tholdings WHERE SECURITIES_ACCOUNT_ID=#{securities_account_id} AND STOCK_CODE=#{stock_code}
+    </delete>
 </mapper>

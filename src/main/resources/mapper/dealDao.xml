@@ -5,13 +5,16 @@
 
 <mapper namespace="com.dao.DealDao">
     <select id="queryDealRecordsBySid" resultType="com.domain.RealDeal">
-        SELECT
-            DEAL_DATE,STOCK_CODE,DEAL_DIRECTION,DEAL_AMOUNT,DEAL_PRICE,DEAL_AMOUNT_MONEY,DEAL_CAPITAL_BALANCE
-        FROM TREALDEAL
+        SELECT * FROM TREALDEAL
         WHERE securities_account_id=#{securities_account_id}
     </select>
 
     <select id="queryNumberOfDealBySid" resultType="java.lang.Integer">
         SELECT COUNT(1) FROM TREALDEAL WHERE securities_account_id=#{securities_account_id}
     </select>
+
+    <insert id="addOneDealRecord" parameterType="com.domain.RealDeal">
+        INSERT INTO TREALDEAL VALUES (deal.nextval,#{entrust_key},#{deal_date},#{securities_account_id},#{stock_code},
+          #{deal_direction},#{deal_amount},#{deal_price},#{deal_amount_money},#{deal_capital_balance},#{capital_account_id})
+    </insert>
 </mapper>

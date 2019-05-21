@@ -45,7 +45,7 @@
             </ul>
         </div>
         <div class="d2 dd"  id="basicInfo2">
-            <div class="dd"><h4 style="text-align:center">十档行情</h4></div>
+            <div class="dd"><h4 style="text-align:center">五档行情</h4></div>
             <div style="height:10px"></div>
             <table class=" table-condensed table-style">
                 <tr>
@@ -154,7 +154,7 @@
                             <div class="input-group input-compo" style="width:281px">
                                 <span class="input-group-addon" id="basic-addon4">委托价格</span>
                                 <input type="text" class="form-control" style="width:161px"
-                                       v-model="entrust_price" aria-describedby="basic-addon4">
+                                       v-model="entrust_price" aria-describedby="basic-addon4" @input="checkPrice">
                                 <span class="input-group-addon">元</span>
                             </div>
                             <div class="box"></div>

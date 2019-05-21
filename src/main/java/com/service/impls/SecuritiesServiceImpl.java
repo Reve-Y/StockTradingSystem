@@ -50,7 +50,7 @@ public class SecuritiesServiceImpl implements SecuritiesService {
     public List<Holdings> queryHoldingsBySid(String securities_account_id,int pageNum) {
         log.info("begin --- 根据证券账户 "+securities_account_id+" 查询持仓情况");
 
-        PageHelper.offsetPage(pageNum,5);
+        PageHelper.startPage(pageNum,5);
         List<Holdings> list = holdingDao.queryHoldingsBySid(securities_account_id);
         log.info("end --- 查询持仓信息完毕");
 

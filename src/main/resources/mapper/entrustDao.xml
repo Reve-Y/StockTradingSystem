@@ -25,4 +25,15 @@
     <select id="getCurrentEntrustDetailByKey" resultType="com.domain.CurrentEntrust">
         SELECT * FROM TCURRENTENTRUST WHERE entrust_key=#{entrust_key}
     </select>
+
+    <select id="queryAllCurrentEntrust" resultType="com.domain.CurrentEntrust">
+        SELECT * FROM TCURRENTENTRUST
+    </select>
+
+    <update id="updateEntrust" parameterType="com.domain.CurrentEntrust">
+        UPDATE TCURRENTENTRUST
+         SET entrust_amount=#{entrust_amount},
+             amount_money=#{amount_money}
+         WHERE entrust_key=#{entrust_key}
+    </update>
 </mapper>

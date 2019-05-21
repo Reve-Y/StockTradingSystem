@@ -41,4 +41,17 @@ public interface EntrustDao {
      * @return
      */
     CurrentEntrust getCurrentEntrustDetailByKey(@Param("entrust_key") String entrust_key);
+
+    /**
+     * 获取所有的“当前委托”记录
+     * @return
+     */
+    List<CurrentEntrust> queryAllCurrentEntrust();
+
+    /**
+     * 更新委托
+     * @param ce
+     * @return
+     */
+    int updateEntrust(CurrentEntrust ce);
 }

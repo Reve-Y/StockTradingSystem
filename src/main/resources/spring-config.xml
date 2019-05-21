@@ -15,7 +15,7 @@
         http://www.springframework.org/schema/tx
 	    http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--开启注解自动生成bean  -->
-    <context:component-scan base-package="com.dao,com.controller,com.service"/>
+    <context:component-scan base-package="com.dao,com.controller,com.service,com.matching"/>
     <!--加载外界文件  -->
     <context:property-placeholder location="classpath:oracle.properties"/>
     <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -40,7 +40,6 @@
                             helperDialect=oracle
                             pageSizeZero=true
                             offsetAsPageNum=true
-                            pageSizeZero=true
                             reasonable=true
                         </value>
                     </property>

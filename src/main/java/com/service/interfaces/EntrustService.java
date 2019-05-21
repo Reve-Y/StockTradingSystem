@@ -17,4 +17,8 @@ public interface EntrustService {
     int countNumberOfHistoryEntBySid(String securities_account_id);
 
     int withdrawEntrustByKey(String entrust_key);
+
+    void debuctServiceCharge(CurrentEntrust ce);
+
+    void sendMessageToMatching(String entrust_key,int entrust_type);
 }

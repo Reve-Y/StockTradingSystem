@@ -22,4 +22,8 @@
     <update id="updateStatusToWithdrawByKey" parameterType="java.lang.String">
         UPDATE tHistoryEntrust SET entrust_status=2 WHERE entrust_key=#{entrust_key}
     </update>
+
+    <update id="updateStatusToDealByKey" parameterType="java.lang.String">
+        UPDATE tHistoryEntrust SET entrust_status=1 WHERE entrust_key=#{entrust_key}
+    </update>
 </mapper>

@@ -5,15 +5,49 @@ package com.domain;
  */
 public class RealDeal {
 
+    private String entrust_key ;
     private String deal_date; // 成交日期
+    private String securities_account_id ;
     private String stock_code;
-    private String stock_name;
     private int deal_direction;
+    private String stock_name; // 数据库没有这个字段
     private long deal_amount;
     private float deal_price;
     private float deal_amount_money; // 成交金额
-    private float deal_capital_balance ; // 成交后资金账户余额
+    private float deal_capital_balance ; // 成交后资金账户可用余额
+    private String capital_account_id ;
 
+    public String getStock_name() {
+        return stock_name;
+    }
+
+    public void setStock_name(String stock_name) {
+        this.stock_name = stock_name;
+    }
+
+    public String getSecurities_account_id() {
+        return securities_account_id;
+    }
+
+    public void setSecurities_account_id(String securities_account_id) {
+        this.securities_account_id = securities_account_id;
+    }
+
+    public String getCapital_account_id() {
+        return capital_account_id;
+    }
+
+    public void setCapital_account_id(String capital_account_id) {
+        this.capital_account_id = capital_account_id;
+    }
+
+    public String getEntrust_key() {
+        return entrust_key;
+    }
+
+    public void setEntrust_key(String entrust_key) {
+        this.entrust_key = entrust_key;
+    }
     public String getDeal_date() {
         return deal_date;
     }
@@ -30,14 +64,6 @@ public class RealDeal {
         this.stock_code = stock_code;
     }
 
-    public String getStock_name() {
-        return stock_name;
-    }
-
-    public void setStock_name(String stock_name) {
-        this.stock_name = stock_name;
-    }
-
     public int getDeal_direction() {
         return deal_direction;
     }
@@ -49,14 +75,17 @@ public class RealDeal {
     @Override
     public String toString() {
         return "RealDeal{" +
-                "deal_date='" + deal_date + '\'' +
+                "entrust_key='" + entrust_key + '\'' +
+                ", deal_date='" + deal_date + '\'' +
+                ", securities_account_id='" + securities_account_id + '\'' +
                 ", stock_code='" + stock_code + '\'' +
-                ", stock_name='" + stock_name + '\'' +
                 ", deal_direction=" + deal_direction +
+                ", stock_name='" + stock_name + '\'' +
                 ", deal_amount=" + deal_amount +
                 ", deal_price=" + deal_price +
                 ", deal_amount_money=" + deal_amount_money +
                 ", deal_capital_balance=" + deal_capital_balance +
+                ", capital_account_id='" + capital_account_id + '\'' +
                 '}';
     }
 
