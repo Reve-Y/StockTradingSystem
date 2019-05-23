@@ -3,7 +3,6 @@ package com.matching;
 import com.dao.EntrustDao;
 import com.domain.CurrentEntrust;
 import com.domain.StockInfo;
-import com.service.impls.EntrustServiceImpl;
 import com.service.interfaces.DataService;
 import com.service.interfaces.DealService;
 import org.apache.log4j.Logger;
@@ -14,6 +13,9 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * 这个线程正常运行的前提是网络连接正常。否则可能会有某些意外情况。
+ */
 @Service
 public class Matching implements Runnable{
     private static Logger log= Logger.getLogger(Matching.class);
@@ -89,7 +91,8 @@ public class Matching implements Runnable{
     }
 
     /**
-     * 对委托进行排序：价格优先 时间优先
+     * 对委托进行排序：价格优先 时间优先。
+     * 由于本系统是模拟交易，不是真正的撮合，股票的行情数据实时获取，所以没有排序的必要
      */
     public void sort(List<CurrentEntrust> list){
 
@@ -145,6 +148,10 @@ public class Matching implements Runnable{
         else
             stock_code.append("sz"+ce.getStock_code());
         StockInfo stockInfo = dataService.getBasicStockInfo(stock_code.toString());
+        if (stockInfo.getBuy_price1() == 0){
+            log.info("获取不到股票相关信息，跳过此次执行。");
+            return;
+        }
         float entrust_price = ce.getEntrust_price();
         int entrust_amount = (int) ce.getEntrust_amount();
 
@@ -223,6 +230,10 @@ public class Matching implements Runnable{
         else
             stock_code.append("sz"+ce.getStock_code());
         StockInfo stockInfo = dataService.getBasicStockInfo(stock_code.toString());
+        if (stockInfo.getBuy_price1() == 0){
+            log.info("获取不到股票相关信息，跳过此次执行。");
+            return;
+        }
         float entrust_price = ce.getEntrust_price();
         int entrust_amount = (int) ce.getEntrust_amount();
 
